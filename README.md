@@ -4,7 +4,7 @@
 
 ### Spring 2023
 
-## Project Overview
+## Project Summary
 
 The birth weight of an infant may come as a surprise at the end of a pregnancy. The birthweight is an important factor in the 
 health of the mother and the delivery procedure of the infant. If the parents know the birthweight in advance, they may be 
