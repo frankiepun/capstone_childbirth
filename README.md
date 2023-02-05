@@ -1,6 +1,6 @@
 # W210 Capstone Childbirth Prediction
 
-### By Luis Delgado, Frankie Pun, Heather Rancic, Irene Shaffer
+### By Frankie Pun, Luis Delgado, Heather Rancic, Irene Shaffer
 
 ### Spring 2023
 
