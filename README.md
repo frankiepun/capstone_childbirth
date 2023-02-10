@@ -30,3 +30,38 @@ We use a convenient library called *pandas_profiling*, which summarizes each col
 
 The final result of EDA is a list of features to be used in training the models. A file called *models/feature_list.txt* is generated. It is a simple text file, and each line contains a feature name. We have considered multiple feature selection techniques to pick features, such as PCA or Lasso. Still, preliminary prediction results show that features confirmed by subject matter experts (OBGYN and Pediatricians) yield the best results. 
 
+To run the EDA on colab, a cloud development environment capable of loading and processing the massive 4GB data file, please search for the keyword *colab* in the notebook and uncomment the code.
+
+## childbirth_model_age.ipynb
+
+This notebook uses supervised machine learning to predict the gestation age. It reads the train, validation, and test data files and the feature list from *models/feature_list_age.txt*. Feel free to edit *feature_list_age.txt" to add or remove features for the models. It uses several utility functions in a common python file *childbirth_common_util.py*. 
+
+The baseline for the model prediction is the mean gestation age. During EDA, we correlated each feature against gestation age but didn't discover any feature with strong prediction power. As a result, we must resort to the most basic measurement - the average gestation age, which is 38.50 weeks. 
+
+To measure the model's performance and accuracy, we choose RMSE (Root Mean Square Error), the most common performance indicator for a regression model. RMSE measures the average difference between values predicted by a model and the actual values. The RMSE for the baseline prediction, i.e., mean gestation age, is 2.51. 
+
+Scaling is essential for transforming the features to a standard range of numeric values. Instead of one-hot encoding, we decided to use a ranking technique to convert a categorical feature to a numeric feature. For example, if a feature contains four values - Y, N, U, X, we first rank them based on their mean gestation_age. The lowest is assigned 0, and the second lowest is assigned 1. Please refer to the function *util_calc_save_scaler* in *childbirth_common_util.py* for the algorithm. Then we applied skleanr's StandardScaler to scale each feature to a standard range with mean = 0 and standard deviation = 1. We have also tried other scalers, such as MinMaxScaler and RobustScaler, but  StandardScaler yields the best results. 
+
+For training the model, we applied the ensemble modeling technique, which combines multiple models to generate the optimal result. The base models are Linear Regression, Gradient Boosting Regressor, SGD Regressor, LGBM Regressor, Random Forest Regressor, and Neural Network. We have also tried other models, such as KNN and SVM, but they are dropped due to poor results. 
+
+We tuned the base model by trying many combinations of hyperparameters. Please see this file *childbirth_model_parameter_tuning.ipynb* for details about the hyperparameter tuning. Please be aware that the tuning takes many hours to complete. 
+
+The prediction is a weighted average of the result of the above six models. The weight of each model results from many trial-and-error, and we discover the current model's weight yields the optimal result without overfitting or underfitting. As a result, the RMSE of our model based on the test dataset is 2.02, better than our baseline of 2.51. 
+
+
+
+## childbirth_model_weight.ipynb
+
+The structure of *childbirth_model_weight.ipynb* is similar *childbirth_model_age.ipynb*. To add or remove features, please change the file *models/feature_list_weight.txt* and then run each cell to re-train the model and measure the result. The baseline is the average newborn's weight is 3249.15, and RMSE is 588.13. The RMSE is 472.52, better than the baseline
+
+
+## childbirth_model_parameter_tuning.ipynb
+
+This notebook contains code to tune individual models. It uses Grid Search to identify the optimal hyperparameters for each model by trying different parameter combinations. Hyperparameters are the parameters that define and customize the base model. 
+
+
+## childbirth_common_util.py
+
+This python file contains many common utility functions for predicting the gestation age or newborn weight. To use the model for prediction, a program must invoke util_load_x_columns_list_from_file() to load a list of input features and util_load_models_from_file() to load the trained models. Then it calls util_scale() to scale the input features to a standard range with mean=0 and standard deviation=1. Finally, it executes the util_ensemble_predict_weight() or util_ensemble_predict_age(), which accept the input features and predict the result.
+
+This python file also provides common utility functions for training the model - util_handle_na() to handle NA values. util_calc_save_scaler() ranks and scales the input features and saves the scaler to the file system. util_calc_baseline() calculates the baseline and its root mean square error. util_train_evaluate() trains the individual base model and evaluates its accuracy. 
