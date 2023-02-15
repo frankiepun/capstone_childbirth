@@ -1,0 +1,7 @@
+mother_age
+father_age
+bmi
+prepregnancy_weight
+mother_height_in_total_inches
+number_of_prenatal_visits
+weight_gain

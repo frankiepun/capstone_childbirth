@@ -27,13 +27,87 @@ from sklearn.model_selection import RandomizedSearchCV
 
 import tensorflow as tf
 
-    
+# create an empty dataframe with the correct column name and type
+def util_create_empty_X_input_df(predict_output_type):
+    numeric_column_list = np.loadtxt(f'models/numeric_column_list.txt', dtype="object")
+    column_list = np.loadtxt(f'models/feature_list_{predict_output_type}.txt', dtype="object")
+    column_dict = {}
+    for column in column_list:
+        if column in ['combined_gestation_week', 'birth_weight_in_g']:
+            continue
+        if column in numeric_column_list:
+            column_dict[column] = pd.Series(dtype='float')
+        else:
+            column_dict[column] = pd.Series(dtype='str')
 
-# this function handles the NA case 
-def util_handle_na(X_features):
+    df = pd.DataFrame(column_dict)
+    return df
+
+
+# convert the column to proper type. only str(object) or float are used because they support NA
+def util_change_column_type(X_features):
+    numeric_column_list = np.loadtxt(f'models/numeric_column_list.txt', dtype="object")
+    for column in X_features.columns:
+        if column in numeric_column_list:
+            X_features[column] = X_features[column].astype(float)
+        else:
+            X_features[column] = X_features[column].astype(str)
+    return X_features
+
+
+# replace unknown value such as 99 or 999 with feature mean
+# unknown_value can be 9, 99 or 999 dependingo on the column
+def util_replace_unknown_99_with_mean(X_features, column_name, unknown_value, predict_output_type):
+    feature_mean_value_df = pd.read_csv(f"models/train_mean_{predict_output_type}.csv")
+
+    if column_name in X_features.columns:
+        X_features[column_name] = X_features[column_name].replace(unknown_value, np.nan)
+        mean_value = feature_mean_value_df[column_name].item()
+        X_features[column_name] = X_features[column_name].fillna(mean_value)
+    return X_features
+
+
+# this function handles the NA and convert the column to proper types
+# HTTP API accepts only string so the model must match the datatype
+def util_handle_na_and_type(X_features, predict_output_type):
+
+    feature_default_value_df = pd.read_csv(f"models/train_mode_{predict_output_type}.csv")
+
+    # if X_features has fewer columns than the scaler_features, we must add the column back and default them to mode
+    for feature in feature_default_value_df.columns:
+        if feature not in X_features.columns:
+            X_features[feature] = feature_default_value_df[feature].item()
+
+    # convert the input feature to the correct type
+    X_features = util_change_column_type(X_features)
+
+    # handle NA
     X_features['marital_status'] = X_features.marital_status.fillna(3)
     X_features['paternity_acknowledged'] = X_features.paternity_acknowledged.fillna('U')
-    # print(X_features.isna().any())
+
+    # for other categorical variables that have NA, fill it with the mode from the file
+    for feature in X_features.columns:
+        if feature in ['combined_gestation_week', 'birth_weight_in_g']:
+            continue
+        if X_features[feature].dtype == 'O':
+            # replace it with mode
+            mode_value = feature_default_value_df[feature].item()
+            X_features[feature] = X_features[feature].replace("nan", mode_value)
+        if X_features[feature].dtype != 'O': # flaot
+            # for numeric columns, map unknown to mean
+            if feature == "bmi":
+                unknown_value = 99.9
+            elif feature == "prepregnancy_weight":
+                unknown_value = 999
+            else:
+                unknown_value = 99
+            X_features = util_replace_unknown_99_with_mean(X_features, feature, unknown_value, predict_output_type)
+
+    # convert the input feature to the correct type again
+    X_features = util_change_column_type(X_features)
+
+    print(X_features[['birth_month', 'mother_age', 'mother_race1', 'father_age', 'bmi']])
+
     return X_features
 
 
@@ -49,14 +123,15 @@ def util_scale(X_input, predict_output_type):
         features_rank_dict = pickle.load(f)
     with open(f'models/standard_scaler_{predict_output_type}.pkl','rb') as f2:
         scaler = pickle.load(f2)
-   
+
     X_input = X_input[scaler.feature_names_in_].copy()
-    X_input = util_handle_na(X_input)
-    
+    X_input = util_handle_na_and_type(X_input, predict_output_type)
+
     # it converts the values to a ranked number (see util_calc_save_scaler() for details)
     for feature in scaler.feature_names_in_:
-        X_input[feature] = X_input[feature].map(features_rank_dict[feature])
-    
+        if X_input[feature].dtype == 'O':
+            X_input[feature] = X_input[feature].map(features_rank_dict[feature])
+
     X_input = scaler.transform(X_input) # Fit scaler on and transform the data
     X_input = pd.DataFrame(X_input, columns=scaler.feature_names_in_) # Convert back into dataframe
 
@@ -92,22 +167,30 @@ def util_calc_save_scaler(X_features, predict_output_type):
     #   mean(birth_weight_in_g) with value 3 (unknown) is 1500 grams
     #   then order them. In this case, we will assign 0 to 3 (unknown), 1 to 2 (outside), 2 to 1 (US)
     for feature in X_features.columns:
-        labels_ordered = X_features.groupby([feature])[output_column].mean().sort_values().index
-        # labels_ordered now contains the ranked order of each value
-        # for example, it is Index(['N', 'Y', 'U', 'X'], N has highest birth_weight_in_g
-        # convert labels_ordered to a dictionary {k:i}
-        labels_ordered = {k:i for i,k in enumerate(labels_ordered, 0)}
-        # labels_ordered is a dictionary {6:0, 12:1, ...}. It means if the value is 6, map it to 0
-        # another example {'N': 0, 'Y': 1, 'U': 2, 'X': 3}. if the value is N, map it to 0
-        features_rank_dict[feature] = labels_ordered
-        # print(f"{feature}: {labels_ordered}")
-        X_features_rank[feature] = X_features[feature].map(labels_ordered)
+        if X_features[feature].dtype == 'O':
+            labels_ordered = X_features.groupby([feature])[output_column].mean().sort_values().index
+            # labels_ordered now contains the ranked order of each value
+            # for example, it is Index(['N', 'Y', 'U', 'X'], N has highest birth_weight_in_g
+            # convert labels_ordered to a dictionary {k:i}
+            labels_ordered = {k:i for i,k in enumerate(labels_ordered, 0)}
+            # labels_ordered is a dictionary {6:0, 12:1, ...}. It means if the value is 6, map it to 0
+            # another example {'N': 0, 'Y': 1, 'U': 2, 'X': 3}. if the value is N, map it to 0
+            features_rank_dict[feature] = labels_ordered
+            # print(f"{feature}: {labels_ordered}")
+            X_features_rank[feature] = X_features[feature].map(labels_ordered)
+            #print(feature)
+            #print(features_rank_dict[feature])
+        else:
+            X_features_rank[feature] = X_features[feature]
 
     with open(f'models/feature_rank_dict_{predict_output_type}.pkl', 'wb') as f:
         pickle.dump(features_rank_dict, f)
     
-    # get all features except birth_weight_in_g
+    # get all features except the output variables: birth_weight_in_g and combined_gestation_week
     feature_scale=[feature for feature in X_features_rank.columns if feature not in ['birth_weight_in_g', 'combined_gestation_week']]
+
+    # write to file - the mode of each feature. They will be used as default
+    X_features[feature_scale].mode().to_csv(f"models/train_mode_{predict_output_type}.csv", index=False)
 
     # all values will be standardized to standard normal distribution with mean = 0, std dev = 1
     scaler = StandardScaler() # Initialize StandardScaler object
@@ -210,10 +293,7 @@ def util_load_models_from_file(predict_output_type):
 def util_ensemble_predict_weight(X_input, column_list, models):
 
     predict_output_type = "weight"
-    
-    # scaled/transformed (normalized with mean=0, std dev=1)
-    X_scaled = util_scale(X_input[column_list], predict_output_type)
-    
+
     # model_proportion = {'linear':0.05, 'gb':0.25, 'svr':0.05, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.05, 'nn':0.05}
     # model_proportion = {'linear':0.1, 'gb':0.25, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.1}
     model_proportion = {'linear':0.05, 'gb':0.25, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.05, 'nn':0.10}
@@ -248,9 +328,7 @@ def util_ensemble_predict_weight(X_input, column_list, models):
 def util_ensemble_predict_age(X_input, column_list, models):
 
     predict_output_type = "age"
-    # scaled/transformed (normalized with mean=0, std dev=1)
-    X_scaled = util_scale(X_input[column_list], predict_output_type)
-    
+
     # model_proportion = {'linear':0.05, 'gb':0.25, 'svr':0.05, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.05, 'nn':0.05}
     # model_proportion = {'linear':0.1, 'gb':0.25, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.1}
     model_proportion = {'linear':0.05, 'gb':0.25, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.05, 'nn':0.10}
