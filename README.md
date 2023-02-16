@@ -19,7 +19,12 @@ https://drive.google.com/drive/u/0/folders/1bkKgJ0jFC7D7luyDrVyKB-NgfEb72lt2. Th
 ## childbirth_get_small_sample.ipynb
 For performance reasons, we wrote a program called *childbirth_get_small_sample.ipynb*, randomly selecting a smaller sample from the massive 4GB file. We have pre-created two smaller data files. *Nat2021us_small_30000.txt* contains 30K rows, and *Nat2021us_small_200000.txt* contains 200K rows. Due to their size, we store only the compressed zip file in GitHub. Please unzip them to a directory called *Nat2021us* for the Jupyter notebook to load.
 
+## Colab
+We decided to use Colab for our primary development environment because it provides a standardized and shared development environment. Please refer to the colab files in the shared google drive (https://drive.google.com/drive/folders/1jms-QHD3Lmsh1B0ZJ82mboKpvYgWO5dx?usp=share_link) for the latest version. We will regularly download and check in a copy to github.
+
+
 ## childbirth_EDA.ipynb
+
 *childbirth_EDA.ipynb*  parses the *Nat2021us.txt*, a fixed-length flat file, and creates a Pandas dataframe. It then splits it into three groups - training, validation, and testing. The training data (60%) is for training the model. The validation data (20%) is for checking the trained model. Finally, the testing data (20%) is set aside for final comparison. 
 
 We examined the document and selected 79 features from the *Nat2021us.txt*. Please reference the CDC data dictionary - *CDC ChildBirth Data UserGuide2021.pdf* for details about each feature. To add more features, please use the field's start and end position specified on page 8 of the document 
@@ -49,10 +54,21 @@ We tuned the base model by trying many combinations of hyperparameters. Please s
 The prediction is a weighted average of the result of the above six models. The weight of each model results from many trial-and-error, and we discover the current weights yield the optimal result without overfitting or underfitting. As a result, the RMSE of our model based on the test dataset is 2.02, better than our baseline of 2.51. 
 
 
-
 ## childbirth_model_weight.ipynb
 
 The structure of *childbirth_model_weight.ipynb* is similar *childbirth_model_age.ipynb*. To add or remove features, please change the file *models/feature_list_weight.txt* and then run each cell to re-train the model and measure the result. The baseline is the average newborn's weight is 3249.15, and RMSE is 588.13. The model's RMSE is 472.52, better than the baseline's RMSE 588.13.
+
+## Model Tuning
+We can perform a few things to optimize the models:
+### add or delete a feature. 
+The features are stored in the files feature_list_age.txt or feature_list_weight.txt, under "/content/drive/MyDrive/w210-capstone/Colab/models". They are text files and each line contains a feature. 
+
+### hyperparameter tuning
+We are using six base linear regression models. Each model has a set of hyperparameters that can be tuned to improve the performance. Please refer to childbirth_model_parameter_tuning.ipynb for some example code that uses GridSearch to test different parameter combinations. 
+
+
+### Add new model
+Sklearn has many regression models (https://scikit-learn.org/stable/supervised_learning.html). So we can add more base models to our ensemble model to improve the performance.
 
 
 ## childbirth_model_parameter_tuning.ipynb
