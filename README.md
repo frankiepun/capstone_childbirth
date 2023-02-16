@@ -60,10 +60,10 @@ The structure of *childbirth_model_weight.ipynb* is similar *childbirth_model_ag
 
 ## Model Tuning
 We can perform a few things to optimize the models:
-### add or delete a feature. 
+### Add or delete a feature. 
 The features are stored in the files feature_list_age.txt or feature_list_weight.txt, under "/content/drive/MyDrive/w210-capstone/Colab/models". They are text files and each line contains a feature. 
 
-### hyperparameter tuning
+### Hyperparameter tuning
 We are using six base linear regression models. Each model has a set of hyperparameters that can be tuned to improve the performance. Please refer to childbirth_model_parameter_tuning.ipynb for some example code that uses GridSearch to test different parameter combinations. 
 
 
