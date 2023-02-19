@@ -119,8 +119,9 @@ for i in range(0, 31):
 childbirth_data_dict["prior_births_now_living"]["99"]="Unknown"
 
 childbirth_data_dict["total_birth_order"] = {}
-for i in range(0, 9):
+for i in range(1, 8):
     childbirth_data_dict["total_birth_order"][f"{i}"] = f"{i}"
+childbirth_data_dict["total_birth_order"]["8"] = "8 or more total births"
 childbirth_data_dict["total_birth_order"]["9"]="Unknown"
 
 childbirth_data_dict["interval_since_last_live_birth"] = {
@@ -241,7 +242,7 @@ childbirth_data_dict["previous_cesarean"] = {
 childbirth_data_dict["number_of_previous_cesareans"] = {}
 for i in range(0, 31):
     childbirth_data_dict["number_of_previous_cesareans"][f"{i}"] = f"{i}"
-childbirth_data_dict["total_birth_order"]["99"]="Unknown"
+childbirth_data_dict["number_of_previous_cesareans"]["99"]="Unknown"
 
 childbirth_data_dict["no_risk_factors_reported"] = {
 "Y": "Yes",
@@ -298,16 +299,57 @@ childbirth_data_dict["infant_breastfed_at_discharge"] = {
 "U": "Unknown"
 }
 
-"""
-childbirth_data_type_dict = {}
-# type conversion
-for column in childbirth_data_dict:
-    nested_dict = childbirth_data_dict[column]
-    keylist = list(nested_dict.keys())
-    series1 = np.asarray(keylist)
+# it stores the user-friendly text used in HTML pages
+childbirth_data_display_text_dict = {
+    "birth_month" : "Expected childbirth month",
+    "mother_age" : "Mother's age at childbirth",
+    "mother_nativity" : "Mother's nativity",
+    "residence_status" : "Mother's Residence status",
+    "mother_race1" : "Mother's race",
+    "mother_hispanic_race" : "Mother's hispanic origin",
+    "paternity_acknowledged" : "Paternity acknowledged (father's name was identified)",
+    "marital_status" : "Mother's marital status",
+    "mother_education" : "Mother's education level",
+    "father_age" : "Father's age",
+    "prior_births_now_living" : "Number of children still living from previous live births",
+    "total_birth_order" : "Expected birth order (for example, with two previous live births, enter 3)",
+    "interval_since_last_live_birth" : "Interval since last live birth",
+    "month_prenatal_care_began" : "The month prenatal care began",
+    "number_of_prenatal_visits" : "The number of prenatal visits",
+    "wic" : "Mother received special supplemental nutrition program for WIC (Women, Infants and Children)",
+    "cigarettes_3rd_trimester" : "Cigarettes consumed in the 3rd trimester",
+    "mother_height_in_total_inches" : "Mother's height in total inches",
+    "bmi" : "Mother's BMI (Body Mass Index)",
+    "prepregnancy_weight" : "Mother's prepregnancy weight",
+    "weight_gain_group" : "Mother's expected weight gain at childbirth",
+    "gestational_diabetes" : "Mother's gestational diabetes",
+    "prepregnancy_hypertension" : "Mother's prepregnancy hypertension",
+    "gestational_hypertension" : "Mother's gestational hypertension",
+    "previous_preterm_birth" : "Mother's previous preterm birth",
+    "infertility_treatment_used" : "Mother's infertility treatment used",
+    "fertility_enhancing_drugs" : "Mother's fertility enhancing drugs",
+    "previous_cesarean" : "Mother's previous cesarean",
+    "number_of_previous_cesareans" : "Mother's number of previous cesareans",
+    "no_risk_factors_reported" : "Mother has no other risk factors reported (Yes=No other risks factors, No=has other risks factor reported)",
+    "chlamydia" : "Mother's chlamydia (a sexual transmitted disease)",
+    "attendant_at_birth" : "Type of medical attendant at birth",
+    "pluarality" : "Pluarality (Single, Twin, etc)",
+    "sex_of_infant" : "Sex of infant",
+    "last_normal_menses_month" : "Last normal menses month",
+    "infant_breastfed_at_discharge" : "Infant breastfed at discharge"
+}
 
-    childbirth_data_type_dict[column] = str(series1.dtype)
-    if series1.dtype == "<U1":
-        childbirth_data_type_dict[column] = "str"
-"""
-# print(childbirth_data_type_dict)
+
+# generaet sample HTMl snippets for field selection
+def generate_html_input_form_select_field_sample_code():
+    with open(f'C:/Users/frankiepun/Documents/workspace-w210-capstone/childbirth prediction/git/capstone_childbirth/DEBUG_html_form_select.txt', 'w') as f:
+        for column_name in childbirth_data_dict:
+            nested_dict = childbirth_data_dict[column_name]
+            f.write(f'<label for="{column_name}">{childbirth_data_display_text_dict[column_name]}:</label>\n')
+            f.write(f'<select id="{column_name}" name="{column_name}">\n')
+            for key, value in nested_dict.items():
+                f.write(f'  <option value="{key}" {{{{"selected" if default_value_dict.{column_name}=="{key}"}}}}>{value}</option>\n')
+            f.write(f'</select>\n')
+            f.write(f'<p>\n')
+
+# generate_html_input_form_select_field_sample_code()

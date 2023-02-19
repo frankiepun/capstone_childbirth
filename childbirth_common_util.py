@@ -27,10 +27,14 @@ from sklearn.model_selection import RandomizedSearchCV
 
 import tensorflow as tf
 
+# model_path = "/content/drive/MyDrive/w210-capstone/Colab/models"
+# local jupyer notebook
+model_path="models"
+
 # create an empty dataframe with the correct column name and type
 def util_create_empty_X_input_df(predict_output_type):
-    numeric_column_list = np.loadtxt(f'models/numeric_column_list.txt', dtype="object")
-    column_list = np.loadtxt(f'models/feature_list_{predict_output_type}.txt', dtype="object")
+    numeric_column_list = np.loadtxt(f'{model_path}/numeric_column_list.txt', dtype="object")
+    column_list = np.loadtxt(f'{model_path}/feature_list_{predict_output_type}.txt', dtype="object")
     column_dict = {}
     for column in column_list:
         if column in ['combined_gestation_week', 'birth_weight_in_g']:
@@ -46,7 +50,7 @@ def util_create_empty_X_input_df(predict_output_type):
 
 # convert the column to proper type. only str(object) or float are used because they support NA
 def util_change_column_type(X_features):
-    numeric_column_list = np.loadtxt(f'models/numeric_column_list.txt', dtype="object")
+    numeric_column_list = np.loadtxt(f'{model_path}/numeric_column_list.txt', dtype="object")
     for column in X_features.columns:
         if column in numeric_column_list:
             X_features[column] = X_features[column].astype(float)
@@ -58,7 +62,7 @@ def util_change_column_type(X_features):
 # replace unknown value such as 99 or 999 with feature mean
 # unknown_value can be 9, 99 or 999 dependingo on the column
 def util_replace_unknown_99_with_mean(X_features, column_name, unknown_value, predict_output_type):
-    feature_mean_value_df = pd.read_csv(f"models/train_mean_{predict_output_type}.csv")
+    feature_mean_value_df = pd.read_csv(f"{model_path}/train_mean_{predict_output_type}.csv")
 
     if column_name in X_features.columns:
         X_features[column_name] = X_features[column_name].replace(unknown_value, np.nan)
@@ -71,7 +75,7 @@ def util_replace_unknown_99_with_mean(X_features, column_name, unknown_value, pr
 # HTTP API accepts only string so the model must match the datatype
 def util_handle_na_and_type(X_features, predict_output_type):
 
-    feature_default_value_df = pd.read_csv(f"models/train_mode_{predict_output_type}.csv")
+    feature_default_value_df = pd.read_csv(f"{model_path}/train_mode_{predict_output_type}.csv")
 
     # if X_features has fewer columns than the scaler_features, we must add the column back and default them to mode
     for feature in feature_default_value_df.columns:
@@ -106,8 +110,6 @@ def util_handle_na_and_type(X_features, predict_output_type):
     # convert the input feature to the correct type again
     X_features = util_change_column_type(X_features)
 
-    print(X_features[['birth_month', 'mother_age', 'mother_race1', 'father_age', 'bmi']])
-
     return X_features
 
 
@@ -119,9 +121,9 @@ def util_handle_na_and_type(X_features, predict_output_type):
 # and set the value to mean if it is missing
 def util_scale(X_input, predict_output_type):
    
-    with open(f'models/feature_rank_dict_{predict_output_type}.pkl', 'rb') as f:
+    with open(f'{model_path}/feature_rank_dict_{predict_output_type}.pkl', 'rb') as f:
         features_rank_dict = pickle.load(f)
-    with open(f'models/standard_scaler_{predict_output_type}.pkl','rb') as f2:
+    with open(f'{model_path}/standard_scaler_{predict_output_type}.pkl','rb') as f2:
         scaler = pickle.load(f2)
 
     X_input = X_input[scaler.feature_names_in_].copy()
@@ -183,28 +185,28 @@ def util_calc_save_scaler(X_features, predict_output_type):
         else:
             X_features_rank[feature] = X_features[feature]
 
-    with open(f'models/feature_rank_dict_{predict_output_type}.pkl', 'wb') as f:
+    with open(f'{model_path}/feature_rank_dict_{predict_output_type}.pkl', 'wb') as f:
         pickle.dump(features_rank_dict, f)
     
     # get all features except the output variables: birth_weight_in_g and combined_gestation_week
     feature_scale=[feature for feature in X_features_rank.columns if feature not in ['birth_weight_in_g', 'combined_gestation_week']]
 
     # write to file - the mode of each feature. They will be used as default
-    X_features[feature_scale].mode().to_csv(f"models/train_mode_{predict_output_type}.csv", index=False)
+    X_features[feature_scale].mode().to_csv(f"{model_path}/train_mode_{predict_output_type}.csv", index=False)
 
     # all values will be standardized to standard normal distribution with mean = 0, std dev = 1
     scaler = StandardScaler() # Initialize StandardScaler object
     
     # save the fitted StandardScaler
     X_features_scaled = scaler.fit_transform(X_features_rank[feature_scale]) # Fit scaler on and transform the data
-    with open(f'models/standard_scaler_{predict_output_type}.pkl', 'wb') as f:
+    with open(f'{model_path}/standard_scaler_{predict_output_type}.pkl', 'wb') as f:
         pickle.dump(scaler, f)
     
     # output the mean and standard deviation. 
     train_mean = pd.DataFrame(data=scaler.mean_.reshape(1, len(scaler.mean_)), columns=scaler.feature_names_in_)
-    train_mean.to_csv(f"models/train_mean_{predict_output_type}.csv", index=False)
+    train_mean.to_csv(f"{model_path}/train_mean_{predict_output_type}.csv", index=False)
     train_stddev = pd.DataFrame(data=scaler.mean_.reshape(1, len(scaler.mean_)), columns=scaler.feature_names_in_)
-    train_mean.to_csv(f"models/train_stddev_{predict_output_type}.csv", index=False)
+    train_mean.to_csv(f"{model_path}/train_stddev_{predict_output_type}.csv", index=False)
     
     X_features_transformed = pd.DataFrame(X_features_scaled, columns=feature_scale) # Convert back into dataframe
 
@@ -253,8 +255,8 @@ def util_train_and_evaluate(model_name, predict_output_type, model, X_train_scal
 
     mse = mean_squared_error(y_val, y_pred)
     rmse = np.sqrt(mse)
-    
-    model_filename = f"models/model_{model_name}_{predict_output_type}.sav"
+
+    model_filename = f"{model_path}/model_{model_name}_{predict_output_type}.sav"
     print(f"Saving {model_name} to file: {model_filename}")
     pickle.dump(model, open(model_filename, 'wb'))
     
@@ -267,7 +269,7 @@ def util_train_and_evaluate(model_name, predict_output_type, model, X_train_scal
 # load column list from file but drop the output variables - combined_gestation_week and birth_weight_in_g
 def util_load_x_columns_list_from_file(predict_output_type):
     
-    col_from_files = np.loadtxt(f'models/feature_list_{predict_output_type}.txt', dtype="object")
+    col_from_files = np.loadtxt(f'{model_path}/feature_list_{predict_output_type}.txt', dtype="object")
     
     # remove the outcome variables
     col_features_only =  np.delete(col_from_files, np.where(col_from_files == 'combined_gestation_week'))
@@ -279,8 +281,8 @@ def util_load_x_columns_list_from_file(predict_output_type):
 def util_load_models_from_file(predict_output_type):
     models = {}
     for model in ['linear', 'gb', 'sgd', 'lgbm', 'xgb', 'rf']:
-         models[model] = pickle.load(open(f'models/model_{model}_{predict_output_type}.sav', 'rb'))
-    models['nn'] = tf.keras.models.load_model(f'models/model_nn_{predict_output_type}')
+         models[model] = pickle.load(open(f'{model_path}/model_{model}_{predict_output_type}.sav', 'rb'))
+    models['nn'] = tf.keras.models.load_model(f'{model_path}/model_nn_{predict_output_type}')
 
     return models
 
