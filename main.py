@@ -25,7 +25,7 @@ models['weight'] = util_load_models_from_file("weight")
 
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
-    return templates.TemplateResponse("predict_input.html", {"request": request})
+    return data_input(request)
 
 
 @app.get("/input", response_class=HTMLResponse)
