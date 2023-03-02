@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from childbirth_data_dictionary import *
 import json
 from childbirth_common_util import *
@@ -13,6 +13,19 @@ import math
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/css", StaticFiles(directory="static/css"), name="css")
+app.mount("/js", StaticFiles(directory="static/js"), name="js")
+app.mount("/img", StaticFiles(directory="static/img"), name="img")
+app.mount("/scss", StaticFiles(directory="static/scss"), name="scss")
+app.mount("/vendor", StaticFiles(directory="static/vendor"), name="vendor")
+
+app.mount("/api/css", StaticFiles(directory="static/css"), name="css")
+app.mount("/api/js", StaticFiles(directory="static/js"), name="js")
+app.mount("/api/img", StaticFiles(directory="static/img"), name="img")
+app.mount("/api/scss", StaticFiles(directory="static/scss"), name="scss")
+app.mount("/api/vendor", StaticFiles(directory="static/vendor"), name="vendor")
+
+
 templates = Jinja2Templates(directory="templates")
 
 column_list = {}
@@ -23,36 +36,28 @@ models['age'] = util_load_models_from_file("age")
 models['weight'] = util_load_models_from_file("weight")
 
 
+# return the index.html
 @app.get("/", response_class=HTMLResponse)
-def read_root(request: Request):
-    return data_input(request)
+def get_index_page(request: Request):
+    return get_page(request, "index")
 
 
-@app.get("/input", response_class=HTMLResponse)
-def data_input(request: Request):
+# return a HTML page. The {page} must match templates/{page}.html
+@app.get("/{page}")
+def get_page(request: Request, page: str):
     default_value_dict =  dict(request.query_params)
-    return templates.TemplateResponse("predict_input.html", {"request": request, "default_value_dict": default_value_dict})
+    return templates.TemplateResponse(f"{page}.html",
+                                      {"request": request,
+                                       "default_value_dict": default_value_dict,
+                                       "childbirth_data_dict": childbirth_data_dict,
+                                       "childbirth_data_display_text_dict": childbirth_data_display_text_dict})
 
 
-# return the data dictionary for each feature
-@app.get("/features/{predict_output_type}")
-def get_all_features_data_dictionary(predict_output_type):
-
-    if predict_output_type not in column_list:
-        return childbirth_data_dict # default the return_dict in case output_type is not found
-
-    column_list_by_type = column_list[predict_output_type]
-
-    return_dict = {}
-    for column in column_list_by_type:
-        return_dict[column] = childbirth_data_dict.get(column, "ERROR - key not found in childbirth_data_dict.")
-
-    return return_dict
-
-@app.get("/help", response_class=HTMLResponse)
+# return example JSON inputs
+@app.get("/api/example", response_class=HTMLResponse)
 def get_help_and_example_payload(request: Request):
     # single request
-    url_first_part = "http://127.0.0.1:8000/predict"
+    url_first_part = "http://some-domain-name:port-number/predict"
 
     predict_type_dict = {'age': {}, 'weight': {}} # key=age/weight. value=dict of column (key=column name, value=dict of values).
     url_query_string_dict = {}  # the key is age or weight. the value is the query string
@@ -70,7 +75,7 @@ def get_help_and_example_payload(request: Request):
     input_array_weight = [input1_dict['weight'], input1_dict['weight'],input1_dict['weight']]
     input_array_age = [input1_dict['age'], input1_dict['age'], input1_dict['age']]
 
-    return templates.TemplateResponse("help.html", {"request": request,
+    return templates.TemplateResponse("api_example.html", {"request": request,
                                                     "get_age_url": f"{url_first_part}/age?{url_query_string_dict['age'][1:]}",
                                                     "post_age_url": f"{url_first_part}/age",
                                                     "get_weight_url": f"{url_first_part}/weight?{url_query_string_dict['weight'][1:]}",
@@ -80,10 +85,11 @@ def get_help_and_example_payload(request: Request):
                                                     })
 
 
-@app.get("/predict")
-def predict_http_form(request: Request, predict_output_type : str):
+# returns the result in a formatted HTML page
+@app.get("/api/predict")
+def predict_returns_formatted_html(request: Request, predict_output_type : str):
     dictobj =  predict_single_input(predict_output_type, request)
-    input_url = request.url._url.replace("/predict?", "/input?")
+    input_url = request.url._url.replace("/api/predict?", "/predict_input?")
 
     input_params_dict = dict(request.query_params)
     input_params_dict.pop('predict_output_type')
@@ -109,10 +115,8 @@ def predict_http_form(request: Request, predict_output_type : str):
                                                               })
 
 
-
-
-
-@app.get("/predict/{predict_output_type}")
+# it returns the predicted result in JSON format
+@app.get("/api/predict/{predict_output_type}")
 def predict_single_input(predict_output_type, request: Request):
     params = dict(request.query_params)
 
@@ -127,8 +131,8 @@ def predict_single_input(predict_output_type, request: Request):
     return {predict_output_type: y_pred.item()}
 
 
-# this endpoint handle multiple inputs in JSON format in the request body.
-@app.post("/predict/{predict_output_type}")
+# it handles multiple inputs in JSON format in the request body.
+@app.post("/api/predict/{predict_output_type}")
 async def predict_multiple_input(predict_output_type, request: Request):
     body = await request.json()
     print(f"The number of records in input = {len(body)}")
@@ -144,6 +148,7 @@ async def predict_multiple_input(predict_output_type, request: Request):
     return dict(enumerate(y_pred))
 
 
+# main program runs uvicorn
 def main():
     print("Welcome to Childbirth Predictor")
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True, workers=2)

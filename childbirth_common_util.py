@@ -71,6 +71,14 @@ def util_replace_unknown_99_with_mean(X_features, column_name, unknown_value, pr
     return X_features
 
 
+# always calculate BMI
+def util_calc_bmi(X_features):
+    util_replace_unknown_99_with_mean(X_features, 'prepregnancy_weight', 999, 'weight')
+    util_replace_unknown_99_with_mean(X_features, 'mother_height_in_total_inches', 99, 'weight')
+    X_features['bmi'] = (X_features['prepregnancy_weight'] / X_features['mother_height_in_total_inches'] / X_features['mother_height_in_total_inches']) * 703
+    return X_features
+
+
 # this function handles the NA and convert the column to proper types
 # HTTP API accepts only string so the model must match the datatype
 def util_handle_na_and_type(X_features, predict_output_type):
@@ -84,6 +92,9 @@ def util_handle_na_and_type(X_features, predict_output_type):
 
     # convert the input feature to the correct type
     X_features = util_change_column_type(X_features)
+
+    # calculate BMI from weight and height
+    util_calc_bmi(X_features)
 
     # handle NA
     X_features['marital_status'] = X_features.marital_status.fillna(3)
@@ -296,10 +307,9 @@ def util_ensemble_predict_weight(X_input, column_list, models):
 
     predict_output_type = "weight"
 
-    # model_proportion = {'linear':0.05, 'gb':0.25, 'svr':0.05, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.05, 'nn':0.05}
-    # model_proportion = {'linear':0.1, 'gb':0.25, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.1}
     model_proportion = {'linear':0.05, 'gb':0.25, 'sgd':0.05, 'lgbm':0.25, 'xgb':0.25, 'rf':0.05, 'nn':0.10}
-    
+    #model_proportion = {'linear':0.0, 'gb':1.0, 'sgd':0.0, 'lgbm':0.0, 'xgb':0.0, 'rf':0.0, 'nn':0.0}
+
     proportion_sum = 0.0 # sanity check
     predicted_result = np.zeros(len(X_input))
 

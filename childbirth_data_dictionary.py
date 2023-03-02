@@ -345,11 +345,12 @@ def generate_html_input_form_select_field_sample_code():
     with open(f'C:/Users/frankiepun/Documents/workspace-w210-capstone/childbirth prediction/git/capstone_childbirth/DEBUG_html_form_select.txt', 'w') as f:
         for column_name in childbirth_data_dict:
             nested_dict = childbirth_data_dict[column_name]
-            f.write(f'<label for="{column_name}">{childbirth_data_display_text_dict[column_name]}:</label>\n')
-            f.write(f'<select id="{column_name}" name="{column_name}">\n')
+            f.write(f'<div class="mb-3">\n')
+            f.write(f'  <label for="{column_name}" class="form-label">{childbirth_data_display_text_dict[column_name]}:</label>\n')
+            f.write(f'  <select class="form-select" aria-label="{column_name}" id="{column_name}" name="{column_name}">\n')
             for key, value in nested_dict.items():
-                f.write(f'  <option value="{key}" {{{{"selected" if default_value_dict.{column_name}=="{key}"}}}}>{value}</option>\n')
-            f.write(f'</select>\n')
-            f.write(f'<p>\n')
+                f.write(f'    <option value="{key}" {{{{"selected" if default_value_dict.{column_name}=="{key}"}}}}>{value}</option>\n')
+            f.write(f'  </select>\n')
+            f.write(f'</div>\n')
 
 # generate_html_input_form_select_field_sample_code()
