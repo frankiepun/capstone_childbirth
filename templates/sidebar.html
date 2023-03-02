@@ -1,0 +1,136 @@
+<!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/index">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">GoldenCub Predictor</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Main -->
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Main</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Prediction
+            </div>
+
+            <!-- Nav Item  -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/predict_input">
+                    <i class="fas fa-fw fa-question"></i>
+                    <span>Predict UI</span></a>
+            </li>
+
+            <!-- Nav Item  -->
+		    <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePredictAPI"
+                    aria-expanded="true" aria-controls="collapsePredictAPI">
+                    <i class="fas fa-fw fa-arrow-right"></i>
+                    <span>Predict API</span>
+                </a>
+                <div id="collapsePredictAPI" class="collapse" aria-labelledby="headingPredictAPI"
+					data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Predict API</h6>
+						<a class="collapse-item" href="/api/example">Sample Payload</a>
+						<a class="collapse-item" href="/api_data_dictionary">Data Dictionary</a>
+					</div>
+				</div>
+            </li>
+			
+
+			<!-- Divider -->
+            <hr class="sidebar-divider">
+  
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Machine Learning Model
+            </div>
+
+            <!-- Nav Item - Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseModel"
+                    aria-expanded="true" aria-controls="collapseModel">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Model</span>
+                </a>
+                <div id="collapseModel" class="collapse" aria-labelledby="headingModel" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Machine Learning Model:</h6>
+                        <a class="collapse-item" href="/eda">Exploratory Data Analysis</a>
+						<a class="collapse-item" href="/feature_engineering">Feature Engineering</a>
+						<a class="collapse-item" href="/model">Model</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProject"
+                    aria-expanded="true" aria-controls="collapseProject">
+                    <i class="fas fa-fw fa-code"></i>
+                    <span>Source code</span>
+                </a>
+                <div id="collapseProject" class="collapse" aria-labelledby="headingProject"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Source Code:</h6>
+                        <a class="collapse-item" href="/code_structure">Code Structure</a>
+                        <a class="collapse-item" href="/environment">Environment</a>
+                    </div>
+                </div>
+            </li>
+			
+			<!-- Nav Item  -->
+            <li class="nav-item">
+                <a class="nav-link" href="/reference_material">
+                    <i class="fas fa-fw fa-book"></i>
+                    <span>Reference Materials</span></a>
+            </li>
+
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+			            <!-- Heading -->
+            <div class="sidebar-heading">
+                Project
+            </div>
+
+            <!-- Nav Item  -->
+            <li class="nav-item">
+                <a class="nav-link" href="/about_us">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>About Us</span></a>
+            </li>
+			
+			<!-- Nav Item  -->
+            <li class="nav-item">
+                <a class="nav-link" href="/ethics">
+                    <i class="fas fa-fw fa-lock"></i>
+                    <span>Ethics & Privacy</span></a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->

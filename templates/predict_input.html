@@ -1,990 +1,1133 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h2>Gestation Age and Newborn Weight Predictor</h2>
-<p>
+<html lang="en">
 
-<form action="/predict" method="get">
+<head>
 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<label for="birth_month">Expected childbirth month:</label>
-<select id="birth_month" name="birth_month">
-  <option value="1" {{"selected" if default_value_dict.birth_month=="1"}}>January</option>
-  <option value="2" {{"selected" if default_value_dict.birth_month=="2"}}>February</option>
-  <option value="3" {{"selected" if default_value_dict.birth_month=="3"}}>March</option>
-  <option value="4" {{"selected" if default_value_dict.birth_month=="4"}}>April</option>
-  <option value="5" {{"selected" if default_value_dict.birth_month=="5"}}>May</option>
-  <option value="6" {{"selected" if default_value_dict.birth_month=="6"}}>June</option>
-  <option value="7" {{"selected" if default_value_dict.birth_month=="7"}}>July</option>
-  <option value="8" {{"selected" if default_value_dict.birth_month=="8"}}>August</option>
-  <option value="9" {{"selected" if default_value_dict.birth_month=="9"}}>September</option>
-  <option value="10" {{"selected" if default_value_dict.birth_month=="10"}}>October</option>
-  <option value="11" {{"selected" if default_value_dict.birth_month=="11"}}>November</option>
-  <option value="12" {{"selected" if default_value_dict.birth_month=="12"}}>December</option>
-</select>
-<p>
-<label for="mother_age">Mother's age at childbirth:</label>
-<select id="mother_age" name="mother_age">
-  <option value="12" {{"selected" if default_value_dict.mother_age=="12"}}>10-12 years</option>
-  <option value="13" {{"selected" if default_value_dict.mother_age=="13"}}>13 years</option>
-  <option value="14" {{"selected" if default_value_dict.mother_age=="14"}}>14 years</option>
-  <option value="15" {{"selected" if default_value_dict.mother_age=="15"}}>15 years</option>
-  <option value="16" {{"selected" if default_value_dict.mother_age=="16"}}>16 years</option>
-  <option value="17" {{"selected" if default_value_dict.mother_age=="17"}}>17 years</option>
-  <option value="18" {{"selected" if default_value_dict.mother_age=="18"}}>18 years</option>
-  <option value="19" {{"selected" if default_value_dict.mother_age=="19"}}>19 years</option>
-  <option value="20" {{"selected" if default_value_dict.mother_age=="20"}}>20 years</option>
-  <option value="21" {{"selected" if default_value_dict.mother_age=="21"}}>21 years</option>
-  <option value="22" {{"selected" if default_value_dict.mother_age=="22"}}>22 years</option>
-  <option value="23" {{"selected" if default_value_dict.mother_age=="23"}}>23 years</option>
-  <option value="24" {{"selected" if default_value_dict.mother_age=="24"}}>24 years</option>
-  <option value="25" {{"selected" if default_value_dict.mother_age=="25"}}>25 years</option>
-  <option value="26" {{"selected" if default_value_dict.mother_age=="26"}}>26 years</option>
-  <option value="27" {{"selected" if default_value_dict.mother_age=="27"}}>27 years</option>
-  <option value="28" {{"selected" if default_value_dict.mother_age=="28"}}>28 years</option>
-  <option value="29" {{"selected" if default_value_dict.mother_age=="29"}}>29 years</option>
-  <option value="30" {{"selected" if default_value_dict.mother_age=="30"}}>30 years</option>
-  <option value="31" {{"selected" if default_value_dict.mother_age=="31"}}>31 years</option>
-  <option value="32" {{"selected" if default_value_dict.mother_age=="32"}}>32 years</option>
-  <option value="33" {{"selected" if default_value_dict.mother_age=="33"}}>33 years</option>
-  <option value="34" {{"selected" if default_value_dict.mother_age=="34"}}>34 years</option>
-  <option value="35" {{"selected" if default_value_dict.mother_age=="35"}}>35 years</option>
-  <option value="36" {{"selected" if default_value_dict.mother_age=="36"}}>36 years</option>
-  <option value="37" {{"selected" if default_value_dict.mother_age=="37"}}>37 years</option>
-  <option value="38" {{"selected" if default_value_dict.mother_age=="38"}}>38 years</option>
-  <option value="39" {{"selected" if default_value_dict.mother_age=="39"}}>39 years</option>
-  <option value="40" {{"selected" if default_value_dict.mother_age=="40"}}>40 years</option>
-  <option value="41" {{"selected" if default_value_dict.mother_age=="41"}}>41 years</option>
-  <option value="42" {{"selected" if default_value_dict.mother_age=="42"}}>42 years</option>
-  <option value="43" {{"selected" if default_value_dict.mother_age=="43"}}>43 years</option>
-  <option value="44" {{"selected" if default_value_dict.mother_age=="44"}}>44 years</option>
-  <option value="45" {{"selected" if default_value_dict.mother_age=="45"}}>45 years</option>
-  <option value="46" {{"selected" if default_value_dict.mother_age=="46"}}>46 years</option>
-  <option value="47" {{"selected" if default_value_dict.mother_age=="47"}}>47 years</option>
-  <option value="48" {{"selected" if default_value_dict.mother_age=="48"}}>48 years</option>
-  <option value="49" {{"selected" if default_value_dict.mother_age=="49"}}>49 years</option>
-  <option value="50" {{"selected" if default_value_dict.mother_age=="50"}}>50 years and over</option>
-</select>
-<p>
-<label for="mother_nativity">Mother's nativity:</label>
-<select id="mother_nativity" name="mother_nativity">
-  <option value="1" {{"selected" if default_value_dict.mother_nativity=="1"}}>Born in the U.S. (50 US States)</option>
-  <option value="2" {{"selected" if default_value_dict.mother_nativity=="2"}}>Born outside the U.S. (includes possessions)</option>
-  <option value="3" {{"selected" if default_value_dict.mother_nativity=="3"}}>Unknown or Not Stated</option>
-</select>
-<p>
-<label for="residence_status">Mother's Residence status:</label>
-<select id="residence_status" name="residence_status">
-  <option value="1" {{"selected" if default_value_dict.residence_status=="1"}}>RESIDENT: State and county of occurrence and residence are the same</option>
-  <option value="2" {{"selected" if default_value_dict.residence_status=="2"}}>INTRASTATE NONRESIDENT: State of occurrence and residence are the same but county is different</option>
-  <option value="3" {{"selected" if default_value_dict.residence_status=="3"}}>INTERSTATE NONRESIDENT: State of occurrence and residence are different but both are one of the 50 US states or District of Columbia</option>
-  <option value="4" {{"selected" if default_value_dict.residence_status=="4"}}>FOREIGN RESIDENT: The state of residence is not one of the 50 US states or District of Columbia.</option>
-</select>
-<p>
-<label for="mother_race1">Mother's race:</label>
-<select id="mother_race1" name="mother_race1">
-  <option value="1" {{"selected" if default_value_dict.mother_race1=="1"}}>White (only) [only one race reported] the United States except Puerto Rico</option>
-  <option value="2" {{"selected" if default_value_dict.mother_race1=="2"}}>Black (only)</option>
-  <option value="3" {{"selected" if default_value_dict.mother_race1=="3"}}>AIAN (American Indian or Alaskan Native) (only)</option>
-  <option value="4" {{"selected" if default_value_dict.mother_race1=="4"}}>Asian (only)</option>
-  <option value="5" {{"selected" if default_value_dict.mother_race1=="5"}}>NHOPI (Native Hawaiian or Other Pacific Islander) (only)</option>
-  <option value="6" {{"selected" if default_value_dict.mother_race1=="6"}}>Black and White</option>
-  <option value="7" {{"selected" if default_value_dict.mother_race1=="7"}}>Black and AIAN</option>
-  <option value="8" {{"selected" if default_value_dict.mother_race1=="8"}}>Black and Asian</option>
-  <option value="9" {{"selected" if default_value_dict.mother_race1=="9"}}>Black and NHOPI</option>
-  <option value="10" {{"selected" if default_value_dict.mother_race1=="10"}}>AIAN and White</option>
-  <option value="11" {{"selected" if default_value_dict.mother_race1=="11"}}>AIAN and Asian</option>
-  <option value="12" {{"selected" if default_value_dict.mother_race1=="12"}}>AIAN and NHOPI</option>
-  <option value="13" {{"selected" if default_value_dict.mother_race1=="13"}}>Asian and White</option>
-  <option value="14" {{"selected" if default_value_dict.mother_race1=="14"}}>Asian and NHOPI</option>
-  <option value="15" {{"selected" if default_value_dict.mother_race1=="15"}}>NHOPI and White</option>
-  <option value="16" {{"selected" if default_value_dict.mother_race1=="16"}}>Black, AIAN, and White</option>
-  <option value="17" {{"selected" if default_value_dict.mother_race1=="17"}}>Black, AIAN, and Asian</option>
-  <option value="18" {{"selected" if default_value_dict.mother_race1=="18"}}>Black, AIAN, and NHOPI</option>
-  <option value="19" {{"selected" if default_value_dict.mother_race1=="19"}}>Black, Asian, and White</option>
-  <option value="20" {{"selected" if default_value_dict.mother_race1=="20"}}>Black, Asian, and NHOPI</option>
-  <option value="21" {{"selected" if default_value_dict.mother_race1=="21"}}>Black, NHOPI, and White</option>
-  <option value="22" {{"selected" if default_value_dict.mother_race1=="22"}}>AIAN, Asian, and White</option>
-  <option value="23" {{"selected" if default_value_dict.mother_race1=="23"}}>AIAN, NHOPI, and White</option>
-  <option value="24" {{"selected" if default_value_dict.mother_race1=="24"}}>AIAN, Asian, and NHOPI</option>
-  <option value="25" {{"selected" if default_value_dict.mother_race1=="25"}}>Asian, NHOPI, and White</option>
-  <option value="26" {{"selected" if default_value_dict.mother_race1=="26"}}>Black, AIAN, Asian, and White</option>
-  <option value="27" {{"selected" if default_value_dict.mother_race1=="27"}}>Black, AIAN, Asian, and NHOPI</option>
-  <option value="28" {{"selected" if default_value_dict.mother_race1=="28"}}>Black, AIAN, NHOPI, and White</option>
-  <option value="29" {{"selected" if default_value_dict.mother_race1=="29"}}>Black, Asian, NHOPI, and White</option>
-  <option value="30" {{"selected" if default_value_dict.mother_race1=="30"}}>AIAN, Asian, NHOPI, and White</option>
-  <option value="31" {{"selected" if default_value_dict.mother_race1=="31"}}>Black, AIAN, Asian, NHOPI, and White</option>
-</select>
-<p>
-<label for="mother_hispanic_race">Mother's hispanic origin:</label>
-<select id="mother_hispanic_race" name="mother_hispanic_race">
-  <option value="1" {{"selected" if default_value_dict.mother_hispanic_race=="1"}}>Non-Hispanic White (only)</option>
-  <option value="2" {{"selected" if default_value_dict.mother_hispanic_race=="2"}}>Non-Hispanic Black (only)</option>
-  <option value="3" {{"selected" if default_value_dict.mother_hispanic_race=="3"}}>Non-Hispanic AIAN (only)</option>
-  <option value="4" {{"selected" if default_value_dict.mother_hispanic_race=="4"}}>Non-Hispanic Asian (only)</option>
-  <option value="5" {{"selected" if default_value_dict.mother_hispanic_race=="5"}}>Non-Hispanic NHOPI (only)</option>
-  <option value="6" {{"selected" if default_value_dict.mother_hispanic_race=="6"}}>Non-Hispanic more than one race</option>
-  <option value="7" {{"selected" if default_value_dict.mother_hispanic_race=="7"}}>Hispanic</option>
-  <option value="8" {{"selected" if default_value_dict.mother_hispanic_race=="8"}}>Origin unknown or not stated</option>
-</select>
-<p>
-<label for="paternity_acknowledged">Paternity acknowledged (father's name was identified):</label>
-<select id="paternity_acknowledged" name="paternity_acknowledged">
-  <option value="Y" {{"selected" if default_value_dict.paternity_acknowledged=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.paternity_acknowledged=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.paternity_acknowledged=="U"}}>Unknown</option>
-  <option value="X" {{"selected" if default_value_dict.paternity_acknowledged=="X"}}>Not Applicable</option>
-</select>
-<p>
-<label for="marital_status">Mother's marital status:</label>
-<select id="marital_status" name="marital_status">
-  <option value="1" {{"selected" if default_value_dict.marital_status=="1"}}>Married</option>
-  <option value="2" {{"selected" if default_value_dict.marital_status=="2"}}>Unmarried</option>
-</select>
-<p>
-<label for="mother_education">Mother's education level:</label>
-<select id="mother_education" name="mother_education">
-  <option value="1" {{"selected" if default_value_dict.mother_education=="1"}}>8th grade or less</option>
-  <option value="2" {{"selected" if default_value_dict.mother_education=="2"}}>9th through 12th grade with no diploma</option>
-  <option value="3" {{"selected" if default_value_dict.mother_education=="3"}}>High school graduate or GED completed</option>
-  <option value="4" {{"selected" if default_value_dict.mother_education=="4"}}>Some college credit, but not a degree.</option>
-  <option value="5" {{"selected" if default_value_dict.mother_education=="5"}}>Associate degree (AA,AS)</option>
-  <option value="6" {{"selected" if default_value_dict.mother_education=="6"}}>Bachelor’s degree (BA, AB, BS)</option>
-  <option value="7" {{"selected" if default_value_dict.mother_education=="7"}}>Master’s degree (MA, MS, MEng, MEd, MSW, MBA)</option>
-  <option value="8" {{"selected" if default_value_dict.mother_education=="8"}}>Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD)</option>
-  <option value="9" {{"selected" if default_value_dict.mother_education=="9"}}>Unknown</option>
-</select>
-<p>
-<label for="father_age">Father's age:</label>
-<select id="father_age" name="father_age">
-  <option value="12" {{"selected" if default_value_dict.father_age=="12"}}>10-12 years</option>
-  <option value="13" {{"selected" if default_value_dict.father_age=="13"}}>13 years</option>
-  <option value="14" {{"selected" if default_value_dict.father_age=="14"}}>14 years</option>
-  <option value="15" {{"selected" if default_value_dict.father_age=="15"}}>15 years</option>
-  <option value="16" {{"selected" if default_value_dict.father_age=="16"}}>16 years</option>
-  <option value="17" {{"selected" if default_value_dict.father_age=="17"}}>17 years</option>
-  <option value="18" {{"selected" if default_value_dict.father_age=="18"}}>18 years</option>
-  <option value="19" {{"selected" if default_value_dict.father_age=="19"}}>19 years</option>
-  <option value="20" {{"selected" if default_value_dict.father_age=="20"}}>20 years</option>
-  <option value="21" {{"selected" if default_value_dict.father_age=="21"}}>21 years</option>
-  <option value="22" {{"selected" if default_value_dict.father_age=="22"}}>22 years</option>
-  <option value="23" {{"selected" if default_value_dict.father_age=="23"}}>23 years</option>
-  <option value="24" {{"selected" if default_value_dict.father_age=="24"}}>24 years</option>
-  <option value="25" {{"selected" if default_value_dict.father_age=="25"}}>25 years</option>
-  <option value="26" {{"selected" if default_value_dict.father_age=="26"}}>26 years</option>
-  <option value="27" {{"selected" if default_value_dict.father_age=="27"}}>27 years</option>
-  <option value="28" {{"selected" if default_value_dict.father_age=="28"}}>28 years</option>
-  <option value="29" {{"selected" if default_value_dict.father_age=="29"}}>29 years</option>
-  <option value="30" {{"selected" if default_value_dict.father_age=="30"}}>30 years</option>
-  <option value="31" {{"selected" if default_value_dict.father_age=="31"}}>31 years</option>
-  <option value="32" {{"selected" if default_value_dict.father_age=="32"}}>32 years</option>
-  <option value="33" {{"selected" if default_value_dict.father_age=="33"}}>33 years</option>
-  <option value="34" {{"selected" if default_value_dict.father_age=="34"}}>34 years</option>
-  <option value="35" {{"selected" if default_value_dict.father_age=="35"}}>35 years</option>
-  <option value="36" {{"selected" if default_value_dict.father_age=="36"}}>36 years</option>
-  <option value="37" {{"selected" if default_value_dict.father_age=="37"}}>37 years</option>
-  <option value="38" {{"selected" if default_value_dict.father_age=="38"}}>38 years</option>
-  <option value="39" {{"selected" if default_value_dict.father_age=="39"}}>39 years</option>
-  <option value="40" {{"selected" if default_value_dict.father_age=="40"}}>40 years</option>
-  <option value="41" {{"selected" if default_value_dict.father_age=="41"}}>41 years</option>
-  <option value="42" {{"selected" if default_value_dict.father_age=="42"}}>42 years</option>
-  <option value="43" {{"selected" if default_value_dict.father_age=="43"}}>43 years</option>
-  <option value="44" {{"selected" if default_value_dict.father_age=="44"}}>44 years</option>
-  <option value="45" {{"selected" if default_value_dict.father_age=="45"}}>45 years</option>
-  <option value="46" {{"selected" if default_value_dict.father_age=="46"}}>46 years</option>
-  <option value="47" {{"selected" if default_value_dict.father_age=="47"}}>47 years</option>
-  <option value="48" {{"selected" if default_value_dict.father_age=="48"}}>48 years</option>
-  <option value="49" {{"selected" if default_value_dict.father_age=="49"}}>49 years</option>
-  <option value="50" {{"selected" if default_value_dict.father_age=="50"}}>50 years and over</option>
-  <option value="99" {{"selected" if default_value_dict.father_age=="99"}}>Unknown</option>
-</select>
-<p>
-<label for="prior_births_now_living">Number of children still living from previous live births:</label>
-<select id="prior_births_now_living" name="prior_births_now_living">
-  <option value="0" {{"selected" if default_value_dict.prior_births_now_living=="0"}}>0</option>
-  <option value="1" {{"selected" if default_value_dict.prior_births_now_living=="1"}}>1</option>
-  <option value="2" {{"selected" if default_value_dict.prior_births_now_living=="2"}}>2</option>
-  <option value="3" {{"selected" if default_value_dict.prior_births_now_living=="3"}}>3</option>
-  <option value="4" {{"selected" if default_value_dict.prior_births_now_living=="4"}}>4</option>
-  <option value="5" {{"selected" if default_value_dict.prior_births_now_living=="5"}}>5</option>
-  <option value="6" {{"selected" if default_value_dict.prior_births_now_living=="6"}}>6</option>
-  <option value="7" {{"selected" if default_value_dict.prior_births_now_living=="7"}}>7</option>
-  <option value="8" {{"selected" if default_value_dict.prior_births_now_living=="8"}}>8</option>
-  <option value="9" {{"selected" if default_value_dict.prior_births_now_living=="9"}}>9</option>
-  <option value="10" {{"selected" if default_value_dict.prior_births_now_living=="10"}}>10</option>
-  <option value="11" {{"selected" if default_value_dict.prior_births_now_living=="11"}}>11</option>
-  <option value="12" {{"selected" if default_value_dict.prior_births_now_living=="12"}}>12</option>
-  <option value="13" {{"selected" if default_value_dict.prior_births_now_living=="13"}}>13</option>
-  <option value="14" {{"selected" if default_value_dict.prior_births_now_living=="14"}}>14</option>
-  <option value="15" {{"selected" if default_value_dict.prior_births_now_living=="15"}}>15</option>
-  <option value="16" {{"selected" if default_value_dict.prior_births_now_living=="16"}}>16</option>
-  <option value="17" {{"selected" if default_value_dict.prior_births_now_living=="17"}}>17</option>
-  <option value="18" {{"selected" if default_value_dict.prior_births_now_living=="18"}}>18</option>
-  <option value="19" {{"selected" if default_value_dict.prior_births_now_living=="19"}}>19</option>
-  <option value="20" {{"selected" if default_value_dict.prior_births_now_living=="20"}}>20</option>
-  <option value="21" {{"selected" if default_value_dict.prior_births_now_living=="21"}}>21</option>
-  <option value="22" {{"selected" if default_value_dict.prior_births_now_living=="22"}}>22</option>
-  <option value="23" {{"selected" if default_value_dict.prior_births_now_living=="23"}}>23</option>
-  <option value="24" {{"selected" if default_value_dict.prior_births_now_living=="24"}}>24</option>
-  <option value="25" {{"selected" if default_value_dict.prior_births_now_living=="25"}}>25</option>
-  <option value="26" {{"selected" if default_value_dict.prior_births_now_living=="26"}}>26</option>
-  <option value="27" {{"selected" if default_value_dict.prior_births_now_living=="27"}}>27</option>
-  <option value="28" {{"selected" if default_value_dict.prior_births_now_living=="28"}}>28</option>
-  <option value="29" {{"selected" if default_value_dict.prior_births_now_living=="29"}}>29</option>
-  <option value="30" {{"selected" if default_value_dict.prior_births_now_living=="30"}}>30</option>
-  <option value="99" {{"selected" if default_value_dict.prior_births_now_living=="99"}}>Unknown</option>
-</select>
-<p>
-<label for="total_birth_order">Expected birth order (for example, with two previous live births, enter 3):</label>
-<select id="total_birth_order" name="total_birth_order">
-  <option value="1" {{"selected" if default_value_dict.total_birth_order=="1"}}>1</option>
-  <option value="2" {{"selected" if default_value_dict.total_birth_order=="2"}}>2</option>
-  <option value="3" {{"selected" if default_value_dict.total_birth_order=="3"}}>3</option>
-  <option value="4" {{"selected" if default_value_dict.total_birth_order=="4"}}>4</option>
-  <option value="5" {{"selected" if default_value_dict.total_birth_order=="5"}}>5</option>
-  <option value="6" {{"selected" if default_value_dict.total_birth_order=="6"}}>6</option>
-  <option value="7" {{"selected" if default_value_dict.total_birth_order=="7"}}>7</option>
-  <option value="8" {{"selected" if default_value_dict.total_birth_order=="8"}}>8 or more total births</option>
-  <option value="9" {{"selected" if default_value_dict.total_birth_order=="9"}}>Unknown</option>
-</select>
-<p>
-<label for="interval_since_last_live_birth">Interval since last live birth:</label>
-<select id="interval_since_last_live_birth" name="interval_since_last_live_birth">
-  <option value="0" {{"selected" if default_value_dict.interval_since_last_live_birth=="0"}}>Zero to 3 months (plural delivery)</option>
-  <option value="1" {{"selected" if default_value_dict.interval_since_last_live_birth=="1"}}>4 to 11 months</option>
-  <option value="2" {{"selected" if default_value_dict.interval_since_last_live_birth=="2"}}>12 to 17 months</option>
-  <option value="3" {{"selected" if default_value_dict.interval_since_last_live_birth=="3"}}>18 to 23 months</option>
-  <option value="4" {{"selected" if default_value_dict.interval_since_last_live_birth=="4"}}>24 to 35 months</option>
-  <option value="5" {{"selected" if default_value_dict.interval_since_last_live_birth=="5"}}>36 to 47 months</option>
-  <option value="6" {{"selected" if default_value_dict.interval_since_last_live_birth=="6"}}>48 to 59 months</option>
-  <option value="7" {{"selected" if default_value_dict.interval_since_last_live_birth=="7"}}>60 to 71 months</option>
-  <option value="8" {{"selected" if default_value_dict.interval_since_last_live_birth=="8"}}>72 months and over</option>
-  <option value="88" {{"selected" if default_value_dict.interval_since_last_live_birth=="88"}}>Not applicable (1st live birth)</option>
-  <option value="99" {{"selected" if default_value_dict.interval_since_last_live_birth=="99"}}>Unknown or not stated</option>
-</select>
-<p>
-<label for="month_prenatal_care_began">The month prenatal care began:</label>
-<select id="month_prenatal_care_began" name="month_prenatal_care_began">
-  <option value="1" {{"selected" if default_value_dict.month_prenatal_care_began=="1"}}>1st to 3rd month</option>
-  <option value="2" {{"selected" if default_value_dict.month_prenatal_care_began=="2"}}>4th to 6th month</option>
-  <option value="3" {{"selected" if default_value_dict.month_prenatal_care_began=="3"}}>7th to final month</option>
-  <option value="4" {{"selected" if default_value_dict.month_prenatal_care_began=="4"}}>No prenatal care</option>
-  <option value="5" {{"selected" if default_value_dict.month_prenatal_care_began=="5"}}>Unknown or not stated</option>
-</select>
-<p>
-<label for="number_of_prenatal_visits">The number of prenatal visits:</label>
-<select id="number_of_prenatal_visits" name="number_of_prenatal_visits">
-  <option value="1" {{"selected" if default_value_dict.number_of_prenatal_visits=="1"}}>No visits</option>
-  <option value="2" {{"selected" if default_value_dict.number_of_prenatal_visits=="2"}}>1 to 2 visits</option>
-  <option value="3" {{"selected" if default_value_dict.number_of_prenatal_visits=="3"}}>3 to 4 visits</option>
-  <option value="4" {{"selected" if default_value_dict.number_of_prenatal_visits=="4"}}>5 to 6 visits</option>
-  <option value="5" {{"selected" if default_value_dict.number_of_prenatal_visits=="5"}}>7 to 8 visits</option>
-  <option value="6" {{"selected" if default_value_dict.number_of_prenatal_visits=="6"}}>9 to 10 visits</option>
-  <option value="7" {{"selected" if default_value_dict.number_of_prenatal_visits=="7"}}>11 to 12 visits</option>
-  <option value="8" {{"selected" if default_value_dict.number_of_prenatal_visits=="8"}}>13 to 14 visits</option>
-  <option value="9" {{"selected" if default_value_dict.number_of_prenatal_visits=="9"}}>15 to 16 visits</option>
-  <option value="10" {{"selected" if default_value_dict.number_of_prenatal_visits=="10"}}>17 to 18 visits</option>
-  <option value="11" {{"selected" if default_value_dict.number_of_prenatal_visits=="11"}}>19 or more visits</option>
-  <option value="12" {{"selected" if default_value_dict.number_of_prenatal_visits=="12"}}>Unknown or not stated</option>
-</select>
-<p>
-<label for="wic">Mother received special supplemental nutrition program for WIC (Women, Infants and Children):</label>
-<select id="wic" name="wic">
-  <option value="Y" {{"selected" if default_value_dict.wic=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.wic=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.wic=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="cigarettes_3rd_trimester">Cigarettes consumed in the 3rd trimester:</label>
-<select id="cigarettes_3rd_trimester" name="cigarettes_3rd_trimester">
-  <option value="0" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="0"}}>0</option>
-  <option value="1" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="1"}}>1</option>
-  <option value="2" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="2"}}>2</option>
-  <option value="3" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="3"}}>3</option>
-  <option value="4" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="4"}}>4</option>
-  <option value="5" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="5"}}>5</option>
-  <option value="6" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="6"}}>6</option>
-  <option value="7" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="7"}}>7</option>
-  <option value="8" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="8"}}>8</option>
-  <option value="9" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="9"}}>9</option>
-  <option value="10" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="10"}}>10</option>
-  <option value="11" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="11"}}>11</option>
-  <option value="12" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="12"}}>12</option>
-  <option value="13" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="13"}}>13</option>
-  <option value="14" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="14"}}>14</option>
-  <option value="15" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="15"}}>15</option>
-  <option value="16" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="16"}}>16</option>
-  <option value="17" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="17"}}>17</option>
-  <option value="18" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="18"}}>18</option>
-  <option value="19" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="19"}}>19</option>
-  <option value="20" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="20"}}>20</option>
-  <option value="21" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="21"}}>21</option>
-  <option value="22" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="22"}}>22</option>
-  <option value="23" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="23"}}>23</option>
-  <option value="24" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="24"}}>24</option>
-  <option value="25" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="25"}}>25</option>
-  <option value="26" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="26"}}>26</option>
-  <option value="27" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="27"}}>27</option>
-  <option value="28" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="28"}}>28</option>
-  <option value="29" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="29"}}>29</option>
-  <option value="30" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="30"}}>30</option>
-  <option value="31" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="31"}}>31</option>
-  <option value="32" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="32"}}>32</option>
-  <option value="33" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="33"}}>33</option>
-  <option value="34" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="34"}}>34</option>
-  <option value="35" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="35"}}>35</option>
-  <option value="36" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="36"}}>36</option>
-  <option value="37" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="37"}}>37</option>
-  <option value="38" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="38"}}>38</option>
-  <option value="39" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="39"}}>39</option>
-  <option value="40" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="40"}}>40</option>
-  <option value="41" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="41"}}>41</option>
-  <option value="42" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="42"}}>42</option>
-  <option value="43" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="43"}}>43</option>
-  <option value="44" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="44"}}>44</option>
-  <option value="45" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="45"}}>45</option>
-  <option value="46" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="46"}}>46</option>
-  <option value="47" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="47"}}>47</option>
-  <option value="48" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="48"}}>48</option>
-  <option value="49" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="49"}}>49</option>
-  <option value="50" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="50"}}>50</option>
-  <option value="51" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="51"}}>51</option>
-  <option value="52" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="52"}}>52</option>
-  <option value="53" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="53"}}>53</option>
-  <option value="54" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="54"}}>54</option>
-  <option value="55" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="55"}}>55</option>
-  <option value="56" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="56"}}>56</option>
-  <option value="57" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="57"}}>57</option>
-  <option value="58" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="58"}}>58</option>
-  <option value="59" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="59"}}>59</option>
-  <option value="60" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="60"}}>60</option>
-  <option value="61" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="61"}}>61</option>
-  <option value="62" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="62"}}>62</option>
-  <option value="63" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="63"}}>63</option>
-  <option value="64" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="64"}}>64</option>
-  <option value="65" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="65"}}>65</option>
-  <option value="66" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="66"}}>66</option>
-  <option value="67" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="67"}}>67</option>
-  <option value="68" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="68"}}>68</option>
-  <option value="69" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="69"}}>69</option>
-  <option value="70" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="70"}}>70</option>
-  <option value="71" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="71"}}>71</option>
-  <option value="72" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="72"}}>72</option>
-  <option value="73" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="73"}}>73</option>
-  <option value="74" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="74"}}>74</option>
-  <option value="75" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="75"}}>75</option>
-  <option value="76" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="76"}}>76</option>
-  <option value="77" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="77"}}>77</option>
-  <option value="78" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="78"}}>78</option>
-  <option value="79" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="79"}}>79</option>
-  <option value="80" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="80"}}>80</option>
-  <option value="81" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="81"}}>81</option>
-  <option value="82" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="82"}}>82</option>
-  <option value="83" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="83"}}>83</option>
-  <option value="84" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="84"}}>84</option>
-  <option value="85" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="85"}}>85</option>
-  <option value="86" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="86"}}>86</option>
-  <option value="87" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="87"}}>87</option>
-  <option value="88" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="88"}}>88</option>
-  <option value="89" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="89"}}>89</option>
-  <option value="90" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="90"}}>90</option>
-  <option value="91" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="91"}}>91</option>
-  <option value="92" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="92"}}>92</option>
-  <option value="93" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="93"}}>93</option>
-  <option value="94" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="94"}}>94</option>
-  <option value="95" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="95"}}>95</option>
-  <option value="96" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="96"}}>96</option>
-  <option value="97" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="97"}}>97</option>
-  <option value="98" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="98"}}>98</option>
-  <option value="99" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="99"}}>Unknown</option>
-</select>
-<p>
-<label for="mother_height_in_total_inches">Mother's height in total inches:</label>
-<select id="mother_height_in_total_inches" name="mother_height_in_total_inches">
-  <option value="30" {{"selected" if default_value_dict.mother_height_in_total_inches=="30"}}>30</option>
-  <option value="31" {{"selected" if default_value_dict.mother_height_in_total_inches=="31"}}>31</option>
-  <option value="32" {{"selected" if default_value_dict.mother_height_in_total_inches=="32"}}>32</option>
-  <option value="33" {{"selected" if default_value_dict.mother_height_in_total_inches=="33"}}>33</option>
-  <option value="34" {{"selected" if default_value_dict.mother_height_in_total_inches=="34"}}>34</option>
-  <option value="35" {{"selected" if default_value_dict.mother_height_in_total_inches=="35"}}>35</option>
-  <option value="36" {{"selected" if default_value_dict.mother_height_in_total_inches=="36"}}>36</option>
-  <option value="37" {{"selected" if default_value_dict.mother_height_in_total_inches=="37"}}>37</option>
-  <option value="38" {{"selected" if default_value_dict.mother_height_in_total_inches=="38"}}>38</option>
-  <option value="39" {{"selected" if default_value_dict.mother_height_in_total_inches=="39"}}>39</option>
-  <option value="40" {{"selected" if default_value_dict.mother_height_in_total_inches=="40"}}>40</option>
-  <option value="41" {{"selected" if default_value_dict.mother_height_in_total_inches=="41"}}>41</option>
-  <option value="42" {{"selected" if default_value_dict.mother_height_in_total_inches=="42"}}>42</option>
-  <option value="43" {{"selected" if default_value_dict.mother_height_in_total_inches=="43"}}>43</option>
-  <option value="44" {{"selected" if default_value_dict.mother_height_in_total_inches=="44"}}>44</option>
-  <option value="45" {{"selected" if default_value_dict.mother_height_in_total_inches=="45"}}>45</option>
-  <option value="46" {{"selected" if default_value_dict.mother_height_in_total_inches=="46"}}>46</option>
-  <option value="47" {{"selected" if default_value_dict.mother_height_in_total_inches=="47"}}>47</option>
-  <option value="48" {{"selected" if default_value_dict.mother_height_in_total_inches=="48"}}>48</option>
-  <option value="49" {{"selected" if default_value_dict.mother_height_in_total_inches=="49"}}>49</option>
-  <option value="50" {{"selected" if default_value_dict.mother_height_in_total_inches=="50"}}>50</option>
-  <option value="51" {{"selected" if default_value_dict.mother_height_in_total_inches=="51"}}>51</option>
-  <option value="52" {{"selected" if default_value_dict.mother_height_in_total_inches=="52"}}>52</option>
-  <option value="53" {{"selected" if default_value_dict.mother_height_in_total_inches=="53"}}>53</option>
-  <option value="54" {{"selected" if default_value_dict.mother_height_in_total_inches=="54"}}>54</option>
-  <option value="55" {{"selected" if default_value_dict.mother_height_in_total_inches=="55"}}>55</option>
-  <option value="56" {{"selected" if default_value_dict.mother_height_in_total_inches=="56"}}>56</option>
-  <option value="57" {{"selected" if default_value_dict.mother_height_in_total_inches=="57"}}>57</option>
-  <option value="58" {{"selected" if default_value_dict.mother_height_in_total_inches=="58"}}>58</option>
-  <option value="59" {{"selected" if default_value_dict.mother_height_in_total_inches=="59"}}>59</option>
-  <option value="60" {{"selected" if default_value_dict.mother_height_in_total_inches=="60"}}>60</option>
-  <option value="61" {{"selected" if default_value_dict.mother_height_in_total_inches=="61"}}>61</option>
-  <option value="62" {{"selected" if default_value_dict.mother_height_in_total_inches=="62"}}>62</option>
-  <option value="63" {{"selected" if default_value_dict.mother_height_in_total_inches=="63"}}>63</option>
-  <option value="64" {{"selected" if default_value_dict.mother_height_in_total_inches=="64"}}>64</option>
-  <option value="65" {{"selected" if default_value_dict.mother_height_in_total_inches=="65"}}>65</option>
-  <option value="66" {{"selected" if default_value_dict.mother_height_in_total_inches=="66"}}>66</option>
-  <option value="67" {{"selected" if default_value_dict.mother_height_in_total_inches=="67"}}>67</option>
-  <option value="68" {{"selected" if default_value_dict.mother_height_in_total_inches=="68"}}>68</option>
-  <option value="69" {{"selected" if default_value_dict.mother_height_in_total_inches=="69"}}>69</option>
-  <option value="70" {{"selected" if default_value_dict.mother_height_in_total_inches=="70"}}>70</option>
-  <option value="71" {{"selected" if default_value_dict.mother_height_in_total_inches=="71"}}>71</option>
-  <option value="72" {{"selected" if default_value_dict.mother_height_in_total_inches=="72"}}>72</option>
-  <option value="73" {{"selected" if default_value_dict.mother_height_in_total_inches=="73"}}>73</option>
-  <option value="74" {{"selected" if default_value_dict.mother_height_in_total_inches=="74"}}>74</option>
-  <option value="75" {{"selected" if default_value_dict.mother_height_in_total_inches=="75"}}>75</option>
-  <option value="76" {{"selected" if default_value_dict.mother_height_in_total_inches=="76"}}>76</option>
-  <option value="77" {{"selected" if default_value_dict.mother_height_in_total_inches=="77"}}>77</option>
-  <option value="78" {{"selected" if default_value_dict.mother_height_in_total_inches=="78"}}>78</option>
-  <option value="99" {{"selected" if default_value_dict.mother_height_in_total_inches=="99"}}>Unknown</option>
-</select>
-<p>
-<label for="bmi">Mother's BMI (Body Mass Index):</label>
-<select id="bmi" name="bmi">
-  <option value="13" {{"selected" if default_value_dict.bmi=="13"}}>13</option>
-  <option value="14" {{"selected" if default_value_dict.bmi=="14"}}>14</option>
-  <option value="15" {{"selected" if default_value_dict.bmi=="15"}}>15</option>
-  <option value="16" {{"selected" if default_value_dict.bmi=="16"}}>16</option>
-  <option value="17" {{"selected" if default_value_dict.bmi=="17"}}>17</option>
-  <option value="18" {{"selected" if default_value_dict.bmi=="18"}}>18</option>
-  <option value="19" {{"selected" if default_value_dict.bmi=="19"}}>19</option>
-  <option value="20" {{"selected" if default_value_dict.bmi=="20"}}>20</option>
-  <option value="21" {{"selected" if default_value_dict.bmi=="21"}}>21</option>
-  <option value="22" {{"selected" if default_value_dict.bmi=="22"}}>22</option>
-  <option value="23" {{"selected" if default_value_dict.bmi=="23"}}>23</option>
-  <option value="24" {{"selected" if default_value_dict.bmi=="24"}}>24</option>
-  <option value="25" {{"selected" if default_value_dict.bmi=="25"}}>25</option>
-  <option value="26" {{"selected" if default_value_dict.bmi=="26"}}>26</option>
-  <option value="27" {{"selected" if default_value_dict.bmi=="27"}}>27</option>
-  <option value="28" {{"selected" if default_value_dict.bmi=="28"}}>28</option>
-  <option value="29" {{"selected" if default_value_dict.bmi=="29"}}>29</option>
-  <option value="30" {{"selected" if default_value_dict.bmi=="30"}}>30</option>
-  <option value="31" {{"selected" if default_value_dict.bmi=="31"}}>31</option>
-  <option value="32" {{"selected" if default_value_dict.bmi=="32"}}>32</option>
-  <option value="33" {{"selected" if default_value_dict.bmi=="33"}}>33</option>
-  <option value="34" {{"selected" if default_value_dict.bmi=="34"}}>34</option>
-  <option value="35" {{"selected" if default_value_dict.bmi=="35"}}>35</option>
-  <option value="36" {{"selected" if default_value_dict.bmi=="36"}}>36</option>
-  <option value="37" {{"selected" if default_value_dict.bmi=="37"}}>37</option>
-  <option value="38" {{"selected" if default_value_dict.bmi=="38"}}>38</option>
-  <option value="39" {{"selected" if default_value_dict.bmi=="39"}}>39</option>
-  <option value="40" {{"selected" if default_value_dict.bmi=="40"}}>40</option>
-  <option value="41" {{"selected" if default_value_dict.bmi=="41"}}>41</option>
-  <option value="42" {{"selected" if default_value_dict.bmi=="42"}}>42</option>
-  <option value="43" {{"selected" if default_value_dict.bmi=="43"}}>43</option>
-  <option value="44" {{"selected" if default_value_dict.bmi=="44"}}>44</option>
-  <option value="45" {{"selected" if default_value_dict.bmi=="45"}}>45</option>
-  <option value="46" {{"selected" if default_value_dict.bmi=="46"}}>46</option>
-  <option value="47" {{"selected" if default_value_dict.bmi=="47"}}>47</option>
-  <option value="48" {{"selected" if default_value_dict.bmi=="48"}}>48</option>
-  <option value="49" {{"selected" if default_value_dict.bmi=="49"}}>49</option>
-  <option value="50" {{"selected" if default_value_dict.bmi=="50"}}>50</option>
-  <option value="51" {{"selected" if default_value_dict.bmi=="51"}}>51</option>
-  <option value="52" {{"selected" if default_value_dict.bmi=="52"}}>52</option>
-  <option value="53" {{"selected" if default_value_dict.bmi=="53"}}>53</option>
-  <option value="54" {{"selected" if default_value_dict.bmi=="54"}}>54</option>
-  <option value="55" {{"selected" if default_value_dict.bmi=="55"}}>55</option>
-  <option value="56" {{"selected" if default_value_dict.bmi=="56"}}>56</option>
-  <option value="57" {{"selected" if default_value_dict.bmi=="57"}}>57</option>
-  <option value="58" {{"selected" if default_value_dict.bmi=="58"}}>58</option>
-  <option value="59" {{"selected" if default_value_dict.bmi=="59"}}>59</option>
-  <option value="60" {{"selected" if default_value_dict.bmi=="60"}}>60</option>
-  <option value="61" {{"selected" if default_value_dict.bmi=="61"}}>61</option>
-  <option value="62" {{"selected" if default_value_dict.bmi=="62"}}>62</option>
-  <option value="63" {{"selected" if default_value_dict.bmi=="63"}}>63</option>
-  <option value="64" {{"selected" if default_value_dict.bmi=="64"}}>64</option>
-  <option value="65" {{"selected" if default_value_dict.bmi=="65"}}>65</option>
-  <option value="66" {{"selected" if default_value_dict.bmi=="66"}}>66</option>
-  <option value="67" {{"selected" if default_value_dict.bmi=="67"}}>67</option>
-  <option value="68" {{"selected" if default_value_dict.bmi=="68"}}>68</option>
-  <option value="69" {{"selected" if default_value_dict.bmi=="69"}}>69</option>
-  <option value="99.9" {{"selected" if default_value_dict.bmi=="99.9"}}>Unknown</option>
-</select>
-<p>
-<label for="prepregnancy_weight">Mother's prepregnancy weight:</label>
-<select id="prepregnancy_weight" name="prepregnancy_weight">
-  <option value="75" {{"selected" if default_value_dict.prepregnancy_weight=="75"}}>75</option>
-  <option value="76" {{"selected" if default_value_dict.prepregnancy_weight=="76"}}>76</option>
-  <option value="77" {{"selected" if default_value_dict.prepregnancy_weight=="77"}}>77</option>
-  <option value="78" {{"selected" if default_value_dict.prepregnancy_weight=="78"}}>78</option>
-  <option value="79" {{"selected" if default_value_dict.prepregnancy_weight=="79"}}>79</option>
-  <option value="80" {{"selected" if default_value_dict.prepregnancy_weight=="80"}}>80</option>
-  <option value="81" {{"selected" if default_value_dict.prepregnancy_weight=="81"}}>81</option>
-  <option value="82" {{"selected" if default_value_dict.prepregnancy_weight=="82"}}>82</option>
-  <option value="83" {{"selected" if default_value_dict.prepregnancy_weight=="83"}}>83</option>
-  <option value="84" {{"selected" if default_value_dict.prepregnancy_weight=="84"}}>84</option>
-  <option value="85" {{"selected" if default_value_dict.prepregnancy_weight=="85"}}>85</option>
-  <option value="86" {{"selected" if default_value_dict.prepregnancy_weight=="86"}}>86</option>
-  <option value="87" {{"selected" if default_value_dict.prepregnancy_weight=="87"}}>87</option>
-  <option value="88" {{"selected" if default_value_dict.prepregnancy_weight=="88"}}>88</option>
-  <option value="89" {{"selected" if default_value_dict.prepregnancy_weight=="89"}}>89</option>
-  <option value="90" {{"selected" if default_value_dict.prepregnancy_weight=="90"}}>90</option>
-  <option value="91" {{"selected" if default_value_dict.prepregnancy_weight=="91"}}>91</option>
-  <option value="92" {{"selected" if default_value_dict.prepregnancy_weight=="92"}}>92</option>
-  <option value="93" {{"selected" if default_value_dict.prepregnancy_weight=="93"}}>93</option>
-  <option value="94" {{"selected" if default_value_dict.prepregnancy_weight=="94"}}>94</option>
-  <option value="95" {{"selected" if default_value_dict.prepregnancy_weight=="95"}}>95</option>
-  <option value="96" {{"selected" if default_value_dict.prepregnancy_weight=="96"}}>96</option>
-  <option value="97" {{"selected" if default_value_dict.prepregnancy_weight=="97"}}>97</option>
-  <option value="98" {{"selected" if default_value_dict.prepregnancy_weight=="98"}}>98</option>
-  <option value="99" {{"selected" if default_value_dict.prepregnancy_weight=="99"}}>99</option>
-  <option value="100" {{"selected" if default_value_dict.prepregnancy_weight=="100"}}>100</option>
-  <option value="101" {{"selected" if default_value_dict.prepregnancy_weight=="101"}}>101</option>
-  <option value="102" {{"selected" if default_value_dict.prepregnancy_weight=="102"}}>102</option>
-  <option value="103" {{"selected" if default_value_dict.prepregnancy_weight=="103"}}>103</option>
-  <option value="104" {{"selected" if default_value_dict.prepregnancy_weight=="104"}}>104</option>
-  <option value="105" {{"selected" if default_value_dict.prepregnancy_weight=="105"}}>105</option>
-  <option value="106" {{"selected" if default_value_dict.prepregnancy_weight=="106"}}>106</option>
-  <option value="107" {{"selected" if default_value_dict.prepregnancy_weight=="107"}}>107</option>
-  <option value="108" {{"selected" if default_value_dict.prepregnancy_weight=="108"}}>108</option>
-  <option value="109" {{"selected" if default_value_dict.prepregnancy_weight=="109"}}>109</option>
-  <option value="110" {{"selected" if default_value_dict.prepregnancy_weight=="110"}}>110</option>
-  <option value="111" {{"selected" if default_value_dict.prepregnancy_weight=="111"}}>111</option>
-  <option value="112" {{"selected" if default_value_dict.prepregnancy_weight=="112"}}>112</option>
-  <option value="113" {{"selected" if default_value_dict.prepregnancy_weight=="113"}}>113</option>
-  <option value="114" {{"selected" if default_value_dict.prepregnancy_weight=="114"}}>114</option>
-  <option value="115" {{"selected" if default_value_dict.prepregnancy_weight=="115"}}>115</option>
-  <option value="116" {{"selected" if default_value_dict.prepregnancy_weight=="116"}}>116</option>
-  <option value="117" {{"selected" if default_value_dict.prepregnancy_weight=="117"}}>117</option>
-  <option value="118" {{"selected" if default_value_dict.prepregnancy_weight=="118"}}>118</option>
-  <option value="119" {{"selected" if default_value_dict.prepregnancy_weight=="119"}}>119</option>
-  <option value="120" {{"selected" if default_value_dict.prepregnancy_weight=="120"}}>120</option>
-  <option value="121" {{"selected" if default_value_dict.prepregnancy_weight=="121"}}>121</option>
-  <option value="122" {{"selected" if default_value_dict.prepregnancy_weight=="122"}}>122</option>
-  <option value="123" {{"selected" if default_value_dict.prepregnancy_weight=="123"}}>123</option>
-  <option value="124" {{"selected" if default_value_dict.prepregnancy_weight=="124"}}>124</option>
-  <option value="125" {{"selected" if default_value_dict.prepregnancy_weight=="125"}}>125</option>
-  <option value="126" {{"selected" if default_value_dict.prepregnancy_weight=="126"}}>126</option>
-  <option value="127" {{"selected" if default_value_dict.prepregnancy_weight=="127"}}>127</option>
-  <option value="128" {{"selected" if default_value_dict.prepregnancy_weight=="128"}}>128</option>
-  <option value="129" {{"selected" if default_value_dict.prepregnancy_weight=="129"}}>129</option>
-  <option value="130" {{"selected" if default_value_dict.prepregnancy_weight=="130"}}>130</option>
-  <option value="131" {{"selected" if default_value_dict.prepregnancy_weight=="131"}}>131</option>
-  <option value="132" {{"selected" if default_value_dict.prepregnancy_weight=="132"}}>132</option>
-  <option value="133" {{"selected" if default_value_dict.prepregnancy_weight=="133"}}>133</option>
-  <option value="134" {{"selected" if default_value_dict.prepregnancy_weight=="134"}}>134</option>
-  <option value="135" {{"selected" if default_value_dict.prepregnancy_weight=="135"}}>135</option>
-  <option value="136" {{"selected" if default_value_dict.prepregnancy_weight=="136"}}>136</option>
-  <option value="137" {{"selected" if default_value_dict.prepregnancy_weight=="137"}}>137</option>
-  <option value="138" {{"selected" if default_value_dict.prepregnancy_weight=="138"}}>138</option>
-  <option value="139" {{"selected" if default_value_dict.prepregnancy_weight=="139"}}>139</option>
-  <option value="140" {{"selected" if default_value_dict.prepregnancy_weight=="140"}}>140</option>
-  <option value="141" {{"selected" if default_value_dict.prepregnancy_weight=="141"}}>141</option>
-  <option value="142" {{"selected" if default_value_dict.prepregnancy_weight=="142"}}>142</option>
-  <option value="143" {{"selected" if default_value_dict.prepregnancy_weight=="143"}}>143</option>
-  <option value="144" {{"selected" if default_value_dict.prepregnancy_weight=="144"}}>144</option>
-  <option value="145" {{"selected" if default_value_dict.prepregnancy_weight=="145"}}>145</option>
-  <option value="146" {{"selected" if default_value_dict.prepregnancy_weight=="146"}}>146</option>
-  <option value="147" {{"selected" if default_value_dict.prepregnancy_weight=="147"}}>147</option>
-  <option value="148" {{"selected" if default_value_dict.prepregnancy_weight=="148"}}>148</option>
-  <option value="149" {{"selected" if default_value_dict.prepregnancy_weight=="149"}}>149</option>
-  <option value="150" {{"selected" if default_value_dict.prepregnancy_weight=="150"}}>150</option>
-  <option value="151" {{"selected" if default_value_dict.prepregnancy_weight=="151"}}>151</option>
-  <option value="152" {{"selected" if default_value_dict.prepregnancy_weight=="152"}}>152</option>
-  <option value="153" {{"selected" if default_value_dict.prepregnancy_weight=="153"}}>153</option>
-  <option value="154" {{"selected" if default_value_dict.prepregnancy_weight=="154"}}>154</option>
-  <option value="155" {{"selected" if default_value_dict.prepregnancy_weight=="155"}}>155</option>
-  <option value="156" {{"selected" if default_value_dict.prepregnancy_weight=="156"}}>156</option>
-  <option value="157" {{"selected" if default_value_dict.prepregnancy_weight=="157"}}>157</option>
-  <option value="158" {{"selected" if default_value_dict.prepregnancy_weight=="158"}}>158</option>
-  <option value="159" {{"selected" if default_value_dict.prepregnancy_weight=="159"}}>159</option>
-  <option value="160" {{"selected" if default_value_dict.prepregnancy_weight=="160"}}>160</option>
-  <option value="161" {{"selected" if default_value_dict.prepregnancy_weight=="161"}}>161</option>
-  <option value="162" {{"selected" if default_value_dict.prepregnancy_weight=="162"}}>162</option>
-  <option value="163" {{"selected" if default_value_dict.prepregnancy_weight=="163"}}>163</option>
-  <option value="164" {{"selected" if default_value_dict.prepregnancy_weight=="164"}}>164</option>
-  <option value="165" {{"selected" if default_value_dict.prepregnancy_weight=="165"}}>165</option>
-  <option value="166" {{"selected" if default_value_dict.prepregnancy_weight=="166"}}>166</option>
-  <option value="167" {{"selected" if default_value_dict.prepregnancy_weight=="167"}}>167</option>
-  <option value="168" {{"selected" if default_value_dict.prepregnancy_weight=="168"}}>168</option>
-  <option value="169" {{"selected" if default_value_dict.prepregnancy_weight=="169"}}>169</option>
-  <option value="170" {{"selected" if default_value_dict.prepregnancy_weight=="170"}}>170</option>
-  <option value="171" {{"selected" if default_value_dict.prepregnancy_weight=="171"}}>171</option>
-  <option value="172" {{"selected" if default_value_dict.prepregnancy_weight=="172"}}>172</option>
-  <option value="173" {{"selected" if default_value_dict.prepregnancy_weight=="173"}}>173</option>
-  <option value="174" {{"selected" if default_value_dict.prepregnancy_weight=="174"}}>174</option>
-  <option value="175" {{"selected" if default_value_dict.prepregnancy_weight=="175"}}>175</option>
-  <option value="176" {{"selected" if default_value_dict.prepregnancy_weight=="176"}}>176</option>
-  <option value="177" {{"selected" if default_value_dict.prepregnancy_weight=="177"}}>177</option>
-  <option value="178" {{"selected" if default_value_dict.prepregnancy_weight=="178"}}>178</option>
-  <option value="179" {{"selected" if default_value_dict.prepregnancy_weight=="179"}}>179</option>
-  <option value="180" {{"selected" if default_value_dict.prepregnancy_weight=="180"}}>180</option>
-  <option value="181" {{"selected" if default_value_dict.prepregnancy_weight=="181"}}>181</option>
-  <option value="182" {{"selected" if default_value_dict.prepregnancy_weight=="182"}}>182</option>
-  <option value="183" {{"selected" if default_value_dict.prepregnancy_weight=="183"}}>183</option>
-  <option value="184" {{"selected" if default_value_dict.prepregnancy_weight=="184"}}>184</option>
-  <option value="185" {{"selected" if default_value_dict.prepregnancy_weight=="185"}}>185</option>
-  <option value="186" {{"selected" if default_value_dict.prepregnancy_weight=="186"}}>186</option>
-  <option value="187" {{"selected" if default_value_dict.prepregnancy_weight=="187"}}>187</option>
-  <option value="188" {{"selected" if default_value_dict.prepregnancy_weight=="188"}}>188</option>
-  <option value="189" {{"selected" if default_value_dict.prepregnancy_weight=="189"}}>189</option>
-  <option value="190" {{"selected" if default_value_dict.prepregnancy_weight=="190"}}>190</option>
-  <option value="191" {{"selected" if default_value_dict.prepregnancy_weight=="191"}}>191</option>
-  <option value="192" {{"selected" if default_value_dict.prepregnancy_weight=="192"}}>192</option>
-  <option value="193" {{"selected" if default_value_dict.prepregnancy_weight=="193"}}>193</option>
-  <option value="194" {{"selected" if default_value_dict.prepregnancy_weight=="194"}}>194</option>
-  <option value="195" {{"selected" if default_value_dict.prepregnancy_weight=="195"}}>195</option>
-  <option value="196" {{"selected" if default_value_dict.prepregnancy_weight=="196"}}>196</option>
-  <option value="197" {{"selected" if default_value_dict.prepregnancy_weight=="197"}}>197</option>
-  <option value="198" {{"selected" if default_value_dict.prepregnancy_weight=="198"}}>198</option>
-  <option value="199" {{"selected" if default_value_dict.prepregnancy_weight=="199"}}>199</option>
-  <option value="200" {{"selected" if default_value_dict.prepregnancy_weight=="200"}}>200</option>
-  <option value="201" {{"selected" if default_value_dict.prepregnancy_weight=="201"}}>201</option>
-  <option value="202" {{"selected" if default_value_dict.prepregnancy_weight=="202"}}>202</option>
-  <option value="203" {{"selected" if default_value_dict.prepregnancy_weight=="203"}}>203</option>
-  <option value="204" {{"selected" if default_value_dict.prepregnancy_weight=="204"}}>204</option>
-  <option value="205" {{"selected" if default_value_dict.prepregnancy_weight=="205"}}>205</option>
-  <option value="206" {{"selected" if default_value_dict.prepregnancy_weight=="206"}}>206</option>
-  <option value="207" {{"selected" if default_value_dict.prepregnancy_weight=="207"}}>207</option>
-  <option value="208" {{"selected" if default_value_dict.prepregnancy_weight=="208"}}>208</option>
-  <option value="209" {{"selected" if default_value_dict.prepregnancy_weight=="209"}}>209</option>
-  <option value="210" {{"selected" if default_value_dict.prepregnancy_weight=="210"}}>210</option>
-  <option value="211" {{"selected" if default_value_dict.prepregnancy_weight=="211"}}>211</option>
-  <option value="212" {{"selected" if default_value_dict.prepregnancy_weight=="212"}}>212</option>
-  <option value="213" {{"selected" if default_value_dict.prepregnancy_weight=="213"}}>213</option>
-  <option value="214" {{"selected" if default_value_dict.prepregnancy_weight=="214"}}>214</option>
-  <option value="215" {{"selected" if default_value_dict.prepregnancy_weight=="215"}}>215</option>
-  <option value="216" {{"selected" if default_value_dict.prepregnancy_weight=="216"}}>216</option>
-  <option value="217" {{"selected" if default_value_dict.prepregnancy_weight=="217"}}>217</option>
-  <option value="218" {{"selected" if default_value_dict.prepregnancy_weight=="218"}}>218</option>
-  <option value="219" {{"selected" if default_value_dict.prepregnancy_weight=="219"}}>219</option>
-  <option value="220" {{"selected" if default_value_dict.prepregnancy_weight=="220"}}>220</option>
-  <option value="221" {{"selected" if default_value_dict.prepregnancy_weight=="221"}}>221</option>
-  <option value="222" {{"selected" if default_value_dict.prepregnancy_weight=="222"}}>222</option>
-  <option value="223" {{"selected" if default_value_dict.prepregnancy_weight=="223"}}>223</option>
-  <option value="224" {{"selected" if default_value_dict.prepregnancy_weight=="224"}}>224</option>
-  <option value="225" {{"selected" if default_value_dict.prepregnancy_weight=="225"}}>225</option>
-  <option value="226" {{"selected" if default_value_dict.prepregnancy_weight=="226"}}>226</option>
-  <option value="227" {{"selected" if default_value_dict.prepregnancy_weight=="227"}}>227</option>
-  <option value="228" {{"selected" if default_value_dict.prepregnancy_weight=="228"}}>228</option>
-  <option value="229" {{"selected" if default_value_dict.prepregnancy_weight=="229"}}>229</option>
-  <option value="230" {{"selected" if default_value_dict.prepregnancy_weight=="230"}}>230</option>
-  <option value="231" {{"selected" if default_value_dict.prepregnancy_weight=="231"}}>231</option>
-  <option value="232" {{"selected" if default_value_dict.prepregnancy_weight=="232"}}>232</option>
-  <option value="233" {{"selected" if default_value_dict.prepregnancy_weight=="233"}}>233</option>
-  <option value="234" {{"selected" if default_value_dict.prepregnancy_weight=="234"}}>234</option>
-  <option value="235" {{"selected" if default_value_dict.prepregnancy_weight=="235"}}>235</option>
-  <option value="236" {{"selected" if default_value_dict.prepregnancy_weight=="236"}}>236</option>
-  <option value="237" {{"selected" if default_value_dict.prepregnancy_weight=="237"}}>237</option>
-  <option value="238" {{"selected" if default_value_dict.prepregnancy_weight=="238"}}>238</option>
-  <option value="239" {{"selected" if default_value_dict.prepregnancy_weight=="239"}}>239</option>
-  <option value="240" {{"selected" if default_value_dict.prepregnancy_weight=="240"}}>240</option>
-  <option value="241" {{"selected" if default_value_dict.prepregnancy_weight=="241"}}>241</option>
-  <option value="242" {{"selected" if default_value_dict.prepregnancy_weight=="242"}}>242</option>
-  <option value="243" {{"selected" if default_value_dict.prepregnancy_weight=="243"}}>243</option>
-  <option value="244" {{"selected" if default_value_dict.prepregnancy_weight=="244"}}>244</option>
-  <option value="245" {{"selected" if default_value_dict.prepregnancy_weight=="245"}}>245</option>
-  <option value="246" {{"selected" if default_value_dict.prepregnancy_weight=="246"}}>246</option>
-  <option value="247" {{"selected" if default_value_dict.prepregnancy_weight=="247"}}>247</option>
-  <option value="248" {{"selected" if default_value_dict.prepregnancy_weight=="248"}}>248</option>
-  <option value="249" {{"selected" if default_value_dict.prepregnancy_weight=="249"}}>249</option>
-  <option value="250" {{"selected" if default_value_dict.prepregnancy_weight=="250"}}>250</option>
-  <option value="251" {{"selected" if default_value_dict.prepregnancy_weight=="251"}}>251</option>
-  <option value="252" {{"selected" if default_value_dict.prepregnancy_weight=="252"}}>252</option>
-  <option value="253" {{"selected" if default_value_dict.prepregnancy_weight=="253"}}>253</option>
-  <option value="254" {{"selected" if default_value_dict.prepregnancy_weight=="254"}}>254</option>
-  <option value="255" {{"selected" if default_value_dict.prepregnancy_weight=="255"}}>255</option>
-  <option value="256" {{"selected" if default_value_dict.prepregnancy_weight=="256"}}>256</option>
-  <option value="257" {{"selected" if default_value_dict.prepregnancy_weight=="257"}}>257</option>
-  <option value="258" {{"selected" if default_value_dict.prepregnancy_weight=="258"}}>258</option>
-  <option value="259" {{"selected" if default_value_dict.prepregnancy_weight=="259"}}>259</option>
-  <option value="260" {{"selected" if default_value_dict.prepregnancy_weight=="260"}}>260</option>
-  <option value="261" {{"selected" if default_value_dict.prepregnancy_weight=="261"}}>261</option>
-  <option value="262" {{"selected" if default_value_dict.prepregnancy_weight=="262"}}>262</option>
-  <option value="263" {{"selected" if default_value_dict.prepregnancy_weight=="263"}}>263</option>
-  <option value="264" {{"selected" if default_value_dict.prepregnancy_weight=="264"}}>264</option>
-  <option value="265" {{"selected" if default_value_dict.prepregnancy_weight=="265"}}>265</option>
-  <option value="266" {{"selected" if default_value_dict.prepregnancy_weight=="266"}}>266</option>
-  <option value="267" {{"selected" if default_value_dict.prepregnancy_weight=="267"}}>267</option>
-  <option value="268" {{"selected" if default_value_dict.prepregnancy_weight=="268"}}>268</option>
-  <option value="269" {{"selected" if default_value_dict.prepregnancy_weight=="269"}}>269</option>
-  <option value="270" {{"selected" if default_value_dict.prepregnancy_weight=="270"}}>270</option>
-  <option value="271" {{"selected" if default_value_dict.prepregnancy_weight=="271"}}>271</option>
-  <option value="272" {{"selected" if default_value_dict.prepregnancy_weight=="272"}}>272</option>
-  <option value="273" {{"selected" if default_value_dict.prepregnancy_weight=="273"}}>273</option>
-  <option value="274" {{"selected" if default_value_dict.prepregnancy_weight=="274"}}>274</option>
-  <option value="275" {{"selected" if default_value_dict.prepregnancy_weight=="275"}}>275</option>
-  <option value="276" {{"selected" if default_value_dict.prepregnancy_weight=="276"}}>276</option>
-  <option value="277" {{"selected" if default_value_dict.prepregnancy_weight=="277"}}>277</option>
-  <option value="278" {{"selected" if default_value_dict.prepregnancy_weight=="278"}}>278</option>
-  <option value="279" {{"selected" if default_value_dict.prepregnancy_weight=="279"}}>279</option>
-  <option value="280" {{"selected" if default_value_dict.prepregnancy_weight=="280"}}>280</option>
-  <option value="281" {{"selected" if default_value_dict.prepregnancy_weight=="281"}}>281</option>
-  <option value="282" {{"selected" if default_value_dict.prepregnancy_weight=="282"}}>282</option>
-  <option value="283" {{"selected" if default_value_dict.prepregnancy_weight=="283"}}>283</option>
-  <option value="284" {{"selected" if default_value_dict.prepregnancy_weight=="284"}}>284</option>
-  <option value="285" {{"selected" if default_value_dict.prepregnancy_weight=="285"}}>285</option>
-  <option value="286" {{"selected" if default_value_dict.prepregnancy_weight=="286"}}>286</option>
-  <option value="287" {{"selected" if default_value_dict.prepregnancy_weight=="287"}}>287</option>
-  <option value="288" {{"selected" if default_value_dict.prepregnancy_weight=="288"}}>288</option>
-  <option value="289" {{"selected" if default_value_dict.prepregnancy_weight=="289"}}>289</option>
-  <option value="290" {{"selected" if default_value_dict.prepregnancy_weight=="290"}}>290</option>
-  <option value="291" {{"selected" if default_value_dict.prepregnancy_weight=="291"}}>291</option>
-  <option value="292" {{"selected" if default_value_dict.prepregnancy_weight=="292"}}>292</option>
-  <option value="293" {{"selected" if default_value_dict.prepregnancy_weight=="293"}}>293</option>
-  <option value="294" {{"selected" if default_value_dict.prepregnancy_weight=="294"}}>294</option>
-  <option value="295" {{"selected" if default_value_dict.prepregnancy_weight=="295"}}>295</option>
-  <option value="296" {{"selected" if default_value_dict.prepregnancy_weight=="296"}}>296</option>
-  <option value="297" {{"selected" if default_value_dict.prepregnancy_weight=="297"}}>297</option>
-  <option value="298" {{"selected" if default_value_dict.prepregnancy_weight=="298"}}>298</option>
-  <option value="299" {{"selected" if default_value_dict.prepregnancy_weight=="299"}}>299</option>
-  <option value="300" {{"selected" if default_value_dict.prepregnancy_weight=="300"}}>300</option>
-  <option value="301" {{"selected" if default_value_dict.prepregnancy_weight=="301"}}>301</option>
-  <option value="302" {{"selected" if default_value_dict.prepregnancy_weight=="302"}}>302</option>
-  <option value="303" {{"selected" if default_value_dict.prepregnancy_weight=="303"}}>303</option>
-  <option value="304" {{"selected" if default_value_dict.prepregnancy_weight=="304"}}>304</option>
-  <option value="305" {{"selected" if default_value_dict.prepregnancy_weight=="305"}}>305</option>
-  <option value="306" {{"selected" if default_value_dict.prepregnancy_weight=="306"}}>306</option>
-  <option value="307" {{"selected" if default_value_dict.prepregnancy_weight=="307"}}>307</option>
-  <option value="308" {{"selected" if default_value_dict.prepregnancy_weight=="308"}}>308</option>
-  <option value="309" {{"selected" if default_value_dict.prepregnancy_weight=="309"}}>309</option>
-  <option value="310" {{"selected" if default_value_dict.prepregnancy_weight=="310"}}>310</option>
-  <option value="311" {{"selected" if default_value_dict.prepregnancy_weight=="311"}}>311</option>
-  <option value="312" {{"selected" if default_value_dict.prepregnancy_weight=="312"}}>312</option>
-  <option value="313" {{"selected" if default_value_dict.prepregnancy_weight=="313"}}>313</option>
-  <option value="314" {{"selected" if default_value_dict.prepregnancy_weight=="314"}}>314</option>
-  <option value="315" {{"selected" if default_value_dict.prepregnancy_weight=="315"}}>315</option>
-  <option value="316" {{"selected" if default_value_dict.prepregnancy_weight=="316"}}>316</option>
-  <option value="317" {{"selected" if default_value_dict.prepregnancy_weight=="317"}}>317</option>
-  <option value="318" {{"selected" if default_value_dict.prepregnancy_weight=="318"}}>318</option>
-  <option value="319" {{"selected" if default_value_dict.prepregnancy_weight=="319"}}>319</option>
-  <option value="320" {{"selected" if default_value_dict.prepregnancy_weight=="320"}}>320</option>
-  <option value="321" {{"selected" if default_value_dict.prepregnancy_weight=="321"}}>321</option>
-  <option value="322" {{"selected" if default_value_dict.prepregnancy_weight=="322"}}>322</option>
-  <option value="323" {{"selected" if default_value_dict.prepregnancy_weight=="323"}}>323</option>
-  <option value="324" {{"selected" if default_value_dict.prepregnancy_weight=="324"}}>324</option>
-  <option value="325" {{"selected" if default_value_dict.prepregnancy_weight=="325"}}>325</option>
-  <option value="326" {{"selected" if default_value_dict.prepregnancy_weight=="326"}}>326</option>
-  <option value="327" {{"selected" if default_value_dict.prepregnancy_weight=="327"}}>327</option>
-  <option value="328" {{"selected" if default_value_dict.prepregnancy_weight=="328"}}>328</option>
-  <option value="329" {{"selected" if default_value_dict.prepregnancy_weight=="329"}}>329</option>
-  <option value="330" {{"selected" if default_value_dict.prepregnancy_weight=="330"}}>330</option>
-  <option value="331" {{"selected" if default_value_dict.prepregnancy_weight=="331"}}>331</option>
-  <option value="332" {{"selected" if default_value_dict.prepregnancy_weight=="332"}}>332</option>
-  <option value="333" {{"selected" if default_value_dict.prepregnancy_weight=="333"}}>333</option>
-  <option value="334" {{"selected" if default_value_dict.prepregnancy_weight=="334"}}>334</option>
-  <option value="335" {{"selected" if default_value_dict.prepregnancy_weight=="335"}}>335</option>
-  <option value="336" {{"selected" if default_value_dict.prepregnancy_weight=="336"}}>336</option>
-  <option value="337" {{"selected" if default_value_dict.prepregnancy_weight=="337"}}>337</option>
-  <option value="338" {{"selected" if default_value_dict.prepregnancy_weight=="338"}}>338</option>
-  <option value="339" {{"selected" if default_value_dict.prepregnancy_weight=="339"}}>339</option>
-  <option value="340" {{"selected" if default_value_dict.prepregnancy_weight=="340"}}>340</option>
-  <option value="341" {{"selected" if default_value_dict.prepregnancy_weight=="341"}}>341</option>
-  <option value="342" {{"selected" if default_value_dict.prepregnancy_weight=="342"}}>342</option>
-  <option value="343" {{"selected" if default_value_dict.prepregnancy_weight=="343"}}>343</option>
-  <option value="344" {{"selected" if default_value_dict.prepregnancy_weight=="344"}}>344</option>
-  <option value="345" {{"selected" if default_value_dict.prepregnancy_weight=="345"}}>345</option>
-  <option value="346" {{"selected" if default_value_dict.prepregnancy_weight=="346"}}>346</option>
-  <option value="347" {{"selected" if default_value_dict.prepregnancy_weight=="347"}}>347</option>
-  <option value="348" {{"selected" if default_value_dict.prepregnancy_weight=="348"}}>348</option>
-  <option value="349" {{"selected" if default_value_dict.prepregnancy_weight=="349"}}>349</option>
-  <option value="350" {{"selected" if default_value_dict.prepregnancy_weight=="350"}}>350</option>
-  <option value="351" {{"selected" if default_value_dict.prepregnancy_weight=="351"}}>351</option>
-  <option value="352" {{"selected" if default_value_dict.prepregnancy_weight=="352"}}>352</option>
-  <option value="353" {{"selected" if default_value_dict.prepregnancy_weight=="353"}}>353</option>
-  <option value="354" {{"selected" if default_value_dict.prepregnancy_weight=="354"}}>354</option>
-  <option value="355" {{"selected" if default_value_dict.prepregnancy_weight=="355"}}>355</option>
-  <option value="356" {{"selected" if default_value_dict.prepregnancy_weight=="356"}}>356</option>
-  <option value="357" {{"selected" if default_value_dict.prepregnancy_weight=="357"}}>357</option>
-  <option value="358" {{"selected" if default_value_dict.prepregnancy_weight=="358"}}>358</option>
-  <option value="359" {{"selected" if default_value_dict.prepregnancy_weight=="359"}}>359</option>
-  <option value="360" {{"selected" if default_value_dict.prepregnancy_weight=="360"}}>360</option>
-  <option value="361" {{"selected" if default_value_dict.prepregnancy_weight=="361"}}>361</option>
-  <option value="362" {{"selected" if default_value_dict.prepregnancy_weight=="362"}}>362</option>
-  <option value="363" {{"selected" if default_value_dict.prepregnancy_weight=="363"}}>363</option>
-  <option value="364" {{"selected" if default_value_dict.prepregnancy_weight=="364"}}>364</option>
-  <option value="365" {{"selected" if default_value_dict.prepregnancy_weight=="365"}}>365</option>
-  <option value="366" {{"selected" if default_value_dict.prepregnancy_weight=="366"}}>366</option>
-  <option value="367" {{"selected" if default_value_dict.prepregnancy_weight=="367"}}>367</option>
-  <option value="368" {{"selected" if default_value_dict.prepregnancy_weight=="368"}}>368</option>
-  <option value="369" {{"selected" if default_value_dict.prepregnancy_weight=="369"}}>369</option>
-  <option value="370" {{"selected" if default_value_dict.prepregnancy_weight=="370"}}>370</option>
-  <option value="371" {{"selected" if default_value_dict.prepregnancy_weight=="371"}}>371</option>
-  <option value="372" {{"selected" if default_value_dict.prepregnancy_weight=="372"}}>372</option>
-  <option value="373" {{"selected" if default_value_dict.prepregnancy_weight=="373"}}>373</option>
-  <option value="374" {{"selected" if default_value_dict.prepregnancy_weight=="374"}}>374</option>
-  <option value="375" {{"selected" if default_value_dict.prepregnancy_weight=="375"}}>375</option>
-  <option value="999" {{"selected" if default_value_dict.prepregnancy_weight=="999"}}>Unknown</option>
-</select>
-<p>
-<label for="weight_gain_group">Mother's expected weight gain at childbirth:</label>
-<select id="weight_gain_group" name="weight_gain_group">
-  <option value="1" {{"selected" if default_value_dict.weight_gain_group=="1"}}>Less than 11 pounds</option>
-  <option value="2" {{"selected" if default_value_dict.weight_gain_group=="2"}}>11 to 20 pounds</option>
-  <option value="3" {{"selected" if default_value_dict.weight_gain_group=="3"}}>21 to 30 pounds</option>
-  <option value="4" {{"selected" if default_value_dict.weight_gain_group=="4"}}>31 to 40 pounds</option>
-  <option value="5" {{"selected" if default_value_dict.weight_gain_group=="5"}}>41 to 98 pounds</option>
-  <option value="9" {{"selected" if default_value_dict.weight_gain_group=="9"}}>Unknown</option>
-</select>
-<p>
-<label for="gestational_diabetes">Mother's gestational diabetes:</label>
-<select id="gestational_diabetes" name="gestational_diabetes">
-  <option value="Y" {{"selected" if default_value_dict.gestational_diabetes=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.gestational_diabetes=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.gestational_diabetes=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="prepregnancy_hypertension">Mother's prepregnancy hypertension:</label>
-<select id="prepregnancy_hypertension" name="prepregnancy_hypertension">
-  <option value="Y" {{"selected" if default_value_dict.prepregnancy_hypertension=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.prepregnancy_hypertension=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.prepregnancy_hypertension=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="gestational_hypertension">Mother's gestational hypertension:</label>
-<select id="gestational_hypertension" name="gestational_hypertension">
-  <option value="Y" {{"selected" if default_value_dict.gestational_hypertension=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.gestational_hypertension=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.gestational_hypertension=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="previous_preterm_birth">Mother's previous preterm birth:</label>
-<select id="previous_preterm_birth" name="previous_preterm_birth">
-  <option value="Y" {{"selected" if default_value_dict.previous_preterm_birth=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.previous_preterm_birth=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.previous_preterm_birth=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="infertility_treatment_used">Mother's infertility treatment used:</label>
-<select id="infertility_treatment_used" name="infertility_treatment_used">
-  <option value="Y" {{"selected" if default_value_dict.infertility_treatment_used=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.infertility_treatment_used=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.infertility_treatment_used=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="fertility_enhancing_drugs">Mother's fertility enhancing drugs:</label>
-<select id="fertility_enhancing_drugs" name="fertility_enhancing_drugs">
-  <option value="Y" {{"selected" if default_value_dict.fertility_enhancing_drugs=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.fertility_enhancing_drugs=="N"}}>No</option>
-  <option value="X" {{"selected" if default_value_dict.fertility_enhancing_drugs=="X"}}>Not applicable</option>
-  <option value="U" {{"selected" if default_value_dict.fertility_enhancing_drugs=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="previous_cesarean">Mother's previous cesarean:</label>
-<select id="previous_cesarean" name="previous_cesarean">
-  <option value="Y" {{"selected" if default_value_dict.previous_cesarean=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.previous_cesarean=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.previous_cesarean=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="number_of_previous_cesareans">Mother's number of previous cesareans:</label>
-<select id="number_of_previous_cesareans" name="number_of_previous_cesareans">
-  <option value="0" {{"selected" if default_value_dict.number_of_previous_cesareans=="0"}}>0</option>
-  <option value="1" {{"selected" if default_value_dict.number_of_previous_cesareans=="1"}}>1</option>
-  <option value="2" {{"selected" if default_value_dict.number_of_previous_cesareans=="2"}}>2</option>
-  <option value="3" {{"selected" if default_value_dict.number_of_previous_cesareans=="3"}}>3</option>
-  <option value="4" {{"selected" if default_value_dict.number_of_previous_cesareans=="4"}}>4</option>
-  <option value="5" {{"selected" if default_value_dict.number_of_previous_cesareans=="5"}}>5</option>
-  <option value="6" {{"selected" if default_value_dict.number_of_previous_cesareans=="6"}}>6</option>
-  <option value="7" {{"selected" if default_value_dict.number_of_previous_cesareans=="7"}}>7</option>
-  <option value="8" {{"selected" if default_value_dict.number_of_previous_cesareans=="8"}}>8</option>
-  <option value="9" {{"selected" if default_value_dict.number_of_previous_cesareans=="9"}}>9</option>
-  <option value="10" {{"selected" if default_value_dict.number_of_previous_cesareans=="10"}}>10</option>
-  <option value="11" {{"selected" if default_value_dict.number_of_previous_cesareans=="11"}}>11</option>
-  <option value="12" {{"selected" if default_value_dict.number_of_previous_cesareans=="12"}}>12</option>
-  <option value="13" {{"selected" if default_value_dict.number_of_previous_cesareans=="13"}}>13</option>
-  <option value="14" {{"selected" if default_value_dict.number_of_previous_cesareans=="14"}}>14</option>
-  <option value="15" {{"selected" if default_value_dict.number_of_previous_cesareans=="15"}}>15</option>
-  <option value="16" {{"selected" if default_value_dict.number_of_previous_cesareans=="16"}}>16</option>
-  <option value="17" {{"selected" if default_value_dict.number_of_previous_cesareans=="17"}}>17</option>
-  <option value="18" {{"selected" if default_value_dict.number_of_previous_cesareans=="18"}}>18</option>
-  <option value="19" {{"selected" if default_value_dict.number_of_previous_cesareans=="19"}}>19</option>
-  <option value="20" {{"selected" if default_value_dict.number_of_previous_cesareans=="20"}}>20</option>
-  <option value="21" {{"selected" if default_value_dict.number_of_previous_cesareans=="21"}}>21</option>
-  <option value="22" {{"selected" if default_value_dict.number_of_previous_cesareans=="22"}}>22</option>
-  <option value="23" {{"selected" if default_value_dict.number_of_previous_cesareans=="23"}}>23</option>
-  <option value="24" {{"selected" if default_value_dict.number_of_previous_cesareans=="24"}}>24</option>
-  <option value="25" {{"selected" if default_value_dict.number_of_previous_cesareans=="25"}}>25</option>
-  <option value="26" {{"selected" if default_value_dict.number_of_previous_cesareans=="26"}}>26</option>
-  <option value="27" {{"selected" if default_value_dict.number_of_previous_cesareans=="27"}}>27</option>
-  <option value="28" {{"selected" if default_value_dict.number_of_previous_cesareans=="28"}}>28</option>
-  <option value="29" {{"selected" if default_value_dict.number_of_previous_cesareans=="29"}}>29</option>
-  <option value="30" {{"selected" if default_value_dict.number_of_previous_cesareans=="30"}}>30</option>
-  <option value="99" {{"selected" if default_value_dict.number_of_previous_cesareans=="99"}}>Unknown</option>
-</select>
-<p>
-<label for="no_risk_factors_reported">Mother has no other risk factors reported (Yes=No other risks factors, No=has other risks factor reported):</label>
-<select id="no_risk_factors_reported" name="no_risk_factors_reported">
-  <option value="Y" {{"selected" if default_value_dict.no_risk_factors_reported=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.no_risk_factors_reported=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.no_risk_factors_reported=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="chlamydia">Mother's chlamydia (a sexual transmitted disease):</label>
-<select id="chlamydia" name="chlamydia">
-  <option value="Y" {{"selected" if default_value_dict.chlamydia=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.chlamydia=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.chlamydia=="U"}}>Unknown</option>
-</select>
-<p>
-<label for="attendant_at_birth">Type of medical attendant at birth:</label>
-<select id="attendant_at_birth" name="attendant_at_birth">
-  <option value="1" {{"selected" if default_value_dict.attendant_at_birth=="1"}}>Doctor of Medicine (MD)</option>
-  <option value="2" {{"selected" if default_value_dict.attendant_at_birth=="2"}}>Doctor of Osteopathy (DO)</option>
-  <option value="3" {{"selected" if default_value_dict.attendant_at_birth=="3"}}>Certified Nurse Midwife/Certified Midwife (CNM/CM)</option>
-  <option value="4" {{"selected" if default_value_dict.attendant_at_birth=="4"}}>Other Midwife</option>
-  <option value="5" {{"selected" if default_value_dict.attendant_at_birth=="5"}}>Other</option>
-  <option value="9" {{"selected" if default_value_dict.attendant_at_birth=="9"}}>Unknown or not stated</option>
-</select>
-<p>
-<label for="pluarality">Pluarality (Single, Twin, etc):</label>
-<select id="pluarality" name="pluarality">
-  <option value="1" {{"selected" if default_value_dict.pluarality=="1"}}>Single</option>
-  <option value="2" {{"selected" if default_value_dict.pluarality=="2"}}>Twin</option>
-  <option value="3" {{"selected" if default_value_dict.pluarality=="3"}}>Triplet</option>
-  <option value="4" {{"selected" if default_value_dict.pluarality=="4"}}>Quadruplet or higher</option>
-</select>
-<p>
-<label for="sex_of_infant">Sex of infant:</label>
-<select id="sex_of_infant" name="sex_of_infant">
-  <option value="M" {{"selected" if default_value_dict.sex_of_infant=="M"}}>Male</option>
-  <option value="F" {{"selected" if default_value_dict.sex_of_infant=="F"}}>Female</option>
-</select>
-<p>
-<label for="last_normal_menses_month">Last normal menses month:</label>
-<select id="last_normal_menses_month" name="last_normal_menses_month">
-  <option value="1" {{"selected" if default_value_dict.last_normal_menses_month=="1"}}>January</option>
-  <option value="2" {{"selected" if default_value_dict.last_normal_menses_month=="2"}}>February</option>
-  <option value="3" {{"selected" if default_value_dict.last_normal_menses_month=="3"}}>March</option>
-  <option value="4" {{"selected" if default_value_dict.last_normal_menses_month=="4"}}>April</option>
-  <option value="5" {{"selected" if default_value_dict.last_normal_menses_month=="5"}}>May</option>
-  <option value="6" {{"selected" if default_value_dict.last_normal_menses_month=="6"}}>June</option>
-  <option value="7" {{"selected" if default_value_dict.last_normal_menses_month=="7"}}>July</option>
-  <option value="8" {{"selected" if default_value_dict.last_normal_menses_month=="8"}}>August</option>
-  <option value="9" {{"selected" if default_value_dict.last_normal_menses_month=="9"}}>September</option>
-  <option value="10" {{"selected" if default_value_dict.last_normal_menses_month=="10"}}>October</option>
-  <option value="11" {{"selected" if default_value_dict.last_normal_menses_month=="11"}}>November</option>
-  <option value="12" {{"selected" if default_value_dict.last_normal_menses_month=="12"}}>December</option>
-  <option value="99" {{"selected" if default_value_dict.last_normal_menses_month=="99"}}>Unknown</option>
-</select>
-<p>
-<label for="infant_breastfed_at_discharge">Infant breastfed at discharge:</label>
-<select id="infant_breastfed_at_discharge" name="infant_breastfed_at_discharge">
-  <option value="Y" {{"selected" if default_value_dict.infant_breastfed_at_discharge=="Y"}}>Yes</option>
-  <option value="N" {{"selected" if default_value_dict.infant_breastfed_at_discharge=="N"}}>No</option>
-  <option value="U" {{"selected" if default_value_dict.infant_breastfed_at_discharge=="U"}}>Unknown</option>
-</select>
-<p>
+    <title>GoldenCub Predictor - Predict Input</title>
 
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-  
-<input type="submit" name="predict_output_type" value="age">
-<input type="submit" name="predict_output_type" value="weight">
-</form>
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="#">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'sidebar.html' %}
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+					
+                    <h1 class="h3 mb-2 mt-4 text-gray-800">Please enter the data for gestation age or weight prediction</h1>
+                    <p class="mb-4"> Some help text here </p>
+
+					<form action="/api/predict" method="get">
+
+					<div class="mb-3">
+					  <label for="birth_month" class="form-label">Expected childbirth month:</label>
+					  <select class="form-select" aria-label="birth_month" id="birth_month" name="birth_month">
+						<option value="1" {{"selected" if default_value_dict.birth_month=="1"}}>January</option>
+						<option value="2" {{"selected" if default_value_dict.birth_month=="2"}}>February</option>
+						<option value="3" {{"selected" if default_value_dict.birth_month=="3"}}>March</option>
+						<option value="4" {{"selected" if default_value_dict.birth_month=="4"}}>April</option>
+						<option value="5" {{"selected" if default_value_dict.birth_month=="5"}}>May</option>
+						<option value="6" {{"selected" if default_value_dict.birth_month=="6"}}>June</option>
+						<option value="7" {{"selected" if default_value_dict.birth_month=="7"}}>July</option>
+						<option value="8" {{"selected" if default_value_dict.birth_month=="8"}}>August</option>
+						<option value="9" {{"selected" if default_value_dict.birth_month=="9"}}>September</option>
+						<option value="10" {{"selected" if default_value_dict.birth_month=="10"}}>October</option>
+						<option value="11" {{"selected" if default_value_dict.birth_month=="11"}}>November</option>
+						<option value="12" {{"selected" if default_value_dict.birth_month=="12"}}>December</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="mother_age" class="form-label">Mother's age at childbirth:</label>
+					  <select class="form-select" aria-label="mother_age" id="mother_age" name="mother_age">
+						<option value="12" {{"selected" if default_value_dict.mother_age=="12"}}>10-12 years</option>
+						<option value="13" {{"selected" if default_value_dict.mother_age=="13"}}>13 years</option>
+						<option value="14" {{"selected" if default_value_dict.mother_age=="14"}}>14 years</option>
+						<option value="15" {{"selected" if default_value_dict.mother_age=="15"}}>15 years</option>
+						<option value="16" {{"selected" if default_value_dict.mother_age=="16"}}>16 years</option>
+						<option value="17" {{"selected" if default_value_dict.mother_age=="17"}}>17 years</option>
+						<option value="18" {{"selected" if default_value_dict.mother_age=="18"}}>18 years</option>
+						<option value="19" {{"selected" if default_value_dict.mother_age=="19"}}>19 years</option>
+						<option value="20" {{"selected" if default_value_dict.mother_age=="20"}}>20 years</option>
+						<option value="21" {{"selected" if default_value_dict.mother_age=="21"}}>21 years</option>
+						<option value="22" {{"selected" if default_value_dict.mother_age=="22"}}>22 years</option>
+						<option value="23" {{"selected" if default_value_dict.mother_age=="23"}}>23 years</option>
+						<option value="24" {{"selected" if default_value_dict.mother_age=="24"}}>24 years</option>
+						<option value="25" {{"selected" if default_value_dict.mother_age=="25"}}>25 years</option>
+						<option value="26" {{"selected" if default_value_dict.mother_age=="26"}}>26 years</option>
+						<option value="27" {{"selected" if default_value_dict.mother_age=="27"}}>27 years</option>
+						<option value="28" {{"selected" if default_value_dict.mother_age=="28"}}>28 years</option>
+						<option value="29" {{"selected" if default_value_dict.mother_age=="29"}}>29 years</option>
+						<option value="30" {{"selected" if default_value_dict.mother_age=="30"}}>30 years</option>
+						<option value="31" {{"selected" if default_value_dict.mother_age=="31"}}>31 years</option>
+						<option value="32" {{"selected" if default_value_dict.mother_age=="32"}}>32 years</option>
+						<option value="33" {{"selected" if default_value_dict.mother_age=="33"}}>33 years</option>
+						<option value="34" {{"selected" if default_value_dict.mother_age=="34"}}>34 years</option>
+						<option value="35" {{"selected" if default_value_dict.mother_age=="35"}}>35 years</option>
+						<option value="36" {{"selected" if default_value_dict.mother_age=="36"}}>36 years</option>
+						<option value="37" {{"selected" if default_value_dict.mother_age=="37"}}>37 years</option>
+						<option value="38" {{"selected" if default_value_dict.mother_age=="38"}}>38 years</option>
+						<option value="39" {{"selected" if default_value_dict.mother_age=="39"}}>39 years</option>
+						<option value="40" {{"selected" if default_value_dict.mother_age=="40"}}>40 years</option>
+						<option value="41" {{"selected" if default_value_dict.mother_age=="41"}}>41 years</option>
+						<option value="42" {{"selected" if default_value_dict.mother_age=="42"}}>42 years</option>
+						<option value="43" {{"selected" if default_value_dict.mother_age=="43"}}>43 years</option>
+						<option value="44" {{"selected" if default_value_dict.mother_age=="44"}}>44 years</option>
+						<option value="45" {{"selected" if default_value_dict.mother_age=="45"}}>45 years</option>
+						<option value="46" {{"selected" if default_value_dict.mother_age=="46"}}>46 years</option>
+						<option value="47" {{"selected" if default_value_dict.mother_age=="47"}}>47 years</option>
+						<option value="48" {{"selected" if default_value_dict.mother_age=="48"}}>48 years</option>
+						<option value="49" {{"selected" if default_value_dict.mother_age=="49"}}>49 years</option>
+						<option value="50" {{"selected" if default_value_dict.mother_age=="50"}}>50 years and over</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="mother_nativity" class="form-label">Mother's nativity:</label>
+					  <select class="form-select" aria-label="mother_nativity" id="mother_nativity" name="mother_nativity">
+						<option value="1" {{"selected" if default_value_dict.mother_nativity=="1"}}>Born in the U.S. (50 US States)</option>
+						<option value="2" {{"selected" if default_value_dict.mother_nativity=="2"}}>Born outside the U.S. (includes possessions)</option>
+						<option value="3" {{"selected" if default_value_dict.mother_nativity=="3"}}>Unknown or Not Stated</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="residence_status" class="form-label">Mother's Residence status:</label>
+					  <select class="form-select" aria-label="residence_status" id="residence_status" name="residence_status">
+						<option value="1" {{"selected" if default_value_dict.residence_status=="1"}}>RESIDENT: State and county of occurrence and residence are the same</option>
+						<option value="2" {{"selected" if default_value_dict.residence_status=="2"}}>INTRASTATE NONRESIDENT: State of occurrence and residence are the same but county is different</option>
+						<option value="3" {{"selected" if default_value_dict.residence_status=="3"}}>INTERSTATE NONRESIDENT: State of occurrence and residence are different but both are one of the 50 US states or District of Columbia</option>
+						<option value="4" {{"selected" if default_value_dict.residence_status=="4"}}>FOREIGN RESIDENT: The state of residence is not one of the 50 US states or District of Columbia.</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="mother_race1" class="form-label">Mother's race:</label>
+					  <select class="form-select" aria-label="mother_race1" id="mother_race1" name="mother_race1">
+						<option value="1" {{"selected" if default_value_dict.mother_race1=="1"}}>White (only) [only one race reported] the United States except Puerto Rico</option>
+						<option value="2" {{"selected" if default_value_dict.mother_race1=="2"}}>Black (only)</option>
+						<option value="3" {{"selected" if default_value_dict.mother_race1=="3"}}>AIAN (American Indian or Alaskan Native) (only)</option>
+						<option value="4" {{"selected" if default_value_dict.mother_race1=="4"}}>Asian (only)</option>
+						<option value="5" {{"selected" if default_value_dict.mother_race1=="5"}}>NHOPI (Native Hawaiian or Other Pacific Islander) (only)</option>
+						<option value="6" {{"selected" if default_value_dict.mother_race1=="6"}}>Black and White</option>
+						<option value="7" {{"selected" if default_value_dict.mother_race1=="7"}}>Black and AIAN</option>
+						<option value="8" {{"selected" if default_value_dict.mother_race1=="8"}}>Black and Asian</option>
+						<option value="9" {{"selected" if default_value_dict.mother_race1=="9"}}>Black and NHOPI</option>
+						<option value="10" {{"selected" if default_value_dict.mother_race1=="10"}}>AIAN and White</option>
+						<option value="11" {{"selected" if default_value_dict.mother_race1=="11"}}>AIAN and Asian</option>
+						<option value="12" {{"selected" if default_value_dict.mother_race1=="12"}}>AIAN and NHOPI</option>
+						<option value="13" {{"selected" if default_value_dict.mother_race1=="13"}}>Asian and White</option>
+						<option value="14" {{"selected" if default_value_dict.mother_race1=="14"}}>Asian and NHOPI</option>
+						<option value="15" {{"selected" if default_value_dict.mother_race1=="15"}}>NHOPI and White</option>
+						<option value="16" {{"selected" if default_value_dict.mother_race1=="16"}}>Black, AIAN, and White</option>
+						<option value="17" {{"selected" if default_value_dict.mother_race1=="17"}}>Black, AIAN, and Asian</option>
+						<option value="18" {{"selected" if default_value_dict.mother_race1=="18"}}>Black, AIAN, and NHOPI</option>
+						<option value="19" {{"selected" if default_value_dict.mother_race1=="19"}}>Black, Asian, and White</option>
+						<option value="20" {{"selected" if default_value_dict.mother_race1=="20"}}>Black, Asian, and NHOPI</option>
+						<option value="21" {{"selected" if default_value_dict.mother_race1=="21"}}>Black, NHOPI, and White</option>
+						<option value="22" {{"selected" if default_value_dict.mother_race1=="22"}}>AIAN, Asian, and White</option>
+						<option value="23" {{"selected" if default_value_dict.mother_race1=="23"}}>AIAN, NHOPI, and White</option>
+						<option value="24" {{"selected" if default_value_dict.mother_race1=="24"}}>AIAN, Asian, and NHOPI</option>
+						<option value="25" {{"selected" if default_value_dict.mother_race1=="25"}}>Asian, NHOPI, and White</option>
+						<option value="26" {{"selected" if default_value_dict.mother_race1=="26"}}>Black, AIAN, Asian, and White</option>
+						<option value="27" {{"selected" if default_value_dict.mother_race1=="27"}}>Black, AIAN, Asian, and NHOPI</option>
+						<option value="28" {{"selected" if default_value_dict.mother_race1=="28"}}>Black, AIAN, NHOPI, and White</option>
+						<option value="29" {{"selected" if default_value_dict.mother_race1=="29"}}>Black, Asian, NHOPI, and White</option>
+						<option value="30" {{"selected" if default_value_dict.mother_race1=="30"}}>AIAN, Asian, NHOPI, and White</option>
+						<option value="31" {{"selected" if default_value_dict.mother_race1=="31"}}>Black, AIAN, Asian, NHOPI, and White</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="mother_hispanic_race" class="form-label">Mother's hispanic origin:</label>
+					  <select class="form-select" aria-label="mother_hispanic_race" id="mother_hispanic_race" name="mother_hispanic_race">
+						<option value="1" {{"selected" if default_value_dict.mother_hispanic_race=="1"}}>Non-Hispanic White (only)</option>
+						<option value="2" {{"selected" if default_value_dict.mother_hispanic_race=="2"}}>Non-Hispanic Black (only)</option>
+						<option value="3" {{"selected" if default_value_dict.mother_hispanic_race=="3"}}>Non-Hispanic AIAN (only)</option>
+						<option value="4" {{"selected" if default_value_dict.mother_hispanic_race=="4"}}>Non-Hispanic Asian (only)</option>
+						<option value="5" {{"selected" if default_value_dict.mother_hispanic_race=="5"}}>Non-Hispanic NHOPI (only)</option>
+						<option value="6" {{"selected" if default_value_dict.mother_hispanic_race=="6"}}>Non-Hispanic more than one race</option>
+						<option value="7" {{"selected" if default_value_dict.mother_hispanic_race=="7"}}>Hispanic</option>
+						<option value="8" {{"selected" if default_value_dict.mother_hispanic_race=="8"}}>Origin unknown or not stated</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="paternity_acknowledged" class="form-label">Paternity acknowledged (father's name was identified):</label>
+					  <select class="form-select" aria-label="paternity_acknowledged" id="paternity_acknowledged" name="paternity_acknowledged">
+						<option value="Y" {{"selected" if default_value_dict.paternity_acknowledged=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.paternity_acknowledged=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.paternity_acknowledged=="U"}}>Unknown</option>
+						<option value="X" {{"selected" if default_value_dict.paternity_acknowledged=="X"}}>Not Applicable</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="marital_status" class="form-label">Mother's marital status:</label>
+					  <select class="form-select" aria-label="marital_status" id="marital_status" name="marital_status">
+						<option value="1" {{"selected" if default_value_dict.marital_status=="1"}}>Married</option>
+						<option value="2" {{"selected" if default_value_dict.marital_status=="2"}}>Unmarried</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="mother_education" class="form-label">Mother's education level:</label>
+					  <select class="form-select" aria-label="mother_education" id="mother_education" name="mother_education">
+						<option value="1" {{"selected" if default_value_dict.mother_education=="1"}}>8th grade or less</option>
+						<option value="2" {{"selected" if default_value_dict.mother_education=="2"}}>9th through 12th grade with no diploma</option>
+						<option value="3" {{"selected" if default_value_dict.mother_education=="3"}}>High school graduate or GED completed</option>
+						<option value="4" {{"selected" if default_value_dict.mother_education=="4"}}>Some college credit, but not a degree.</option>
+						<option value="5" {{"selected" if default_value_dict.mother_education=="5"}}>Associate degree (AA,AS)</option>
+						<option value="6" {{"selected" if default_value_dict.mother_education=="6"}}>Bachelor’s degree (BA, AB, BS)</option>
+						<option value="7" {{"selected" if default_value_dict.mother_education=="7"}}>Master’s degree (MA, MS, MEng, MEd, MSW, MBA)</option>
+						<option value="8" {{"selected" if default_value_dict.mother_education=="8"}}>Doctorate (PhD, EdD) or Professional Degree (MD, DDS, DVM, LLB, JD)</option>
+						<option value="9" {{"selected" if default_value_dict.mother_education=="9"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="father_age" class="form-label">Father's age:</label>
+					  <select class="form-select" aria-label="father_age" id="father_age" name="father_age">
+						<option value="12" {{"selected" if default_value_dict.father_age=="12"}}>10-12 years</option>
+						<option value="13" {{"selected" if default_value_dict.father_age=="13"}}>13 years</option>
+						<option value="14" {{"selected" if default_value_dict.father_age=="14"}}>14 years</option>
+						<option value="15" {{"selected" if default_value_dict.father_age=="15"}}>15 years</option>
+						<option value="16" {{"selected" if default_value_dict.father_age=="16"}}>16 years</option>
+						<option value="17" {{"selected" if default_value_dict.father_age=="17"}}>17 years</option>
+						<option value="18" {{"selected" if default_value_dict.father_age=="18"}}>18 years</option>
+						<option value="19" {{"selected" if default_value_dict.father_age=="19"}}>19 years</option>
+						<option value="20" {{"selected" if default_value_dict.father_age=="20"}}>20 years</option>
+						<option value="21" {{"selected" if default_value_dict.father_age=="21"}}>21 years</option>
+						<option value="22" {{"selected" if default_value_dict.father_age=="22"}}>22 years</option>
+						<option value="23" {{"selected" if default_value_dict.father_age=="23"}}>23 years</option>
+						<option value="24" {{"selected" if default_value_dict.father_age=="24"}}>24 years</option>
+						<option value="25" {{"selected" if default_value_dict.father_age=="25"}}>25 years</option>
+						<option value="26" {{"selected" if default_value_dict.father_age=="26"}}>26 years</option>
+						<option value="27" {{"selected" if default_value_dict.father_age=="27"}}>27 years</option>
+						<option value="28" {{"selected" if default_value_dict.father_age=="28"}}>28 years</option>
+						<option value="29" {{"selected" if default_value_dict.father_age=="29"}}>29 years</option>
+						<option value="30" {{"selected" if default_value_dict.father_age=="30"}}>30 years</option>
+						<option value="31" {{"selected" if default_value_dict.father_age=="31"}}>31 years</option>
+						<option value="32" {{"selected" if default_value_dict.father_age=="32"}}>32 years</option>
+						<option value="33" {{"selected" if default_value_dict.father_age=="33"}}>33 years</option>
+						<option value="34" {{"selected" if default_value_dict.father_age=="34"}}>34 years</option>
+						<option value="35" {{"selected" if default_value_dict.father_age=="35"}}>35 years</option>
+						<option value="36" {{"selected" if default_value_dict.father_age=="36"}}>36 years</option>
+						<option value="37" {{"selected" if default_value_dict.father_age=="37"}}>37 years</option>
+						<option value="38" {{"selected" if default_value_dict.father_age=="38"}}>38 years</option>
+						<option value="39" {{"selected" if default_value_dict.father_age=="39"}}>39 years</option>
+						<option value="40" {{"selected" if default_value_dict.father_age=="40"}}>40 years</option>
+						<option value="41" {{"selected" if default_value_dict.father_age=="41"}}>41 years</option>
+						<option value="42" {{"selected" if default_value_dict.father_age=="42"}}>42 years</option>
+						<option value="43" {{"selected" if default_value_dict.father_age=="43"}}>43 years</option>
+						<option value="44" {{"selected" if default_value_dict.father_age=="44"}}>44 years</option>
+						<option value="45" {{"selected" if default_value_dict.father_age=="45"}}>45 years</option>
+						<option value="46" {{"selected" if default_value_dict.father_age=="46"}}>46 years</option>
+						<option value="47" {{"selected" if default_value_dict.father_age=="47"}}>47 years</option>
+						<option value="48" {{"selected" if default_value_dict.father_age=="48"}}>48 years</option>
+						<option value="49" {{"selected" if default_value_dict.father_age=="49"}}>49 years</option>
+						<option value="50" {{"selected" if default_value_dict.father_age=="50"}}>50 years and over</option>
+						<option value="99" {{"selected" if default_value_dict.father_age=="99"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="prior_births_now_living" class="form-label">Number of children still living from previous live births:</label>
+					  <select class="form-select" aria-label="prior_births_now_living" id="prior_births_now_living" name="prior_births_now_living">
+						<option value="0" {{"selected" if default_value_dict.prior_births_now_living=="0"}}>0</option>
+						<option value="1" {{"selected" if default_value_dict.prior_births_now_living=="1"}}>1</option>
+						<option value="2" {{"selected" if default_value_dict.prior_births_now_living=="2"}}>2</option>
+						<option value="3" {{"selected" if default_value_dict.prior_births_now_living=="3"}}>3</option>
+						<option value="4" {{"selected" if default_value_dict.prior_births_now_living=="4"}}>4</option>
+						<option value="5" {{"selected" if default_value_dict.prior_births_now_living=="5"}}>5</option>
+						<option value="6" {{"selected" if default_value_dict.prior_births_now_living=="6"}}>6</option>
+						<option value="7" {{"selected" if default_value_dict.prior_births_now_living=="7"}}>7</option>
+						<option value="8" {{"selected" if default_value_dict.prior_births_now_living=="8"}}>8</option>
+						<option value="9" {{"selected" if default_value_dict.prior_births_now_living=="9"}}>9</option>
+						<option value="10" {{"selected" if default_value_dict.prior_births_now_living=="10"}}>10</option>
+						<option value="11" {{"selected" if default_value_dict.prior_births_now_living=="11"}}>11</option>
+						<option value="12" {{"selected" if default_value_dict.prior_births_now_living=="12"}}>12</option>
+						<option value="13" {{"selected" if default_value_dict.prior_births_now_living=="13"}}>13</option>
+						<option value="14" {{"selected" if default_value_dict.prior_births_now_living=="14"}}>14</option>
+						<option value="15" {{"selected" if default_value_dict.prior_births_now_living=="15"}}>15</option>
+						<option value="16" {{"selected" if default_value_dict.prior_births_now_living=="16"}}>16</option>
+						<option value="17" {{"selected" if default_value_dict.prior_births_now_living=="17"}}>17</option>
+						<option value="18" {{"selected" if default_value_dict.prior_births_now_living=="18"}}>18</option>
+						<option value="19" {{"selected" if default_value_dict.prior_births_now_living=="19"}}>19</option>
+						<option value="20" {{"selected" if default_value_dict.prior_births_now_living=="20"}}>20</option>
+						<option value="21" {{"selected" if default_value_dict.prior_births_now_living=="21"}}>21</option>
+						<option value="22" {{"selected" if default_value_dict.prior_births_now_living=="22"}}>22</option>
+						<option value="23" {{"selected" if default_value_dict.prior_births_now_living=="23"}}>23</option>
+						<option value="24" {{"selected" if default_value_dict.prior_births_now_living=="24"}}>24</option>
+						<option value="25" {{"selected" if default_value_dict.prior_births_now_living=="25"}}>25</option>
+						<option value="26" {{"selected" if default_value_dict.prior_births_now_living=="26"}}>26</option>
+						<option value="27" {{"selected" if default_value_dict.prior_births_now_living=="27"}}>27</option>
+						<option value="28" {{"selected" if default_value_dict.prior_births_now_living=="28"}}>28</option>
+						<option value="29" {{"selected" if default_value_dict.prior_births_now_living=="29"}}>29</option>
+						<option value="30" {{"selected" if default_value_dict.prior_births_now_living=="30"}}>30</option>
+						<option value="99" {{"selected" if default_value_dict.prior_births_now_living=="99"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="total_birth_order" class="form-label">Expected birth order (for example, with two previous live births, enter 3):</label>
+					  <select class="form-select" aria-label="total_birth_order" id="total_birth_order" name="total_birth_order">
+						<option value="1" {{"selected" if default_value_dict.total_birth_order=="1"}}>1</option>
+						<option value="2" {{"selected" if default_value_dict.total_birth_order=="2"}}>2</option>
+						<option value="3" {{"selected" if default_value_dict.total_birth_order=="3"}}>3</option>
+						<option value="4" {{"selected" if default_value_dict.total_birth_order=="4"}}>4</option>
+						<option value="5" {{"selected" if default_value_dict.total_birth_order=="5"}}>5</option>
+						<option value="6" {{"selected" if default_value_dict.total_birth_order=="6"}}>6</option>
+						<option value="7" {{"selected" if default_value_dict.total_birth_order=="7"}}>7</option>
+						<option value="8" {{"selected" if default_value_dict.total_birth_order=="8"}}>8 or more total births</option>
+						<option value="9" {{"selected" if default_value_dict.total_birth_order=="9"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="interval_since_last_live_birth" class="form-label">Interval since last live birth:</label>
+					  <select class="form-select" aria-label="interval_since_last_live_birth" id="interval_since_last_live_birth" name="interval_since_last_live_birth">
+						<option value="0" {{"selected" if default_value_dict.interval_since_last_live_birth=="0"}}>Zero to 3 months (plural delivery)</option>
+						<option value="1" {{"selected" if default_value_dict.interval_since_last_live_birth=="1"}}>4 to 11 months</option>
+						<option value="2" {{"selected" if default_value_dict.interval_since_last_live_birth=="2"}}>12 to 17 months</option>
+						<option value="3" {{"selected" if default_value_dict.interval_since_last_live_birth=="3"}}>18 to 23 months</option>
+						<option value="4" {{"selected" if default_value_dict.interval_since_last_live_birth=="4"}}>24 to 35 months</option>
+						<option value="5" {{"selected" if default_value_dict.interval_since_last_live_birth=="5"}}>36 to 47 months</option>
+						<option value="6" {{"selected" if default_value_dict.interval_since_last_live_birth=="6"}}>48 to 59 months</option>
+						<option value="7" {{"selected" if default_value_dict.interval_since_last_live_birth=="7"}}>60 to 71 months</option>
+						<option value="8" {{"selected" if default_value_dict.interval_since_last_live_birth=="8"}}>72 months and over</option>
+						<option value="88" {{"selected" if default_value_dict.interval_since_last_live_birth=="88"}}>Not applicable (1st live birth)</option>
+						<option value="99" {{"selected" if default_value_dict.interval_since_last_live_birth=="99"}}>Unknown or not stated</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="month_prenatal_care_began" class="form-label">The month prenatal care began:</label>
+					  <select class="form-select" aria-label="month_prenatal_care_began" id="month_prenatal_care_began" name="month_prenatal_care_began">
+						<option value="1" {{"selected" if default_value_dict.month_prenatal_care_began=="1"}}>1st to 3rd month</option>
+						<option value="2" {{"selected" if default_value_dict.month_prenatal_care_began=="2"}}>4th to 6th month</option>
+						<option value="3" {{"selected" if default_value_dict.month_prenatal_care_began=="3"}}>7th to final month</option>
+						<option value="4" {{"selected" if default_value_dict.month_prenatal_care_began=="4"}}>No prenatal care</option>
+						<option value="5" {{"selected" if default_value_dict.month_prenatal_care_began=="5"}}>Unknown or not stated</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="number_of_prenatal_visits" class="form-label">The number of prenatal visits:</label>
+					  <select class="form-select" aria-label="number_of_prenatal_visits" id="number_of_prenatal_visits" name="number_of_prenatal_visits">
+						<option value="1" {{"selected" if default_value_dict.number_of_prenatal_visits=="1"}}>No visits</option>
+						<option value="2" {{"selected" if default_value_dict.number_of_prenatal_visits=="2"}}>1 to 2 visits</option>
+						<option value="3" {{"selected" if default_value_dict.number_of_prenatal_visits=="3"}}>3 to 4 visits</option>
+						<option value="4" {{"selected" if default_value_dict.number_of_prenatal_visits=="4"}}>5 to 6 visits</option>
+						<option value="5" {{"selected" if default_value_dict.number_of_prenatal_visits=="5"}}>7 to 8 visits</option>
+						<option value="6" {{"selected" if default_value_dict.number_of_prenatal_visits=="6"}}>9 to 10 visits</option>
+						<option value="7" {{"selected" if default_value_dict.number_of_prenatal_visits=="7"}}>11 to 12 visits</option>
+						<option value="8" {{"selected" if default_value_dict.number_of_prenatal_visits=="8"}}>13 to 14 visits</option>
+						<option value="9" {{"selected" if default_value_dict.number_of_prenatal_visits=="9"}}>15 to 16 visits</option>
+						<option value="10" {{"selected" if default_value_dict.number_of_prenatal_visits=="10"}}>17 to 18 visits</option>
+						<option value="11" {{"selected" if default_value_dict.number_of_prenatal_visits=="11"}}>19 or more visits</option>
+						<option value="12" {{"selected" if default_value_dict.number_of_prenatal_visits=="12"}}>Unknown or not stated</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="wic" class="form-label">Mother received special supplemental nutrition program for WIC (Women, Infants and Children):</label>
+					  <select class="form-select" aria-label="wic" id="wic" name="wic">
+						<option value="Y" {{"selected" if default_value_dict.wic=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.wic=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.wic=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="cigarettes_3rd_trimester" class="form-label">Cigarettes consumed in the 3rd trimester:</label>
+					  <select class="form-select" aria-label="cigarettes_3rd_trimester" id="cigarettes_3rd_trimester" name="cigarettes_3rd_trimester">
+						<option value="0" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="0"}}>0</option>
+						<option value="1" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="1"}}>1</option>
+						<option value="2" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="2"}}>2</option>
+						<option value="3" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="3"}}>3</option>
+						<option value="4" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="4"}}>4</option>
+						<option value="5" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="5"}}>5</option>
+						<option value="6" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="6"}}>6</option>
+						<option value="7" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="7"}}>7</option>
+						<option value="8" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="8"}}>8</option>
+						<option value="9" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="9"}}>9</option>
+						<option value="10" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="10"}}>10</option>
+						<option value="11" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="11"}}>11</option>
+						<option value="12" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="12"}}>12</option>
+						<option value="13" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="13"}}>13</option>
+						<option value="14" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="14"}}>14</option>
+						<option value="15" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="15"}}>15</option>
+						<option value="16" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="16"}}>16</option>
+						<option value="17" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="17"}}>17</option>
+						<option value="18" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="18"}}>18</option>
+						<option value="19" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="19"}}>19</option>
+						<option value="20" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="20"}}>20</option>
+						<option value="21" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="21"}}>21</option>
+						<option value="22" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="22"}}>22</option>
+						<option value="23" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="23"}}>23</option>
+						<option value="24" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="24"}}>24</option>
+						<option value="25" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="25"}}>25</option>
+						<option value="26" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="26"}}>26</option>
+						<option value="27" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="27"}}>27</option>
+						<option value="28" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="28"}}>28</option>
+						<option value="29" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="29"}}>29</option>
+						<option value="30" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="30"}}>30</option>
+						<option value="31" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="31"}}>31</option>
+						<option value="32" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="32"}}>32</option>
+						<option value="33" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="33"}}>33</option>
+						<option value="34" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="34"}}>34</option>
+						<option value="35" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="35"}}>35</option>
+						<option value="36" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="36"}}>36</option>
+						<option value="37" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="37"}}>37</option>
+						<option value="38" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="38"}}>38</option>
+						<option value="39" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="39"}}>39</option>
+						<option value="40" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="40"}}>40</option>
+						<option value="41" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="41"}}>41</option>
+						<option value="42" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="42"}}>42</option>
+						<option value="43" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="43"}}>43</option>
+						<option value="44" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="44"}}>44</option>
+						<option value="45" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="45"}}>45</option>
+						<option value="46" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="46"}}>46</option>
+						<option value="47" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="47"}}>47</option>
+						<option value="48" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="48"}}>48</option>
+						<option value="49" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="49"}}>49</option>
+						<option value="50" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="50"}}>50</option>
+						<option value="51" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="51"}}>51</option>
+						<option value="52" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="52"}}>52</option>
+						<option value="53" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="53"}}>53</option>
+						<option value="54" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="54"}}>54</option>
+						<option value="55" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="55"}}>55</option>
+						<option value="56" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="56"}}>56</option>
+						<option value="57" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="57"}}>57</option>
+						<option value="58" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="58"}}>58</option>
+						<option value="59" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="59"}}>59</option>
+						<option value="60" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="60"}}>60</option>
+						<option value="61" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="61"}}>61</option>
+						<option value="62" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="62"}}>62</option>
+						<option value="63" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="63"}}>63</option>
+						<option value="64" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="64"}}>64</option>
+						<option value="65" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="65"}}>65</option>
+						<option value="66" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="66"}}>66</option>
+						<option value="67" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="67"}}>67</option>
+						<option value="68" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="68"}}>68</option>
+						<option value="69" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="69"}}>69</option>
+						<option value="70" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="70"}}>70</option>
+						<option value="71" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="71"}}>71</option>
+						<option value="72" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="72"}}>72</option>
+						<option value="73" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="73"}}>73</option>
+						<option value="74" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="74"}}>74</option>
+						<option value="75" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="75"}}>75</option>
+						<option value="76" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="76"}}>76</option>
+						<option value="77" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="77"}}>77</option>
+						<option value="78" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="78"}}>78</option>
+						<option value="79" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="79"}}>79</option>
+						<option value="80" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="80"}}>80</option>
+						<option value="81" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="81"}}>81</option>
+						<option value="82" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="82"}}>82</option>
+						<option value="83" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="83"}}>83</option>
+						<option value="84" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="84"}}>84</option>
+						<option value="85" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="85"}}>85</option>
+						<option value="86" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="86"}}>86</option>
+						<option value="87" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="87"}}>87</option>
+						<option value="88" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="88"}}>88</option>
+						<option value="89" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="89"}}>89</option>
+						<option value="90" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="90"}}>90</option>
+						<option value="91" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="91"}}>91</option>
+						<option value="92" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="92"}}>92</option>
+						<option value="93" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="93"}}>93</option>
+						<option value="94" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="94"}}>94</option>
+						<option value="95" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="95"}}>95</option>
+						<option value="96" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="96"}}>96</option>
+						<option value="97" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="97"}}>97</option>
+						<option value="98" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="98"}}>98</option>
+						<option value="99" {{"selected" if default_value_dict.cigarettes_3rd_trimester=="99"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="mother_height_in_total_inches" class="form-label">Mother's height in total inches:</label>
+					  <select class="form-select" aria-label="mother_height_in_total_inches" id="mother_height_in_total_inches" name="mother_height_in_total_inches">
+						<option value="30" {{"selected" if default_value_dict.mother_height_in_total_inches=="30"}}>30</option>
+						<option value="31" {{"selected" if default_value_dict.mother_height_in_total_inches=="31"}}>31</option>
+						<option value="32" {{"selected" if default_value_dict.mother_height_in_total_inches=="32"}}>32</option>
+						<option value="33" {{"selected" if default_value_dict.mother_height_in_total_inches=="33"}}>33</option>
+						<option value="34" {{"selected" if default_value_dict.mother_height_in_total_inches=="34"}}>34</option>
+						<option value="35" {{"selected" if default_value_dict.mother_height_in_total_inches=="35"}}>35</option>
+						<option value="36" {{"selected" if default_value_dict.mother_height_in_total_inches=="36"}}>36</option>
+						<option value="37" {{"selected" if default_value_dict.mother_height_in_total_inches=="37"}}>37</option>
+						<option value="38" {{"selected" if default_value_dict.mother_height_in_total_inches=="38"}}>38</option>
+						<option value="39" {{"selected" if default_value_dict.mother_height_in_total_inches=="39"}}>39</option>
+						<option value="40" {{"selected" if default_value_dict.mother_height_in_total_inches=="40"}}>40</option>
+						<option value="41" {{"selected" if default_value_dict.mother_height_in_total_inches=="41"}}>41</option>
+						<option value="42" {{"selected" if default_value_dict.mother_height_in_total_inches=="42"}}>42</option>
+						<option value="43" {{"selected" if default_value_dict.mother_height_in_total_inches=="43"}}>43</option>
+						<option value="44" {{"selected" if default_value_dict.mother_height_in_total_inches=="44"}}>44</option>
+						<option value="45" {{"selected" if default_value_dict.mother_height_in_total_inches=="45"}}>45</option>
+						<option value="46" {{"selected" if default_value_dict.mother_height_in_total_inches=="46"}}>46</option>
+						<option value="47" {{"selected" if default_value_dict.mother_height_in_total_inches=="47"}}>47</option>
+						<option value="48" {{"selected" if default_value_dict.mother_height_in_total_inches=="48"}}>48</option>
+						<option value="49" {{"selected" if default_value_dict.mother_height_in_total_inches=="49"}}>49</option>
+						<option value="50" {{"selected" if default_value_dict.mother_height_in_total_inches=="50"}}>50</option>
+						<option value="51" {{"selected" if default_value_dict.mother_height_in_total_inches=="51"}}>51</option>
+						<option value="52" {{"selected" if default_value_dict.mother_height_in_total_inches=="52"}}>52</option>
+						<option value="53" {{"selected" if default_value_dict.mother_height_in_total_inches=="53"}}>53</option>
+						<option value="54" {{"selected" if default_value_dict.mother_height_in_total_inches=="54"}}>54</option>
+						<option value="55" {{"selected" if default_value_dict.mother_height_in_total_inches=="55"}}>55</option>
+						<option value="56" {{"selected" if default_value_dict.mother_height_in_total_inches=="56"}}>56</option>
+						<option value="57" {{"selected" if default_value_dict.mother_height_in_total_inches=="57"}}>57</option>
+						<option value="58" {{"selected" if default_value_dict.mother_height_in_total_inches=="58"}}>58</option>
+						<option value="59" {{"selected" if default_value_dict.mother_height_in_total_inches=="59"}}>59</option>
+						<option value="60" {{"selected" if default_value_dict.mother_height_in_total_inches=="60"}}>60</option>
+						<option value="61" {{"selected" if default_value_dict.mother_height_in_total_inches=="61"}}>61</option>
+						<option value="62" {{"selected" if default_value_dict.mother_height_in_total_inches=="62"}}>62</option>
+						<option value="63" {{"selected" if default_value_dict.mother_height_in_total_inches=="63"}}>63</option>
+						<option value="64" {{"selected" if default_value_dict.mother_height_in_total_inches=="64"}}>64</option>
+						<option value="65" {{"selected" if default_value_dict.mother_height_in_total_inches=="65"}}>65</option>
+						<option value="66" {{"selected" if default_value_dict.mother_height_in_total_inches=="66"}}>66</option>
+						<option value="67" {{"selected" if default_value_dict.mother_height_in_total_inches=="67"}}>67</option>
+						<option value="68" {{"selected" if default_value_dict.mother_height_in_total_inches=="68"}}>68</option>
+						<option value="69" {{"selected" if default_value_dict.mother_height_in_total_inches=="69"}}>69</option>
+						<option value="70" {{"selected" if default_value_dict.mother_height_in_total_inches=="70"}}>70</option>
+						<option value="71" {{"selected" if default_value_dict.mother_height_in_total_inches=="71"}}>71</option>
+						<option value="72" {{"selected" if default_value_dict.mother_height_in_total_inches=="72"}}>72</option>
+						<option value="73" {{"selected" if default_value_dict.mother_height_in_total_inches=="73"}}>73</option>
+						<option value="74" {{"selected" if default_value_dict.mother_height_in_total_inches=="74"}}>74</option>
+						<option value="75" {{"selected" if default_value_dict.mother_height_in_total_inches=="75"}}>75</option>
+						<option value="76" {{"selected" if default_value_dict.mother_height_in_total_inches=="76"}}>76</option>
+						<option value="77" {{"selected" if default_value_dict.mother_height_in_total_inches=="77"}}>77</option>
+						<option value="78" {{"selected" if default_value_dict.mother_height_in_total_inches=="78"}}>78</option>
+						<option value="99" {{"selected" if default_value_dict.mother_height_in_total_inches=="99"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="bmi" class="form-label">Mother's BMI (Body Mass Index):</label>
+					  <select class="form-select" aria-label="bmi" id="bmi" name="bmi">
+						<option value="13" {{"selected" if default_value_dict.bmi=="13"}}>13</option>
+						<option value="14" {{"selected" if default_value_dict.bmi=="14"}}>14</option>
+						<option value="15" {{"selected" if default_value_dict.bmi=="15"}}>15</option>
+						<option value="16" {{"selected" if default_value_dict.bmi=="16"}}>16</option>
+						<option value="17" {{"selected" if default_value_dict.bmi=="17"}}>17</option>
+						<option value="18" {{"selected" if default_value_dict.bmi=="18"}}>18</option>
+						<option value="19" {{"selected" if default_value_dict.bmi=="19"}}>19</option>
+						<option value="20" {{"selected" if default_value_dict.bmi=="20"}}>20</option>
+						<option value="21" {{"selected" if default_value_dict.bmi=="21"}}>21</option>
+						<option value="22" {{"selected" if default_value_dict.bmi=="22"}}>22</option>
+						<option value="23" {{"selected" if default_value_dict.bmi=="23"}}>23</option>
+						<option value="24" {{"selected" if default_value_dict.bmi=="24"}}>24</option>
+						<option value="25" {{"selected" if default_value_dict.bmi=="25"}}>25</option>
+						<option value="26" {{"selected" if default_value_dict.bmi=="26"}}>26</option>
+						<option value="27" {{"selected" if default_value_dict.bmi=="27"}}>27</option>
+						<option value="28" {{"selected" if default_value_dict.bmi=="28"}}>28</option>
+						<option value="29" {{"selected" if default_value_dict.bmi=="29"}}>29</option>
+						<option value="30" {{"selected" if default_value_dict.bmi=="30"}}>30</option>
+						<option value="31" {{"selected" if default_value_dict.bmi=="31"}}>31</option>
+						<option value="32" {{"selected" if default_value_dict.bmi=="32"}}>32</option>
+						<option value="33" {{"selected" if default_value_dict.bmi=="33"}}>33</option>
+						<option value="34" {{"selected" if default_value_dict.bmi=="34"}}>34</option>
+						<option value="35" {{"selected" if default_value_dict.bmi=="35"}}>35</option>
+						<option value="36" {{"selected" if default_value_dict.bmi=="36"}}>36</option>
+						<option value="37" {{"selected" if default_value_dict.bmi=="37"}}>37</option>
+						<option value="38" {{"selected" if default_value_dict.bmi=="38"}}>38</option>
+						<option value="39" {{"selected" if default_value_dict.bmi=="39"}}>39</option>
+						<option value="40" {{"selected" if default_value_dict.bmi=="40"}}>40</option>
+						<option value="41" {{"selected" if default_value_dict.bmi=="41"}}>41</option>
+						<option value="42" {{"selected" if default_value_dict.bmi=="42"}}>42</option>
+						<option value="43" {{"selected" if default_value_dict.bmi=="43"}}>43</option>
+						<option value="44" {{"selected" if default_value_dict.bmi=="44"}}>44</option>
+						<option value="45" {{"selected" if default_value_dict.bmi=="45"}}>45</option>
+						<option value="46" {{"selected" if default_value_dict.bmi=="46"}}>46</option>
+						<option value="47" {{"selected" if default_value_dict.bmi=="47"}}>47</option>
+						<option value="48" {{"selected" if default_value_dict.bmi=="48"}}>48</option>
+						<option value="49" {{"selected" if default_value_dict.bmi=="49"}}>49</option>
+						<option value="50" {{"selected" if default_value_dict.bmi=="50"}}>50</option>
+						<option value="51" {{"selected" if default_value_dict.bmi=="51"}}>51</option>
+						<option value="52" {{"selected" if default_value_dict.bmi=="52"}}>52</option>
+						<option value="53" {{"selected" if default_value_dict.bmi=="53"}}>53</option>
+						<option value="54" {{"selected" if default_value_dict.bmi=="54"}}>54</option>
+						<option value="55" {{"selected" if default_value_dict.bmi=="55"}}>55</option>
+						<option value="56" {{"selected" if default_value_dict.bmi=="56"}}>56</option>
+						<option value="57" {{"selected" if default_value_dict.bmi=="57"}}>57</option>
+						<option value="58" {{"selected" if default_value_dict.bmi=="58"}}>58</option>
+						<option value="59" {{"selected" if default_value_dict.bmi=="59"}}>59</option>
+						<option value="60" {{"selected" if default_value_dict.bmi=="60"}}>60</option>
+						<option value="61" {{"selected" if default_value_dict.bmi=="61"}}>61</option>
+						<option value="62" {{"selected" if default_value_dict.bmi=="62"}}>62</option>
+						<option value="63" {{"selected" if default_value_dict.bmi=="63"}}>63</option>
+						<option value="64" {{"selected" if default_value_dict.bmi=="64"}}>64</option>
+						<option value="65" {{"selected" if default_value_dict.bmi=="65"}}>65</option>
+						<option value="66" {{"selected" if default_value_dict.bmi=="66"}}>66</option>
+						<option value="67" {{"selected" if default_value_dict.bmi=="67"}}>67</option>
+						<option value="68" {{"selected" if default_value_dict.bmi=="68"}}>68</option>
+						<option value="69" {{"selected" if default_value_dict.bmi=="69"}}>69</option>
+						<option value="99.9" {{"selected" if default_value_dict.bmi=="99.9"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="prepregnancy_weight" class="form-label">Mother's prepregnancy weight:</label>
+					  <select class="form-select" aria-label="prepregnancy_weight" id="prepregnancy_weight" name="prepregnancy_weight">
+						<option value="75" {{"selected" if default_value_dict.prepregnancy_weight=="75"}}>75</option>
+						<option value="76" {{"selected" if default_value_dict.prepregnancy_weight=="76"}}>76</option>
+						<option value="77" {{"selected" if default_value_dict.prepregnancy_weight=="77"}}>77</option>
+						<option value="78" {{"selected" if default_value_dict.prepregnancy_weight=="78"}}>78</option>
+						<option value="79" {{"selected" if default_value_dict.prepregnancy_weight=="79"}}>79</option>
+						<option value="80" {{"selected" if default_value_dict.prepregnancy_weight=="80"}}>80</option>
+						<option value="81" {{"selected" if default_value_dict.prepregnancy_weight=="81"}}>81</option>
+						<option value="82" {{"selected" if default_value_dict.prepregnancy_weight=="82"}}>82</option>
+						<option value="83" {{"selected" if default_value_dict.prepregnancy_weight=="83"}}>83</option>
+						<option value="84" {{"selected" if default_value_dict.prepregnancy_weight=="84"}}>84</option>
+						<option value="85" {{"selected" if default_value_dict.prepregnancy_weight=="85"}}>85</option>
+						<option value="86" {{"selected" if default_value_dict.prepregnancy_weight=="86"}}>86</option>
+						<option value="87" {{"selected" if default_value_dict.prepregnancy_weight=="87"}}>87</option>
+						<option value="88" {{"selected" if default_value_dict.prepregnancy_weight=="88"}}>88</option>
+						<option value="89" {{"selected" if default_value_dict.prepregnancy_weight=="89"}}>89</option>
+						<option value="90" {{"selected" if default_value_dict.prepregnancy_weight=="90"}}>90</option>
+						<option value="91" {{"selected" if default_value_dict.prepregnancy_weight=="91"}}>91</option>
+						<option value="92" {{"selected" if default_value_dict.prepregnancy_weight=="92"}}>92</option>
+						<option value="93" {{"selected" if default_value_dict.prepregnancy_weight=="93"}}>93</option>
+						<option value="94" {{"selected" if default_value_dict.prepregnancy_weight=="94"}}>94</option>
+						<option value="95" {{"selected" if default_value_dict.prepregnancy_weight=="95"}}>95</option>
+						<option value="96" {{"selected" if default_value_dict.prepregnancy_weight=="96"}}>96</option>
+						<option value="97" {{"selected" if default_value_dict.prepregnancy_weight=="97"}}>97</option>
+						<option value="98" {{"selected" if default_value_dict.prepregnancy_weight=="98"}}>98</option>
+						<option value="99" {{"selected" if default_value_dict.prepregnancy_weight=="99"}}>99</option>
+						<option value="100" {{"selected" if default_value_dict.prepregnancy_weight=="100"}}>100</option>
+						<option value="101" {{"selected" if default_value_dict.prepregnancy_weight=="101"}}>101</option>
+						<option value="102" {{"selected" if default_value_dict.prepregnancy_weight=="102"}}>102</option>
+						<option value="103" {{"selected" if default_value_dict.prepregnancy_weight=="103"}}>103</option>
+						<option value="104" {{"selected" if default_value_dict.prepregnancy_weight=="104"}}>104</option>
+						<option value="105" {{"selected" if default_value_dict.prepregnancy_weight=="105"}}>105</option>
+						<option value="106" {{"selected" if default_value_dict.prepregnancy_weight=="106"}}>106</option>
+						<option value="107" {{"selected" if default_value_dict.prepregnancy_weight=="107"}}>107</option>
+						<option value="108" {{"selected" if default_value_dict.prepregnancy_weight=="108"}}>108</option>
+						<option value="109" {{"selected" if default_value_dict.prepregnancy_weight=="109"}}>109</option>
+						<option value="110" {{"selected" if default_value_dict.prepregnancy_weight=="110"}}>110</option>
+						<option value="111" {{"selected" if default_value_dict.prepregnancy_weight=="111"}}>111</option>
+						<option value="112" {{"selected" if default_value_dict.prepregnancy_weight=="112"}}>112</option>
+						<option value="113" {{"selected" if default_value_dict.prepregnancy_weight=="113"}}>113</option>
+						<option value="114" {{"selected" if default_value_dict.prepregnancy_weight=="114"}}>114</option>
+						<option value="115" {{"selected" if default_value_dict.prepregnancy_weight=="115"}}>115</option>
+						<option value="116" {{"selected" if default_value_dict.prepregnancy_weight=="116"}}>116</option>
+						<option value="117" {{"selected" if default_value_dict.prepregnancy_weight=="117"}}>117</option>
+						<option value="118" {{"selected" if default_value_dict.prepregnancy_weight=="118"}}>118</option>
+						<option value="119" {{"selected" if default_value_dict.prepregnancy_weight=="119"}}>119</option>
+						<option value="120" {{"selected" if default_value_dict.prepregnancy_weight=="120"}}>120</option>
+						<option value="121" {{"selected" if default_value_dict.prepregnancy_weight=="121"}}>121</option>
+						<option value="122" {{"selected" if default_value_dict.prepregnancy_weight=="122"}}>122</option>
+						<option value="123" {{"selected" if default_value_dict.prepregnancy_weight=="123"}}>123</option>
+						<option value="124" {{"selected" if default_value_dict.prepregnancy_weight=="124"}}>124</option>
+						<option value="125" {{"selected" if default_value_dict.prepregnancy_weight=="125"}}>125</option>
+						<option value="126" {{"selected" if default_value_dict.prepregnancy_weight=="126"}}>126</option>
+						<option value="127" {{"selected" if default_value_dict.prepregnancy_weight=="127"}}>127</option>
+						<option value="128" {{"selected" if default_value_dict.prepregnancy_weight=="128"}}>128</option>
+						<option value="129" {{"selected" if default_value_dict.prepregnancy_weight=="129"}}>129</option>
+						<option value="130" {{"selected" if default_value_dict.prepregnancy_weight=="130"}}>130</option>
+						<option value="131" {{"selected" if default_value_dict.prepregnancy_weight=="131"}}>131</option>
+						<option value="132" {{"selected" if default_value_dict.prepregnancy_weight=="132"}}>132</option>
+						<option value="133" {{"selected" if default_value_dict.prepregnancy_weight=="133"}}>133</option>
+						<option value="134" {{"selected" if default_value_dict.prepregnancy_weight=="134"}}>134</option>
+						<option value="135" {{"selected" if default_value_dict.prepregnancy_weight=="135"}}>135</option>
+						<option value="136" {{"selected" if default_value_dict.prepregnancy_weight=="136"}}>136</option>
+						<option value="137" {{"selected" if default_value_dict.prepregnancy_weight=="137"}}>137</option>
+						<option value="138" {{"selected" if default_value_dict.prepregnancy_weight=="138"}}>138</option>
+						<option value="139" {{"selected" if default_value_dict.prepregnancy_weight=="139"}}>139</option>
+						<option value="140" {{"selected" if default_value_dict.prepregnancy_weight=="140"}}>140</option>
+						<option value="141" {{"selected" if default_value_dict.prepregnancy_weight=="141"}}>141</option>
+						<option value="142" {{"selected" if default_value_dict.prepregnancy_weight=="142"}}>142</option>
+						<option value="143" {{"selected" if default_value_dict.prepregnancy_weight=="143"}}>143</option>
+						<option value="144" {{"selected" if default_value_dict.prepregnancy_weight=="144"}}>144</option>
+						<option value="145" {{"selected" if default_value_dict.prepregnancy_weight=="145"}}>145</option>
+						<option value="146" {{"selected" if default_value_dict.prepregnancy_weight=="146"}}>146</option>
+						<option value="147" {{"selected" if default_value_dict.prepregnancy_weight=="147"}}>147</option>
+						<option value="148" {{"selected" if default_value_dict.prepregnancy_weight=="148"}}>148</option>
+						<option value="149" {{"selected" if default_value_dict.prepregnancy_weight=="149"}}>149</option>
+						<option value="150" {{"selected" if default_value_dict.prepregnancy_weight=="150"}}>150</option>
+						<option value="151" {{"selected" if default_value_dict.prepregnancy_weight=="151"}}>151</option>
+						<option value="152" {{"selected" if default_value_dict.prepregnancy_weight=="152"}}>152</option>
+						<option value="153" {{"selected" if default_value_dict.prepregnancy_weight=="153"}}>153</option>
+						<option value="154" {{"selected" if default_value_dict.prepregnancy_weight=="154"}}>154</option>
+						<option value="155" {{"selected" if default_value_dict.prepregnancy_weight=="155"}}>155</option>
+						<option value="156" {{"selected" if default_value_dict.prepregnancy_weight=="156"}}>156</option>
+						<option value="157" {{"selected" if default_value_dict.prepregnancy_weight=="157"}}>157</option>
+						<option value="158" {{"selected" if default_value_dict.prepregnancy_weight=="158"}}>158</option>
+						<option value="159" {{"selected" if default_value_dict.prepregnancy_weight=="159"}}>159</option>
+						<option value="160" {{"selected" if default_value_dict.prepregnancy_weight=="160"}}>160</option>
+						<option value="161" {{"selected" if default_value_dict.prepregnancy_weight=="161"}}>161</option>
+						<option value="162" {{"selected" if default_value_dict.prepregnancy_weight=="162"}}>162</option>
+						<option value="163" {{"selected" if default_value_dict.prepregnancy_weight=="163"}}>163</option>
+						<option value="164" {{"selected" if default_value_dict.prepregnancy_weight=="164"}}>164</option>
+						<option value="165" {{"selected" if default_value_dict.prepregnancy_weight=="165"}}>165</option>
+						<option value="166" {{"selected" if default_value_dict.prepregnancy_weight=="166"}}>166</option>
+						<option value="167" {{"selected" if default_value_dict.prepregnancy_weight=="167"}}>167</option>
+						<option value="168" {{"selected" if default_value_dict.prepregnancy_weight=="168"}}>168</option>
+						<option value="169" {{"selected" if default_value_dict.prepregnancy_weight=="169"}}>169</option>
+						<option value="170" {{"selected" if default_value_dict.prepregnancy_weight=="170"}}>170</option>
+						<option value="171" {{"selected" if default_value_dict.prepregnancy_weight=="171"}}>171</option>
+						<option value="172" {{"selected" if default_value_dict.prepregnancy_weight=="172"}}>172</option>
+						<option value="173" {{"selected" if default_value_dict.prepregnancy_weight=="173"}}>173</option>
+						<option value="174" {{"selected" if default_value_dict.prepregnancy_weight=="174"}}>174</option>
+						<option value="175" {{"selected" if default_value_dict.prepregnancy_weight=="175"}}>175</option>
+						<option value="176" {{"selected" if default_value_dict.prepregnancy_weight=="176"}}>176</option>
+						<option value="177" {{"selected" if default_value_dict.prepregnancy_weight=="177"}}>177</option>
+						<option value="178" {{"selected" if default_value_dict.prepregnancy_weight=="178"}}>178</option>
+						<option value="179" {{"selected" if default_value_dict.prepregnancy_weight=="179"}}>179</option>
+						<option value="180" {{"selected" if default_value_dict.prepregnancy_weight=="180"}}>180</option>
+						<option value="181" {{"selected" if default_value_dict.prepregnancy_weight=="181"}}>181</option>
+						<option value="182" {{"selected" if default_value_dict.prepregnancy_weight=="182"}}>182</option>
+						<option value="183" {{"selected" if default_value_dict.prepregnancy_weight=="183"}}>183</option>
+						<option value="184" {{"selected" if default_value_dict.prepregnancy_weight=="184"}}>184</option>
+						<option value="185" {{"selected" if default_value_dict.prepregnancy_weight=="185"}}>185</option>
+						<option value="186" {{"selected" if default_value_dict.prepregnancy_weight=="186"}}>186</option>
+						<option value="187" {{"selected" if default_value_dict.prepregnancy_weight=="187"}}>187</option>
+						<option value="188" {{"selected" if default_value_dict.prepregnancy_weight=="188"}}>188</option>
+						<option value="189" {{"selected" if default_value_dict.prepregnancy_weight=="189"}}>189</option>
+						<option value="190" {{"selected" if default_value_dict.prepregnancy_weight=="190"}}>190</option>
+						<option value="191" {{"selected" if default_value_dict.prepregnancy_weight=="191"}}>191</option>
+						<option value="192" {{"selected" if default_value_dict.prepregnancy_weight=="192"}}>192</option>
+						<option value="193" {{"selected" if default_value_dict.prepregnancy_weight=="193"}}>193</option>
+						<option value="194" {{"selected" if default_value_dict.prepregnancy_weight=="194"}}>194</option>
+						<option value="195" {{"selected" if default_value_dict.prepregnancy_weight=="195"}}>195</option>
+						<option value="196" {{"selected" if default_value_dict.prepregnancy_weight=="196"}}>196</option>
+						<option value="197" {{"selected" if default_value_dict.prepregnancy_weight=="197"}}>197</option>
+						<option value="198" {{"selected" if default_value_dict.prepregnancy_weight=="198"}}>198</option>
+						<option value="199" {{"selected" if default_value_dict.prepregnancy_weight=="199"}}>199</option>
+						<option value="200" {{"selected" if default_value_dict.prepregnancy_weight=="200"}}>200</option>
+						<option value="201" {{"selected" if default_value_dict.prepregnancy_weight=="201"}}>201</option>
+						<option value="202" {{"selected" if default_value_dict.prepregnancy_weight=="202"}}>202</option>
+						<option value="203" {{"selected" if default_value_dict.prepregnancy_weight=="203"}}>203</option>
+						<option value="204" {{"selected" if default_value_dict.prepregnancy_weight=="204"}}>204</option>
+						<option value="205" {{"selected" if default_value_dict.prepregnancy_weight=="205"}}>205</option>
+						<option value="206" {{"selected" if default_value_dict.prepregnancy_weight=="206"}}>206</option>
+						<option value="207" {{"selected" if default_value_dict.prepregnancy_weight=="207"}}>207</option>
+						<option value="208" {{"selected" if default_value_dict.prepregnancy_weight=="208"}}>208</option>
+						<option value="209" {{"selected" if default_value_dict.prepregnancy_weight=="209"}}>209</option>
+						<option value="210" {{"selected" if default_value_dict.prepregnancy_weight=="210"}}>210</option>
+						<option value="211" {{"selected" if default_value_dict.prepregnancy_weight=="211"}}>211</option>
+						<option value="212" {{"selected" if default_value_dict.prepregnancy_weight=="212"}}>212</option>
+						<option value="213" {{"selected" if default_value_dict.prepregnancy_weight=="213"}}>213</option>
+						<option value="214" {{"selected" if default_value_dict.prepregnancy_weight=="214"}}>214</option>
+						<option value="215" {{"selected" if default_value_dict.prepregnancy_weight=="215"}}>215</option>
+						<option value="216" {{"selected" if default_value_dict.prepregnancy_weight=="216"}}>216</option>
+						<option value="217" {{"selected" if default_value_dict.prepregnancy_weight=="217"}}>217</option>
+						<option value="218" {{"selected" if default_value_dict.prepregnancy_weight=="218"}}>218</option>
+						<option value="219" {{"selected" if default_value_dict.prepregnancy_weight=="219"}}>219</option>
+						<option value="220" {{"selected" if default_value_dict.prepregnancy_weight=="220"}}>220</option>
+						<option value="221" {{"selected" if default_value_dict.prepregnancy_weight=="221"}}>221</option>
+						<option value="222" {{"selected" if default_value_dict.prepregnancy_weight=="222"}}>222</option>
+						<option value="223" {{"selected" if default_value_dict.prepregnancy_weight=="223"}}>223</option>
+						<option value="224" {{"selected" if default_value_dict.prepregnancy_weight=="224"}}>224</option>
+						<option value="225" {{"selected" if default_value_dict.prepregnancy_weight=="225"}}>225</option>
+						<option value="226" {{"selected" if default_value_dict.prepregnancy_weight=="226"}}>226</option>
+						<option value="227" {{"selected" if default_value_dict.prepregnancy_weight=="227"}}>227</option>
+						<option value="228" {{"selected" if default_value_dict.prepregnancy_weight=="228"}}>228</option>
+						<option value="229" {{"selected" if default_value_dict.prepregnancy_weight=="229"}}>229</option>
+						<option value="230" {{"selected" if default_value_dict.prepregnancy_weight=="230"}}>230</option>
+						<option value="231" {{"selected" if default_value_dict.prepregnancy_weight=="231"}}>231</option>
+						<option value="232" {{"selected" if default_value_dict.prepregnancy_weight=="232"}}>232</option>
+						<option value="233" {{"selected" if default_value_dict.prepregnancy_weight=="233"}}>233</option>
+						<option value="234" {{"selected" if default_value_dict.prepregnancy_weight=="234"}}>234</option>
+						<option value="235" {{"selected" if default_value_dict.prepregnancy_weight=="235"}}>235</option>
+						<option value="236" {{"selected" if default_value_dict.prepregnancy_weight=="236"}}>236</option>
+						<option value="237" {{"selected" if default_value_dict.prepregnancy_weight=="237"}}>237</option>
+						<option value="238" {{"selected" if default_value_dict.prepregnancy_weight=="238"}}>238</option>
+						<option value="239" {{"selected" if default_value_dict.prepregnancy_weight=="239"}}>239</option>
+						<option value="240" {{"selected" if default_value_dict.prepregnancy_weight=="240"}}>240</option>
+						<option value="241" {{"selected" if default_value_dict.prepregnancy_weight=="241"}}>241</option>
+						<option value="242" {{"selected" if default_value_dict.prepregnancy_weight=="242"}}>242</option>
+						<option value="243" {{"selected" if default_value_dict.prepregnancy_weight=="243"}}>243</option>
+						<option value="244" {{"selected" if default_value_dict.prepregnancy_weight=="244"}}>244</option>
+						<option value="245" {{"selected" if default_value_dict.prepregnancy_weight=="245"}}>245</option>
+						<option value="246" {{"selected" if default_value_dict.prepregnancy_weight=="246"}}>246</option>
+						<option value="247" {{"selected" if default_value_dict.prepregnancy_weight=="247"}}>247</option>
+						<option value="248" {{"selected" if default_value_dict.prepregnancy_weight=="248"}}>248</option>
+						<option value="249" {{"selected" if default_value_dict.prepregnancy_weight=="249"}}>249</option>
+						<option value="250" {{"selected" if default_value_dict.prepregnancy_weight=="250"}}>250</option>
+						<option value="251" {{"selected" if default_value_dict.prepregnancy_weight=="251"}}>251</option>
+						<option value="252" {{"selected" if default_value_dict.prepregnancy_weight=="252"}}>252</option>
+						<option value="253" {{"selected" if default_value_dict.prepregnancy_weight=="253"}}>253</option>
+						<option value="254" {{"selected" if default_value_dict.prepregnancy_weight=="254"}}>254</option>
+						<option value="255" {{"selected" if default_value_dict.prepregnancy_weight=="255"}}>255</option>
+						<option value="256" {{"selected" if default_value_dict.prepregnancy_weight=="256"}}>256</option>
+						<option value="257" {{"selected" if default_value_dict.prepregnancy_weight=="257"}}>257</option>
+						<option value="258" {{"selected" if default_value_dict.prepregnancy_weight=="258"}}>258</option>
+						<option value="259" {{"selected" if default_value_dict.prepregnancy_weight=="259"}}>259</option>
+						<option value="260" {{"selected" if default_value_dict.prepregnancy_weight=="260"}}>260</option>
+						<option value="261" {{"selected" if default_value_dict.prepregnancy_weight=="261"}}>261</option>
+						<option value="262" {{"selected" if default_value_dict.prepregnancy_weight=="262"}}>262</option>
+						<option value="263" {{"selected" if default_value_dict.prepregnancy_weight=="263"}}>263</option>
+						<option value="264" {{"selected" if default_value_dict.prepregnancy_weight=="264"}}>264</option>
+						<option value="265" {{"selected" if default_value_dict.prepregnancy_weight=="265"}}>265</option>
+						<option value="266" {{"selected" if default_value_dict.prepregnancy_weight=="266"}}>266</option>
+						<option value="267" {{"selected" if default_value_dict.prepregnancy_weight=="267"}}>267</option>
+						<option value="268" {{"selected" if default_value_dict.prepregnancy_weight=="268"}}>268</option>
+						<option value="269" {{"selected" if default_value_dict.prepregnancy_weight=="269"}}>269</option>
+						<option value="270" {{"selected" if default_value_dict.prepregnancy_weight=="270"}}>270</option>
+						<option value="271" {{"selected" if default_value_dict.prepregnancy_weight=="271"}}>271</option>
+						<option value="272" {{"selected" if default_value_dict.prepregnancy_weight=="272"}}>272</option>
+						<option value="273" {{"selected" if default_value_dict.prepregnancy_weight=="273"}}>273</option>
+						<option value="274" {{"selected" if default_value_dict.prepregnancy_weight=="274"}}>274</option>
+						<option value="275" {{"selected" if default_value_dict.prepregnancy_weight=="275"}}>275</option>
+						<option value="276" {{"selected" if default_value_dict.prepregnancy_weight=="276"}}>276</option>
+						<option value="277" {{"selected" if default_value_dict.prepregnancy_weight=="277"}}>277</option>
+						<option value="278" {{"selected" if default_value_dict.prepregnancy_weight=="278"}}>278</option>
+						<option value="279" {{"selected" if default_value_dict.prepregnancy_weight=="279"}}>279</option>
+						<option value="280" {{"selected" if default_value_dict.prepregnancy_weight=="280"}}>280</option>
+						<option value="281" {{"selected" if default_value_dict.prepregnancy_weight=="281"}}>281</option>
+						<option value="282" {{"selected" if default_value_dict.prepregnancy_weight=="282"}}>282</option>
+						<option value="283" {{"selected" if default_value_dict.prepregnancy_weight=="283"}}>283</option>
+						<option value="284" {{"selected" if default_value_dict.prepregnancy_weight=="284"}}>284</option>
+						<option value="285" {{"selected" if default_value_dict.prepregnancy_weight=="285"}}>285</option>
+						<option value="286" {{"selected" if default_value_dict.prepregnancy_weight=="286"}}>286</option>
+						<option value="287" {{"selected" if default_value_dict.prepregnancy_weight=="287"}}>287</option>
+						<option value="288" {{"selected" if default_value_dict.prepregnancy_weight=="288"}}>288</option>
+						<option value="289" {{"selected" if default_value_dict.prepregnancy_weight=="289"}}>289</option>
+						<option value="290" {{"selected" if default_value_dict.prepregnancy_weight=="290"}}>290</option>
+						<option value="291" {{"selected" if default_value_dict.prepregnancy_weight=="291"}}>291</option>
+						<option value="292" {{"selected" if default_value_dict.prepregnancy_weight=="292"}}>292</option>
+						<option value="293" {{"selected" if default_value_dict.prepregnancy_weight=="293"}}>293</option>
+						<option value="294" {{"selected" if default_value_dict.prepregnancy_weight=="294"}}>294</option>
+						<option value="295" {{"selected" if default_value_dict.prepregnancy_weight=="295"}}>295</option>
+						<option value="296" {{"selected" if default_value_dict.prepregnancy_weight=="296"}}>296</option>
+						<option value="297" {{"selected" if default_value_dict.prepregnancy_weight=="297"}}>297</option>
+						<option value="298" {{"selected" if default_value_dict.prepregnancy_weight=="298"}}>298</option>
+						<option value="299" {{"selected" if default_value_dict.prepregnancy_weight=="299"}}>299</option>
+						<option value="300" {{"selected" if default_value_dict.prepregnancy_weight=="300"}}>300</option>
+						<option value="301" {{"selected" if default_value_dict.prepregnancy_weight=="301"}}>301</option>
+						<option value="302" {{"selected" if default_value_dict.prepregnancy_weight=="302"}}>302</option>
+						<option value="303" {{"selected" if default_value_dict.prepregnancy_weight=="303"}}>303</option>
+						<option value="304" {{"selected" if default_value_dict.prepregnancy_weight=="304"}}>304</option>
+						<option value="305" {{"selected" if default_value_dict.prepregnancy_weight=="305"}}>305</option>
+						<option value="306" {{"selected" if default_value_dict.prepregnancy_weight=="306"}}>306</option>
+						<option value="307" {{"selected" if default_value_dict.prepregnancy_weight=="307"}}>307</option>
+						<option value="308" {{"selected" if default_value_dict.prepregnancy_weight=="308"}}>308</option>
+						<option value="309" {{"selected" if default_value_dict.prepregnancy_weight=="309"}}>309</option>
+						<option value="310" {{"selected" if default_value_dict.prepregnancy_weight=="310"}}>310</option>
+						<option value="311" {{"selected" if default_value_dict.prepregnancy_weight=="311"}}>311</option>
+						<option value="312" {{"selected" if default_value_dict.prepregnancy_weight=="312"}}>312</option>
+						<option value="313" {{"selected" if default_value_dict.prepregnancy_weight=="313"}}>313</option>
+						<option value="314" {{"selected" if default_value_dict.prepregnancy_weight=="314"}}>314</option>
+						<option value="315" {{"selected" if default_value_dict.prepregnancy_weight=="315"}}>315</option>
+						<option value="316" {{"selected" if default_value_dict.prepregnancy_weight=="316"}}>316</option>
+						<option value="317" {{"selected" if default_value_dict.prepregnancy_weight=="317"}}>317</option>
+						<option value="318" {{"selected" if default_value_dict.prepregnancy_weight=="318"}}>318</option>
+						<option value="319" {{"selected" if default_value_dict.prepregnancy_weight=="319"}}>319</option>
+						<option value="320" {{"selected" if default_value_dict.prepregnancy_weight=="320"}}>320</option>
+						<option value="321" {{"selected" if default_value_dict.prepregnancy_weight=="321"}}>321</option>
+						<option value="322" {{"selected" if default_value_dict.prepregnancy_weight=="322"}}>322</option>
+						<option value="323" {{"selected" if default_value_dict.prepregnancy_weight=="323"}}>323</option>
+						<option value="324" {{"selected" if default_value_dict.prepregnancy_weight=="324"}}>324</option>
+						<option value="325" {{"selected" if default_value_dict.prepregnancy_weight=="325"}}>325</option>
+						<option value="326" {{"selected" if default_value_dict.prepregnancy_weight=="326"}}>326</option>
+						<option value="327" {{"selected" if default_value_dict.prepregnancy_weight=="327"}}>327</option>
+						<option value="328" {{"selected" if default_value_dict.prepregnancy_weight=="328"}}>328</option>
+						<option value="329" {{"selected" if default_value_dict.prepregnancy_weight=="329"}}>329</option>
+						<option value="330" {{"selected" if default_value_dict.prepregnancy_weight=="330"}}>330</option>
+						<option value="331" {{"selected" if default_value_dict.prepregnancy_weight=="331"}}>331</option>
+						<option value="332" {{"selected" if default_value_dict.prepregnancy_weight=="332"}}>332</option>
+						<option value="333" {{"selected" if default_value_dict.prepregnancy_weight=="333"}}>333</option>
+						<option value="334" {{"selected" if default_value_dict.prepregnancy_weight=="334"}}>334</option>
+						<option value="335" {{"selected" if default_value_dict.prepregnancy_weight=="335"}}>335</option>
+						<option value="336" {{"selected" if default_value_dict.prepregnancy_weight=="336"}}>336</option>
+						<option value="337" {{"selected" if default_value_dict.prepregnancy_weight=="337"}}>337</option>
+						<option value="338" {{"selected" if default_value_dict.prepregnancy_weight=="338"}}>338</option>
+						<option value="339" {{"selected" if default_value_dict.prepregnancy_weight=="339"}}>339</option>
+						<option value="340" {{"selected" if default_value_dict.prepregnancy_weight=="340"}}>340</option>
+						<option value="341" {{"selected" if default_value_dict.prepregnancy_weight=="341"}}>341</option>
+						<option value="342" {{"selected" if default_value_dict.prepregnancy_weight=="342"}}>342</option>
+						<option value="343" {{"selected" if default_value_dict.prepregnancy_weight=="343"}}>343</option>
+						<option value="344" {{"selected" if default_value_dict.prepregnancy_weight=="344"}}>344</option>
+						<option value="345" {{"selected" if default_value_dict.prepregnancy_weight=="345"}}>345</option>
+						<option value="346" {{"selected" if default_value_dict.prepregnancy_weight=="346"}}>346</option>
+						<option value="347" {{"selected" if default_value_dict.prepregnancy_weight=="347"}}>347</option>
+						<option value="348" {{"selected" if default_value_dict.prepregnancy_weight=="348"}}>348</option>
+						<option value="349" {{"selected" if default_value_dict.prepregnancy_weight=="349"}}>349</option>
+						<option value="350" {{"selected" if default_value_dict.prepregnancy_weight=="350"}}>350</option>
+						<option value="351" {{"selected" if default_value_dict.prepregnancy_weight=="351"}}>351</option>
+						<option value="352" {{"selected" if default_value_dict.prepregnancy_weight=="352"}}>352</option>
+						<option value="353" {{"selected" if default_value_dict.prepregnancy_weight=="353"}}>353</option>
+						<option value="354" {{"selected" if default_value_dict.prepregnancy_weight=="354"}}>354</option>
+						<option value="355" {{"selected" if default_value_dict.prepregnancy_weight=="355"}}>355</option>
+						<option value="356" {{"selected" if default_value_dict.prepregnancy_weight=="356"}}>356</option>
+						<option value="357" {{"selected" if default_value_dict.prepregnancy_weight=="357"}}>357</option>
+						<option value="358" {{"selected" if default_value_dict.prepregnancy_weight=="358"}}>358</option>
+						<option value="359" {{"selected" if default_value_dict.prepregnancy_weight=="359"}}>359</option>
+						<option value="360" {{"selected" if default_value_dict.prepregnancy_weight=="360"}}>360</option>
+						<option value="361" {{"selected" if default_value_dict.prepregnancy_weight=="361"}}>361</option>
+						<option value="362" {{"selected" if default_value_dict.prepregnancy_weight=="362"}}>362</option>
+						<option value="363" {{"selected" if default_value_dict.prepregnancy_weight=="363"}}>363</option>
+						<option value="364" {{"selected" if default_value_dict.prepregnancy_weight=="364"}}>364</option>
+						<option value="365" {{"selected" if default_value_dict.prepregnancy_weight=="365"}}>365</option>
+						<option value="366" {{"selected" if default_value_dict.prepregnancy_weight=="366"}}>366</option>
+						<option value="367" {{"selected" if default_value_dict.prepregnancy_weight=="367"}}>367</option>
+						<option value="368" {{"selected" if default_value_dict.prepregnancy_weight=="368"}}>368</option>
+						<option value="369" {{"selected" if default_value_dict.prepregnancy_weight=="369"}}>369</option>
+						<option value="370" {{"selected" if default_value_dict.prepregnancy_weight=="370"}}>370</option>
+						<option value="371" {{"selected" if default_value_dict.prepregnancy_weight=="371"}}>371</option>
+						<option value="372" {{"selected" if default_value_dict.prepregnancy_weight=="372"}}>372</option>
+						<option value="373" {{"selected" if default_value_dict.prepregnancy_weight=="373"}}>373</option>
+						<option value="374" {{"selected" if default_value_dict.prepregnancy_weight=="374"}}>374</option>
+						<option value="375" {{"selected" if default_value_dict.prepregnancy_weight=="375"}}>375</option>
+						<option value="999" {{"selected" if default_value_dict.prepregnancy_weight=="999"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="weight_gain_group" class="form-label">Mother's expected weight gain at childbirth:</label>
+					  <select class="form-select" aria-label="weight_gain_group" id="weight_gain_group" name="weight_gain_group">
+						<option value="1" {{"selected" if default_value_dict.weight_gain_group=="1"}}>Less than 11 pounds</option>
+						<option value="2" {{"selected" if default_value_dict.weight_gain_group=="2"}}>11 to 20 pounds</option>
+						<option value="3" {{"selected" if default_value_dict.weight_gain_group=="3"}}>21 to 30 pounds</option>
+						<option value="4" {{"selected" if default_value_dict.weight_gain_group=="4"}}>31 to 40 pounds</option>
+						<option value="5" {{"selected" if default_value_dict.weight_gain_group=="5"}}>41 to 98 pounds</option>
+						<option value="9" {{"selected" if default_value_dict.weight_gain_group=="9"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="gestational_diabetes" class="form-label">Mother's gestational diabetes:</label>
+					  <select class="form-select" aria-label="gestational_diabetes" id="gestational_diabetes" name="gestational_diabetes">
+						<option value="Y" {{"selected" if default_value_dict.gestational_diabetes=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.gestational_diabetes=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.gestational_diabetes=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="prepregnancy_hypertension" class="form-label">Mother's prepregnancy hypertension:</label>
+					  <select class="form-select" aria-label="prepregnancy_hypertension" id="prepregnancy_hypertension" name="prepregnancy_hypertension">
+						<option value="Y" {{"selected" if default_value_dict.prepregnancy_hypertension=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.prepregnancy_hypertension=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.prepregnancy_hypertension=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="gestational_hypertension" class="form-label">Mother's gestational hypertension:</label>
+					  <select class="form-select" aria-label="gestational_hypertension" id="gestational_hypertension" name="gestational_hypertension">
+						<option value="Y" {{"selected" if default_value_dict.gestational_hypertension=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.gestational_hypertension=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.gestational_hypertension=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="previous_preterm_birth" class="form-label">Mother's previous preterm birth:</label>
+					  <select class="form-select" aria-label="previous_preterm_birth" id="previous_preterm_birth" name="previous_preterm_birth">
+						<option value="Y" {{"selected" if default_value_dict.previous_preterm_birth=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.previous_preterm_birth=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.previous_preterm_birth=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="infertility_treatment_used" class="form-label">Mother's infertility treatment used:</label>
+					  <select class="form-select" aria-label="infertility_treatment_used" id="infertility_treatment_used" name="infertility_treatment_used">
+						<option value="Y" {{"selected" if default_value_dict.infertility_treatment_used=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.infertility_treatment_used=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.infertility_treatment_used=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="fertility_enhancing_drugs" class="form-label">Mother's fertility enhancing drugs:</label>
+					  <select class="form-select" aria-label="fertility_enhancing_drugs" id="fertility_enhancing_drugs" name="fertility_enhancing_drugs">
+						<option value="Y" {{"selected" if default_value_dict.fertility_enhancing_drugs=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.fertility_enhancing_drugs=="N"}}>No</option>
+						<option value="X" {{"selected" if default_value_dict.fertility_enhancing_drugs=="X"}}>Not applicable</option>
+						<option value="U" {{"selected" if default_value_dict.fertility_enhancing_drugs=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="previous_cesarean" class="form-label">Mother's previous cesarean:</label>
+					  <select class="form-select" aria-label="previous_cesarean" id="previous_cesarean" name="previous_cesarean">
+						<option value="Y" {{"selected" if default_value_dict.previous_cesarean=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.previous_cesarean=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.previous_cesarean=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="number_of_previous_cesareans" class="form-label">Mother's number of previous cesareans:</label>
+					  <select class="form-select" aria-label="number_of_previous_cesareans" id="number_of_previous_cesareans" name="number_of_previous_cesareans">
+						<option value="0" {{"selected" if default_value_dict.number_of_previous_cesareans=="0"}}>0</option>
+						<option value="1" {{"selected" if default_value_dict.number_of_previous_cesareans=="1"}}>1</option>
+						<option value="2" {{"selected" if default_value_dict.number_of_previous_cesareans=="2"}}>2</option>
+						<option value="3" {{"selected" if default_value_dict.number_of_previous_cesareans=="3"}}>3</option>
+						<option value="4" {{"selected" if default_value_dict.number_of_previous_cesareans=="4"}}>4</option>
+						<option value="5" {{"selected" if default_value_dict.number_of_previous_cesareans=="5"}}>5</option>
+						<option value="6" {{"selected" if default_value_dict.number_of_previous_cesareans=="6"}}>6</option>
+						<option value="7" {{"selected" if default_value_dict.number_of_previous_cesareans=="7"}}>7</option>
+						<option value="8" {{"selected" if default_value_dict.number_of_previous_cesareans=="8"}}>8</option>
+						<option value="9" {{"selected" if default_value_dict.number_of_previous_cesareans=="9"}}>9</option>
+						<option value="10" {{"selected" if default_value_dict.number_of_previous_cesareans=="10"}}>10</option>
+						<option value="11" {{"selected" if default_value_dict.number_of_previous_cesareans=="11"}}>11</option>
+						<option value="12" {{"selected" if default_value_dict.number_of_previous_cesareans=="12"}}>12</option>
+						<option value="13" {{"selected" if default_value_dict.number_of_previous_cesareans=="13"}}>13</option>
+						<option value="14" {{"selected" if default_value_dict.number_of_previous_cesareans=="14"}}>14</option>
+						<option value="15" {{"selected" if default_value_dict.number_of_previous_cesareans=="15"}}>15</option>
+						<option value="16" {{"selected" if default_value_dict.number_of_previous_cesareans=="16"}}>16</option>
+						<option value="17" {{"selected" if default_value_dict.number_of_previous_cesareans=="17"}}>17</option>
+						<option value="18" {{"selected" if default_value_dict.number_of_previous_cesareans=="18"}}>18</option>
+						<option value="19" {{"selected" if default_value_dict.number_of_previous_cesareans=="19"}}>19</option>
+						<option value="20" {{"selected" if default_value_dict.number_of_previous_cesareans=="20"}}>20</option>
+						<option value="21" {{"selected" if default_value_dict.number_of_previous_cesareans=="21"}}>21</option>
+						<option value="22" {{"selected" if default_value_dict.number_of_previous_cesareans=="22"}}>22</option>
+						<option value="23" {{"selected" if default_value_dict.number_of_previous_cesareans=="23"}}>23</option>
+						<option value="24" {{"selected" if default_value_dict.number_of_previous_cesareans=="24"}}>24</option>
+						<option value="25" {{"selected" if default_value_dict.number_of_previous_cesareans=="25"}}>25</option>
+						<option value="26" {{"selected" if default_value_dict.number_of_previous_cesareans=="26"}}>26</option>
+						<option value="27" {{"selected" if default_value_dict.number_of_previous_cesareans=="27"}}>27</option>
+						<option value="28" {{"selected" if default_value_dict.number_of_previous_cesareans=="28"}}>28</option>
+						<option value="29" {{"selected" if default_value_dict.number_of_previous_cesareans=="29"}}>29</option>
+						<option value="30" {{"selected" if default_value_dict.number_of_previous_cesareans=="30"}}>30</option>
+						<option value="99" {{"selected" if default_value_dict.number_of_previous_cesareans=="99"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="no_risk_factors_reported" class="form-label">Mother has no other risk factors reported (Yes=No other risks factors, No=has other risks factor reported):</label>
+					  <select class="form-select" aria-label="no_risk_factors_reported" id="no_risk_factors_reported" name="no_risk_factors_reported">
+						<option value="Y" {{"selected" if default_value_dict.no_risk_factors_reported=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.no_risk_factors_reported=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.no_risk_factors_reported=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="chlamydia" class="form-label">Mother's chlamydia (a sexual transmitted disease):</label>
+					  <select class="form-select" aria-label="chlamydia" id="chlamydia" name="chlamydia">
+						<option value="Y" {{"selected" if default_value_dict.chlamydia=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.chlamydia=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.chlamydia=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="attendant_at_birth" class="form-label">Type of medical attendant at birth:</label>
+					  <select class="form-select" aria-label="attendant_at_birth" id="attendant_at_birth" name="attendant_at_birth">
+						<option value="1" {{"selected" if default_value_dict.attendant_at_birth=="1"}}>Doctor of Medicine (MD)</option>
+						<option value="2" {{"selected" if default_value_dict.attendant_at_birth=="2"}}>Doctor of Osteopathy (DO)</option>
+						<option value="3" {{"selected" if default_value_dict.attendant_at_birth=="3"}}>Certified Nurse Midwife/Certified Midwife (CNM/CM)</option>
+						<option value="4" {{"selected" if default_value_dict.attendant_at_birth=="4"}}>Other Midwife</option>
+						<option value="5" {{"selected" if default_value_dict.attendant_at_birth=="5"}}>Other</option>
+						<option value="9" {{"selected" if default_value_dict.attendant_at_birth=="9"}}>Unknown or not stated</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="pluarality" class="form-label">Pluarality (Single, Twin, etc):</label>
+					  <select class="form-select" aria-label="pluarality" id="pluarality" name="pluarality">
+						<option value="1" {{"selected" if default_value_dict.pluarality=="1"}}>Single</option>
+						<option value="2" {{"selected" if default_value_dict.pluarality=="2"}}>Twin</option>
+						<option value="3" {{"selected" if default_value_dict.pluarality=="3"}}>Triplet</option>
+						<option value="4" {{"selected" if default_value_dict.pluarality=="4"}}>Quadruplet or higher</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="sex_of_infant" class="form-label">Sex of infant:</label>
+					  <select class="form-select" aria-label="sex_of_infant" id="sex_of_infant" name="sex_of_infant">
+						<option value="M" {{"selected" if default_value_dict.sex_of_infant=="M"}}>Male</option>
+						<option value="F" {{"selected" if default_value_dict.sex_of_infant=="F"}}>Female</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="last_normal_menses_month" class="form-label">Last normal menses month:</label>
+					  <select class="form-select" aria-label="last_normal_menses_month" id="last_normal_menses_month" name="last_normal_menses_month">
+						<option value="1" {{"selected" if default_value_dict.last_normal_menses_month=="1"}}>January</option>
+						<option value="2" {{"selected" if default_value_dict.last_normal_menses_month=="2"}}>February</option>
+						<option value="3" {{"selected" if default_value_dict.last_normal_menses_month=="3"}}>March</option>
+						<option value="4" {{"selected" if default_value_dict.last_normal_menses_month=="4"}}>April</option>
+						<option value="5" {{"selected" if default_value_dict.last_normal_menses_month=="5"}}>May</option>
+						<option value="6" {{"selected" if default_value_dict.last_normal_menses_month=="6"}}>June</option>
+						<option value="7" {{"selected" if default_value_dict.last_normal_menses_month=="7"}}>July</option>
+						<option value="8" {{"selected" if default_value_dict.last_normal_menses_month=="8"}}>August</option>
+						<option value="9" {{"selected" if default_value_dict.last_normal_menses_month=="9"}}>September</option>
+						<option value="10" {{"selected" if default_value_dict.last_normal_menses_month=="10"}}>October</option>
+						<option value="11" {{"selected" if default_value_dict.last_normal_menses_month=="11"}}>November</option>
+						<option value="12" {{"selected" if default_value_dict.last_normal_menses_month=="12"}}>December</option>
+						<option value="99" {{"selected" if default_value_dict.last_normal_menses_month=="99"}}>Unknown</option>
+					  </select>
+					</div>
+					<div class="mb-3">
+					  <label for="infant_breastfed_at_discharge" class="form-label">Infant breastfed at discharge:</label>
+					  <select class="form-select" aria-label="infant_breastfed_at_discharge" id="infant_breastfed_at_discharge" name="infant_breastfed_at_discharge">
+						<option value="Y" {{"selected" if default_value_dict.infant_breastfed_at_discharge=="Y"}}>Yes</option>
+						<option value="N" {{"selected" if default_value_dict.infant_breastfed_at_discharge=="N"}}>No</option>
+						<option value="U" {{"selected" if default_value_dict.infant_breastfed_at_discharge=="U"}}>Unknown</option>
+					  </select>
+					</div>
+					
+					<div class="col-auto">
+						<button type="submit" class="btn btn-primary mb-3 mr-3" name="predict_output_type" value="age">Predict Age</input>
+						<button type="submit" class="btn btn-primary mb-3" name="predict_output_type" value="weight">Predict Weight</input>
+					</div>
+					</form>
+
+                   
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
 
 </body>
+
 </html>

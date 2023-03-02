@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GoldenCub Predictor</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="#">
+
+	
+	
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'sidebar.html' %}
+
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+					<h1 class="h3 mb-2 mt-4 text-gray-800">Source Code Structure</h1>
+					<p class="mb-4">
+					Documenting the source code structure is important for several reasons:
+					<ul>
+					<li> Understanding the code: A well-documented source code structure 
+					makes it easier for developers to understand the codebase. By documenting 
+					the structure, developers can quickly get an overview of the codebase and 
+					find the relevant files and functions they need to work on.
+					<li> Maintainability: Documentation helps with the maintenance of the codebase. 
+					When developers understand the codebase, they can make changes to the code 
+					without introducing new bugs or breaking existing functionality. Additionally, 
+					well-documented code is easier to maintain over time as new developers join the 
+					project or as existing developers move on to other projects.
+					<li> Collaboration: When multiple developers work on the same project, having a 
+					documented code structure makes it easier for them to collaborate. Developers can 
+					work more efficiently when they know where to find the code they need and how to 
+					use it.
+					<li> Onboarding new developers: Documenting the source code structure can help 
+					onboard new developers to the project more quickly. By providing an overview of 
+					the codebase, new developers can get up to speed more quickly and start contributing 
+					to the project sooner.
+					</ul>
+					
+					The source code is stored in Github.com: https://github.com/frankiepun/capstone_childbirth
+					<p>
+					<p>
+					
+					
+				    <div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Supervised Learning Models</h6>
+						</div>
+                        <div class="card-body">
+						<h6 class="m-0 font-weight-bold">childbirth_EDA.ipynb - juypter notebook for EDA</h6>
+						<br>
+						childbirth_EDA.ipynb parses the Nat2021us.txt, a fixed-length flat file, and creates a 
+						Pandas dataframe. It then splits it into three groups - training, validation, and testing. 
+						The training data is for training the model. The validation data is for checking and validating
+						the trained model. Finally, the testing data is set aside for final comparison.
+						<p>
+						We examined the document and selected 79 features from the Nat2021us.txt. Please reference 
+						the CDC data dictionary - CDC ChildBirth Data UserGuide2021.pdf for details about each feature. 
+						To add more features, please use the field's start and end position specified on page 8 of the 
+						document
+						<p>
+						We use a convenient library called pandas_profiling, which summarizes each column's data 
+						distribution and saves it to a file called train_profile.html. To install the pandas_profiling, 
+						please run "!pip install pandas_profiling==3.6.3".
+						<p>
+						childbirth_EDA.ipynb uses heatmaps to illustrate the correlation between features. For 
+						highly correlated features, only one feature will be selected. We will also drop highly 
+						skewed features.
+						<p>
+						The final result of EDA is a list of features to be used in training the models. A file 
+						called models/feature_list.txt is generated. It is a simple text file, and each line contains 
+						a feature name. We have considered multiple feature selection techniques to pick features, 
+						such as PCA or Lasso. Still, preliminary prediction results show that features confirmed 
+						by subject matter experts (OBGYN and Pediatricians) yield the best results.
+						<p>
+						<hr>
+						<p>
+						<h6 class="m-0 font-weight-bold">childbirth_model_age.ipynb - juypter notebook for training models</h6>
+						<p>
+						This notebook uses supervised machine learning to predict the gestation age. It reads the train, validation,
+						and test data files and the feature list from models/feature_list_age.txt. Feel free to edit *feature_list_age.txt" 
+						to add or remove features for the models. It uses several utility functions in a common python file childbirth_common_util.py 
+						to load the feature list and train the models.
+						<p>
+						The baseline for the model prediction is the mean gestation age. During EDA, we correlated each feature against gestation 
+						age but didn't discover any feature with strong prediction power. As a result, we must resort to the most basic 
+						measurement - the average gestation age, which is 38.50 weeks.
+						<p>
+						To measure the model's performance and accuracy, we choose RMSE (Root Mean Square Error), the most common performance 
+						indicator for a regression model. RMSE measures the average difference between values predicted by a model and the actual 
+						values. The RMSE for the baseline prediction, i.e., mean gestation age, is 2.51.
+						<p>
+						Scaling is essential for transforming the features to a standard range of numeric values. Instead of one-hot 
+						encoding, we decided to use a ranking technique to convert a categorical feature to a numeric feature. 
+						For example, if a feature contains four values - Y, N, U, X, we first rank them based on their mean 
+						gestation_age. The lowest is assigned 0, and the second lowest is assigned 1. Please refer to the 
+						function util_calc_save_scaler in childbirth_common_util.py for the algorithm. Then we applied sklearn's 
+						StandardScaler to scale each feature to a standard range with mean = 0 and standard deviation = 1. 
+						We have also tried other scalers, such as MinMaxScaler and RobustScaler, but StandardScaler yields the best results.
+						<p>
+						For training the model, we applied the ensemble modeling technique, which combines multiple models to generate the 
+						optimal result. The base models are Linear Regression, Gradient Boosting Regressor, SGD Regressor, LGBM Regressor, 
+						Random Forest Regressor, and Neural Network. We have also tried other models, such as KNN and SVM, but they are 
+						dropped due to poor results.
+						<p>
+						We tuned the base model by trying many combinations of hyperparameters. Please see this file 
+						childbirth_model_parameter_tuning.ipynb for details about the hyperparameter tuning. Please be aware that the 
+						tuning takes many hours to complete.
+						<p>
+						The prediction is a weighted average of the result of the above base models. The weight of each model results from 
+						many trial-and-error, and we discover the current weights yield the optimal result without overfitting or 
+						underfitting. As a result, the RMSE of our model based on the test dataset is about 2.00, better than our baseline of 2.51.
+						<p>
+						<hr>
+						<p>
+						<h6 class="m-0 font-weight-bold">childbirth_model_weight.ipynb - juypter notebook for training models</h6>
+						<p>
+						The structure of childbirth_model_weight.ipynb is similar childbirth_model_age.ipynb. To add or remove features, 
+						please change the file models/feature_list_weight.txt and then run each cell to re-train the model and measure 
+						the result. The baseline is the average newborn's weight is 3249.15, and RMSE is 588.13. The model's RMSE is 472.52, 
+						better than the baseline's RMSE 588.13.
+						</div>
+					</div>
+
+				    <div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">API and Website</h6>
+						</div>
+                        <div class="card-body">
+						<p>
+						The API and the website run on FastAPI, a modern, fast (hence the name), and highly scalable web framework for 
+						building APIs with Python 3.7 and above. In addition, it leverages Python's type annotations, which provide a 
+						self-documenting codebase and helps to eliminate common errors during development. It also uses the asynchronous 
+						programming paradigm to make it highly performant.
+						<p>
+						FastAPI generates openAPI documentation automatically. To access it, please use this URL: http://hostname/docs. 
+						Here are some crucial API endpoints:
+						<ul>
+							<li> <code> GET /api/predict/age or /api/predict/weight </code> it predicts a single input and returns the result in JSON format
+							<li> <code> POST /api/predict/age or /api/predict/weight </code> it accepts multiple JSON inputs in the HTTP body and returns the results in JSON array.
+						</ul>
+						
+						For example payload, please access /api/example.
+						
+						<p>
+						The website is based on the free bootstrap templates: https://startbootstrap.com/theme/sb-admin-2. 
+						To customize the left navigation sidebar, please edit templates/sidebar.html. To add a page, please make 
+						a copy of the existing HTML page in the folder templates and give it a descriptive filename.html. Then 
+						access it by http://domain_name/filename. Note that the URL doesn't have HTML because the page is 
+						served by FastAPI dynamically. Images and CSS are stored under the folder static
+
+							
+						</div>
+					</div>
+					
+					
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

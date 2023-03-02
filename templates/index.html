@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GoldenCub Predictor</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="#">
+
+	
+	
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'sidebar.html' %}
+
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+					<h1 class="h3 mb-2 mt-4 text-gray-800">Gestation Age and Newborn Weight Prediction</h1>
+					<p class="mb-4">
+					
+
+					
+				    <div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Project Overview</h6>
+						</div>
+                        <div class="card-body">
+							<p>
+							Birthweight is an important factor in the health of the mother and the delivery procedure of the infant.
+							<li>If parents know birthweight in advance, more likely to schedule an early induction or opt for a Caesarean delivery to avoid complications, such as shoulder dystocia, cerebral palsy, etc.
+							<li>Current method utilizes ultrasound technology for weight predictions. For a 9-pound baby, an ultrasound's predictive accuracy is typically 15 to 20 percent of (+/- 1 pound).
+							</p>
+							<p class="mb-0">
+							Goal: Develop a baby weight and timing of birth predictor model using information that is easily available from electronic health records from the parents (age, weight, height).
+							</p>
+						</div>
+					</div>
+					
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Problem Statement</h6>
+						</div>
+                        <div class="card-body">
+							In this project, we attempt to solve the following problem statement:
+							<ul>
+								<li>What is the predicted weight of a newborn baby?
+								<li>What is the predicted gestation age? 
+								<li>What are the characteristics of mother, father, and pregnancy useful for prediction? 
+							</ul>
+							<p>
+							There are several benefits to using machine learning models to predict gestation age and newborn weight.
+							<p>
+							Firstly, accurate predictions of gestational age and newborn weight can help 
+							healthcare providers better manage maternal and neonatal care, potentially 
+							reducing complications during delivery and improving outcomes for both mother and
+							baby. In addition, by identifying at-risk pregnancies early, healthcare providers 
+							can provide timely interventions and care to reduce the risk of complications.
+							<p>
+							Secondly, supervised learning models can help identify risk factors that may affect 
+							gestational age and newborn weight, allowing healthcare providers to better 
+							tailor care to each patient's needs. This can result in improved clinical 
+							decision-making, more personalized care, and better health outcomes.
+							<p>
+							Thirdly, accurate predictions of gestational age and newborn weight can help parents 
+							and families better prepare for the birth of their child. This can include 
+							preparing for potential complications, arranging appropriate medical care, and 
+							ensuring necessary support is in place.
+							</p>
+						</div>
+					</div>
+
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Approach</h6>
+						</div>
+                        <div class="card-body">
+							This project's data source is the 2021 CDC's Natality dataset, which 
+							includes information on millions of births in the United States. It has over 
+							3.6 million records and hundreds of features related to mothers, fathers, pregnancies, 
+							and infants. First, the dataset is preprocessed to remove any missing or 
+							irrelevant data, and then a list of features is selected for model construction. 
+							Next, the dataset is split into a training set, a test set, and a validation set. The 
+							training set is used to train the supervised learning model, where the algorithm
+							learns to predict gestational age and newborn weight based on the input features. 
+							The validation set evaluates the model's performance and tunes any hyperparameters 
+							to improve performance. Finally, we apply the test dataset for final testing and 
+							validation. 
+							
+							<p>
+							<p>
+							Several supervised learning algorithms can be used to predict gestational age and 
+							newborn weight, such as linear regression, XGBoost, and neural networks. Once the 
+							model has been trained and validated, it can be used to predict the gestational age 
+							and newborn weight of newborns based on their health indicators.	
+						</div>
+					</div>
+					
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Minimum Viable Product</h6>
+						</div>
+                        <div class="card-body">
+							This project's MVP (Minimum Viable Product) is to construct a machine learning pipeline - 
+							EDA (Exploratory Data Analysis), Data Cleaning, Feature Selection, Model Training, Model Testing,
+							Model Tuning, and Model Deployment. 
+							<p>
+							<p>
+							We have two types of users - regular users or 3rd party systems. Regular users are parents-to-be 
+							or healthcare providers and will interact with the model through a web interface. For 3rd party 
+							systems, we provide a Restful API based on JSON data format. They can send one or more input requests 
+							in the JSON payload, and the models return the prediction results accordingly. 
+							<p>
+							<img src="img/MVP.png" alt="minimum variable product" width="1000"/>
+							
+						</div>
+					</div>
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

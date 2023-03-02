@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GoldenCub Predictor - Predict Input</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="shortcut icon" href="#">
+
+	
+	
+
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {% include 'sidebar.html' %}
+
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+					<h1 class="h3 mb-2 mt-4 text-gray-800">EDA (Exploratory Data Analysis)</h1>
+					<p class="mb-4">
+					Exploratory Data Analysis (EDA) is a crucial step in any machine learning project, as it allows us to gain a 
+					deep understanding of the data we are working with. By analyzing and visualizing the distribution, relationships, 
+					and patterns within the data, we can identify potential issues and biases, determine the relevant features, 
+					and decide on appropriate pre-processing techniques. EDA also helps us to make informed decisions about 
+					the appropriate modeling approach to take, and to fine-tune hyperparameters for better model performance. 
+					Additionally, EDA can help us to communicate our findings to stakeholders, providing valuable insights 
+					and building trust in the results. In short, EDA is a vital step in any machine learning project, 
+					as it sets the foundation for the entire data analysis process.
+										
+
+					
+				    <div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Data Source</h6>
+						</div>
+                        <div class="card-body">
+							Data source is a critical aspect of EDA. The quality and quantity of the data we use directly affect the accuracy 
+							and validity of the insights we gain from EDA and the accuracy of the model. We plan to use CDC (Center of
+							Disease Control) dataset for this project. The CDC childbirth dataset contains detailed information on births in the US, 
+							including demographic information on mothers and fathers, characteristics of the pregnancy and delivery, and information 
+							on the birth outcomes.
+							<p>
+							<p>
+							We use CDC 2021 birth data which includes 99.94% of 2021 childbirths in the US, except the US territories. 
+							It has over 3.6 million records, and the file size is over 4GB. Out of the 590 available features, 
+							we selected 79 features for EDA, based on interviews with subject matter experts such as OBGYN doctors, 
+							midwives, and pediatricians. 
+						</div>
+					</div>
+					
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">EDA</h6>
+						</div>
+                        <div class="card-body">
+							For data distribution of each field, please see <a href="/eda_profile">EDA data fields analysis</a>
+							<p>
+							<p>
+							To get the explanation of each field and the values mapping, please refer to <a href="/api_data_dictionary">data dictionary </a>
+							<p>
+							<ul>
+								<li> <a href="#histogram"> histograms </a>
+								<li> <a href="#heatmap"> correlation heatmap between fields </a>
+								<li> <a href="#boxplot_age"> gestation age vs features box plot</a>
+								<li> <a href="#boxplot_weight"> newborn weight vs features box plot</a>
+							</ul>
+							The histograms of each field are illustrated below. For correlation between the fields, please select <a href="#heatmap">data correlation heatmap</a>
+							<p>
+							<div id=#histogram>
+							<img src="/static/img/eda_histograms.png" alt="Childbirth EDA histograms" width="1400">
+							</div>
+							<p>
+							<hr>
+							<p>
+							<div id="heatmap">
+							The following heatmap shows the correlation between the features
+							<img src="/static/img/eda_correlation_heatmap.png" alt="Features correlation heatmap" width="1400">
+							</div>
+							<p>
+							<hr>
+							<p>
+							<div id="boxplot_age">
+							The following boxplot shows the correlation between gestation age and features
+							<img src="/static/img/eda_features_vs_age.png" alt="features vs gestation age boxplot" width="1400">
+							</div>
+							<p>
+							<hr>
+							<p>
+							<div id="boxplot_weight">
+							The following boxplot shows the correlation between newborn weight and features
+							<img src="/static/img/eda_features_vs_weight.png" alt="features vs weight boxplot" width="1400">
+							</div>
+						</div>
+					</div>
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
