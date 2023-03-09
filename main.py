@@ -57,7 +57,7 @@ def get_page(request: Request, page: str):
 @app.get("/api/example", response_class=HTMLResponse)
 def get_help_and_example_payload(request: Request):
     # single request
-    url_first_part = "http://some-domain-name:port-number/predict"
+    url_first_part = "http://some-domain-name:port-number/api/predict"
 
     predict_type_dict = {'age': {}, 'weight': {}} # key=age/weight. value=dict of column (key=column name, value=dict of values).
     url_query_string_dict = {}  # the key is age or weight. the value is the query string
