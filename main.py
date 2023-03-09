@@ -46,6 +46,8 @@ def get_index_page(request: Request):
 @app.get("/{page}")
 def get_page(request: Request, page: str):
     default_value_dict =  dict(request.query_params)
+    if page.endswith("2"):
+        page = "construction"
     return templates.TemplateResponse(f"{page}.html",
                                       {"request": request,
                                        "default_value_dict": default_value_dict,
